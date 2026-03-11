@@ -1,200 +1,185 @@
+import Head from "next/head";
+import Link from "next/link";
+
+const bestSellers = [
+  {
+    name: "Chicken Inasal",
+    price: "A$24.90",
+    description: "Tasty deep fried marinated chicken served with Soulfood special sauce.",
+  },
+  {
+    name: "Pork Ribs BBQ Meal Deal",
+    price: "A$32.00",
+    description: "A rich and smoky favorite with bold barbecue flavor.",
+  },
+  {
+    name: "Crispy Pork Belly",
+    price: "A$24.80",
+    description: "Golden, crunchy, and packed with savory flavor.",
+  },
+  {
+    name: "Beef Tapa",
+    price: "A$26.00",
+    description: "A comforting classic with tender beef and soulful seasoning.",
+  },
+  {
+    name: "Asian Fried Calamari",
+    price: "A$16.60",
+    description: "Salt and pepper breaded calamari with yosu mayo and signature vinegar dip.",
+  },
+  {
+    name: "Mango Graham Cake",
+    price: "A$15.00",
+    description: "A chilled sweet favorite to finish your meal.",
+  },
+];
+
 export default function Home() {
   return (
     <>
-      <main className="container">
+      <Head>
+        <title>Soulfood Fusion House</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <meta
+          name="description"
+          content="Soulfood Fusion House - Where good food meets your soulful cravings."
+        />
+      </Head>
+
+      <header className="topbar">
+        <div className="brand">Soulfood Fusion House</div>
+        <nav className="nav">
+          <a href="#bestsellers">Best Sellers</a>
+          <a href="#about">About</a>
+          <a href="#visit">Visit</a>
+          <Link href="/menu" className="menuButton">
+            ☰ Menu
+          </Link>
+        </nav>
+      </header>
+
+      <main>
         <section className="hero">
-          <div className="hero-copy">
-            <span className="eyebrow">
-              Soulful comfort • Modern fusion • Warm hospitality
-            </span>
-
-            <h1>Bold Southern flavor with a modern fusion twist.</h1>
-
-            <p className="lead">
-              A concept homepage for Soulfood Fusion House designed to feel
-              premium, rich, and modern — with room for online ordering,
-              reservations, AI chat, catering, and a full restaurant system.
+          <div className="overlay" />
+          <div className="heroContent">
+            <p className="eyebrow">BENDIGO, VIC</p>
+            <h1>WHERE GOOD FOOD MEETS YOUR SOULFUL CRAVINGS!</h1>
+            <p className="heroText">
+              A warm, modern food experience with bold Filipino fusion flavors,
+              comforting classics, and a welcoming restaurant atmosphere.
             </p>
-
-            <div className="hero-actions">
-              <a href="#menu" className="primary-btn">
-                View Signature Dishes
-              </a>
-              <a href="#contact" className="ghost-btn">
-                Plan Catering
+            <div className="heroActions">
+              <Link href="/menu" className="primaryBtn">
+                View Full Menu
+              </Link>
+              <a href="#visit" className="secondaryBtn">
+                Visit Us
               </a>
             </div>
+          </div>
+        </section>
 
-            <div className="stats">
-              <div className="stat">
-                <strong>Fast Ordering</strong>
-                <span>Ready for pickup and delivery flow</span>
+        <section className="intro" id="about">
+          <div className="sectionHeader">
+            <p className="mini">WELCOME</p>
+            <h2>Modern comfort food with a soulful fusion twist</h2>
+            <p>
+              Soulfood Fusion House brings together crowd-favorite mains,
+              shareable plates, flavorful appetisers, and desserts made for
+              comfort and celebration.
+            </p>
+          </div>
+        </section>
+
+        <section className="bestsellers" id="bestsellers">
+          <div className="sectionHeader">
+            <p className="mini">BEST SELLERS</p>
+            <h2>Signature favorites from the kitchen</h2>
+            <p>
+              Start with the dishes people come back for again and again.
+            </p>
+          </div>
+
+          <div className="grid">
+            {bestSellers.map((item) => (
+              <article className="card" key={item.name}>
+                <div className="cardImage">
+                  <span>{item.name}</span>
+                </div>
+                <div className="cardBody">
+                  <h3>{item.name}</h3>
+                  <p>{item.description}</p>
+                  <strong>{item.price}</strong>
+                </div>
+              </article>
+            ))}
+          </div>
+
+          <div className="center">
+            <Link href="/menu" className="primaryBtn">
+              See Full Food Menu
+            </Link>
+          </div>
+        </section>
+
+        <section className="visit" id="visit">
+          <div className="visitGrid">
+            <div className="visitCard">
+              <p className="mini">LOCATION & HOURS</p>
+              <h2>Come dine with us in Bendigo</h2>
+
+              <div className="infoBlock">
+                <h4>Address</h4>
+                <p>8 High Street</p>
+                <p>Bendigo, VIC 3550</p>
               </div>
-              <div className="stat">
-                <strong>Live AI Support</strong>
-                <span>Future-ready for inquiries and menu help</span>
+
+              <div className="infoBlock">
+                <h4>Contact</h4>
+                <p>03 5441 2752</p>
+                <p>soulfoodfusionhouse@gmail.com</p>
               </div>
-              <div className="stat">
-                <strong>Brand Upgrade</strong>
-                <span>Luxury layout with strong food-first visuals</span>
+
+              <div className="infoBlock">
+                <h4>Hours</h4>
+                <p><strong>Monday</strong> — CLOSED</p>
+                <p><strong>Tuesday - Friday</strong> — 11:30am to 3:00pm Lunch</p>
+                <p><strong>Tuesday - Friday</strong> — 5:00pm to 5:00pm Dinner</p>
+                <p><strong>Saturday</strong> — 11:30am - 10:00pm Dinner</p>
+                <p><strong>Sunday</strong> — 11:30pm - 5:00pm</p>
               </div>
-            </div>
-          </div>
 
-          <aside className="hero-card">
-            <img
-              src="https://images.unsplash.com/photo-1544025162-d76694265947?auto=format&fit=crop&w=1400&q=80"
-              alt="Soul food platter"
-            />
-          </aside>
-        </section>
-
-        <section className="section-pad" id="experience">
-          <div className="section-title">
-            <h2>A concept built to feel rich, warm, and unforgettable</h2>
-            <p>
-              Luxury comfort-food branding with space for ecommerce, AI, and
-              full restaurant automation.
-            </p>
-          </div>
-
-          <div className="cards">
-            <article className="card">
-              <h3>Order-Ready Design</h3>
-              <p>
-                Built to evolve into a real ordering system with categories,
-                add-ons, checkout, pickup, and delivery options.
-              </p>
-            </article>
-
-            <article className="card">
-              <h3>AI Inquiry Assistant</h3>
-              <p>
-                Perfect for adding a live AI chat that answers opening hours,
-                menu questions, reservations, and catering requests.
-              </p>
-            </article>
-
-            <article className="card">
-              <h3>Conversion Focused</h3>
-              <p>
-                Every section can guide visitors toward actions that matter:
-                order, reserve, call, ask, or book an event.
-              </p>
-            </article>
-          </div>
-        </section>
-
-        <section className="section-pad" id="menu">
-          <div className="section-title">
-            <h2>Signature dishes</h2>
-            <p>
-              Sample layout content for inspiration — you can replace everything
-              later with the real menu.
-            </p>
-          </div>
-
-          <div className="menu-grid">
-            <article className="menu-card">
-              <h3>Smoked BBQ Ribs Plate</h3>
-              <p>
-                Sticky glazed ribs, creamy mac and cheese, cornbread, and house
-                slaw.
-              </p>
-              <p className="price">From $18</p>
-            </article>
-
-            <article className="menu-card">
-              <h3>Cajun Shrimp &amp; Grits</h3>
-              <p>
-                Butter-seared shrimp on creamy grits with herbs, spice, and
-                soulful depth.
-              </p>
-              <p className="price">From $16</p>
-            </article>
-
-            <article className="menu-card">
-              <h3>Hot Honey Fried Chicken</h3>
-              <p>
-                Crispy chicken finished with hot honey glaze and served with
-                seasoned fries.
-              </p>
-              <p className="price">From $15</p>
-            </article>
-          </div>
-        </section>
-
-        <section className="section-pad">
-          <div className="section-title">
-            <h2>Visual direction</h2>
-            <p>
-              A simple gallery concept you can later replace with your own AI
-              images, real food photography, and final brand assets.
-            </p>
-          </div>
-
-          <div className="gallery">
-            <figure className="large">
-              <img
-                src="https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&fit=crop&w=1400&q=80"
-                alt="Restaurant interior"
-              />
-              <figcaption>
-                Warm lighting, dark tones, and a premium dining feel.
-              </figcaption>
-            </figure>
-
-            <div className="stack">
-              <figure>
-                <img
-                  src="https://images.unsplash.com/photo-1504674900247-0877df9cc836?auto=format&fit=crop&w=1200&q=80"
-                  alt="Food closeup"
-                />
-              </figure>
-              <figure>
-                <img
-                  src="https://images.unsplash.com/photo-1559339352-11d035aa65de?auto=format&fit=crop&w=1200&q=80"
-                  alt="Restaurant dish"
-                />
-              </figure>
-            </div>
-          </div>
-        </section>
-
-        <section className="section-pad">
-          <div className="cta-panel">
-            <h2>Ready to turn this into a full smart restaurant platform?</h2>
-            <p>
-              Next steps can include a real menu system, booking flow, AI chat
-              widget, event inquiries, online checkout, and an admin dashboard.
-            </p>
-            <a href="#contact" className="primary-btn">
-              Start the next version
-            </a>
-          </div>
-        </section>
-
-        <section className="section-pad" id="contact">
-          <div className="contact-box">
-            <div>
-              <h2>Get launch updates or reserve for events</h2>
-              <p>
-                Use this section later for reservations, catering, private
-                dining, or customer inquiries.
-              </p>
+              <a
+                className="secondaryBtn inlineBtn"
+                href="https://maps.google.com/?q=8+High+Street+Bendigo+VIC+3550"
+                target="_blank"
+                rel="noreferrer"
+              >
+                Get Directions
+              </a>
             </div>
 
-            <form
-              className="contact-form"
-              onSubmit={(e) => e.preventDefault()}
-            >
-              <input type="text" placeholder="Your name" required />
-              <input type="email" placeholder="Your email" required />
-              <button type="submit">Join the list</button>
-            </form>
+            <div className="quoteCard">
+              <div>
+                <p className="mini">SOULFOOD FUSION HOUSE</p>
+                <h3>Made for cravings, family meals, and memorable comfort food moments.</h3>
+                <p>
+                  This homepage is designed to highlight your best sellers first,
+                  then move customers to the full menu page.
+                </p>
+                <Link href="/menu" className="primaryBtn">
+                  Open Menu Page
+                </Link>
+              </div>
+            </div>
           </div>
         </section>
       </main>
+
+      <footer className="footer">
+        <p>© Soulfood Fusion House</p>
+        <Link href="/menu">Menu</Link>
+      </footer>
 
       <style jsx global>{`
         * {
@@ -208,313 +193,297 @@ export default function Home() {
         body {
           margin: 0;
           font-family: Arial, sans-serif;
-          background: linear-gradient(
-            180deg,
-            #120b08 0%,
-            #1a100c 35%,
-            #24150f 100%
-          );
-          color: #f7efe7;
+          color: #2a2019;
+          background: #fbf7f2;
         }
 
         a {
           text-decoration: none;
         }
 
-        img {
-          display: block;
-          width: 100%;
+        .topbar {
+          position: sticky;
+          top: 0;
+          z-index: 50;
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          padding: 18px 28px;
+          background: rgba(255, 250, 245, 0.95);
+          backdrop-filter: blur(10px);
+          border-bottom: 1px solid #eadfd3;
         }
 
-        .container {
-          max-width: 1200px;
-          margin: 0 auto;
-          padding: 32px 20px 80px;
+        .brand {
+          font-size: 1.2rem;
+          font-weight: 700;
+          color: #4c2f1d;
+        }
+
+        .nav {
+          display: flex;
+          gap: 18px;
+          align-items: center;
+          flex-wrap: wrap;
+        }
+
+        .nav a {
+          color: #5a4334;
+          font-weight: 600;
+        }
+
+        .menuButton {
+          background: #4c2f1d;
+          color: white !important;
+          padding: 10px 16px;
+          border-radius: 999px;
         }
 
         .hero {
-          display: grid;
-          grid-template-columns: 1.1fr 0.9fr;
-          gap: 48px;
-          align-items: center;
-          min-height: 80vh;
-          padding: 32px 0 24px;
-        }
-
-        .eyebrow {
-          display: inline-block;
-          padding: 8px 14px;
-          border-radius: 999px;
-          background: rgba(215, 161, 74, 0.12);
-          color: #f2c16f;
-          border: 1px solid rgba(215, 161, 74, 0.18);
-          margin-bottom: 18px;
-          font-size: 14px;
-        }
-
-        h1 {
-          font-size: clamp(42px, 7vw, 78px);
-          line-height: 0.98;
-          margin: 0 0 18px;
-          color: #fff7ef;
-        }
-
-        .lead {
-          font-size: 18px;
-          line-height: 1.7;
-          color: #e9d8c6;
-          max-width: 680px;
-        }
-
-        .hero-actions {
+          position: relative;
+          min-height: 78vh;
           display: flex;
-          flex-wrap: wrap;
+          align-items: center;
+          padding: 70px 28px;
+          background:
+            linear-gradient(rgba(34, 20, 12, 0.55), rgba(34, 20, 12, 0.55)),
+            url("https://images.unsplash.com/photo-1544025162-d76694265947?auto=format&fit=crop&w=1600&q=80")
+              center/cover no-repeat;
+        }
+
+        .heroContent {
+          position: relative;
+          max-width: 760px;
+          color: white;
+          z-index: 2;
+        }
+
+        .eyebrow,
+        .mini {
+          letter-spacing: 0.16em;
+          text-transform: uppercase;
+          font-size: 0.78rem;
+          color: #b97c48;
+          font-weight: 700;
+        }
+
+        .hero h1 {
+          font-size: clamp(2.8rem, 7vw, 5.2rem);
+          line-height: 1;
+          margin: 14px 0;
+          max-width: 850px;
+        }
+
+        .heroText {
+          font-size: 1.1rem;
+          line-height: 1.7;
+          max-width: 650px;
+          color: #f8eee6;
+        }
+
+        .heroActions {
+          display: flex;
           gap: 14px;
-          margin: 28px 0;
+          flex-wrap: wrap;
+          margin-top: 26px;
         }
 
-        .primary-btn {
-          background: linear-gradient(135deg, #d7a14a, #f1c97a);
-          color: #20120d;
+        .primaryBtn,
+        .secondaryBtn {
+          display: inline-block;
+          padding: 14px 20px;
+          border-radius: 999px;
           font-weight: 700;
-          padding: 15px 22px;
-          border-radius: 999px;
-          display: inline-block;
         }
 
-        .ghost-btn {
-          border: 1px solid rgba(255, 255, 255, 0.2);
-          color: #fff1e6;
-          padding: 15px 22px;
-          border-radius: 999px;
-          display: inline-block;
-          background: rgba(255, 255, 255, 0.03);
+        .primaryBtn {
+          background: #b97c48;
+          color: white;
         }
 
-        .stats {
-          display: grid;
-          grid-template-columns: repeat(3, 1fr);
-          gap: 16px;
-          margin-top: 18px;
+        .secondaryBtn {
+          border: 1px solid #cdbba9;
+          color: #4c2f1d;
+          background: white;
         }
 
-        .stat {
-          background: rgba(255, 255, 255, 0.04);
-          border: 1px solid rgba(255, 255, 255, 0.08);
-          border-radius: 18px;
-          padding: 18px;
-        }
-
-        .stat strong {
-          display: block;
-          font-size: 18px;
-          color: #fff6ed;
-          margin-bottom: 6px;
-        }
-
-        .stat span {
-          color: #d7c3b2;
-          font-size: 14px;
-          line-height: 1.5;
-        }
-
-        .hero-card {
-          background: rgba(255, 255, 255, 0.04);
-          border: 1px solid rgba(255, 255, 255, 0.08);
-          border-radius: 28px;
-          overflow: hidden;
-          box-shadow: 0 30px 80px rgba(0, 0, 0, 0.35);
-        }
-
-        .hero-card img {
-          min-height: 560px;
-          object-fit: cover;
-        }
-
-        .section-pad {
-          padding: 60px 0;
-        }
-
-        .section-title {
-          text-align: center;
-          margin-bottom: 32px;
-        }
-
-        .section-title h2 {
-          font-size: clamp(30px, 4vw, 48px);
-          margin-bottom: 10px;
-          color: #fff7ef;
-        }
-
-        .section-title p {
-          color: #dac7b7;
-          max-width: 820px;
+        .intro,
+        .bestsellers,
+        .visit {
+          padding: 72px 28px;
+          max-width: 1250px;
           margin: 0 auto;
-          line-height: 1.7;
         }
 
-        .cards {
+        .sectionHeader {
+          text-align: center;
+          max-width: 820px;
+          margin: 0 auto 36px;
+        }
+
+        .sectionHeader h2 {
+          font-size: clamp(2rem, 4vw, 3.2rem);
+          margin: 10px 0 14px;
+          color: #3f281a;
+        }
+
+        .sectionHeader p {
+          color: #6d5848;
+          line-height: 1.8;
+        }
+
+        .grid {
           display: grid;
           grid-template-columns: repeat(3, 1fr);
-          gap: 20px;
+          gap: 24px;
         }
 
-        .card,
-        .menu-card {
-          background: linear-gradient(
-            180deg,
-            rgba(255, 255, 255, 0.05),
-            rgba(255, 255, 255, 0.03)
-          );
-          border: 1px solid rgba(255, 255, 255, 0.08);
-          border-radius: 20px;
-          padding: 24px;
-        }
-
-        .card h3,
-        .menu-card h3 {
-          margin-top: 0;
-          color: #fff6ed;
-        }
-
-        .card p,
-        .menu-card p {
-          color: #dbc7b7;
-          line-height: 1.7;
-        }
-
-        .menu-grid {
-          display: grid;
-          grid-template-columns: repeat(3, 1fr);
-          gap: 20px;
-        }
-
-        .price {
-          color: #f2c16f !important;
-          font-weight: 700;
-        }
-
-        .gallery {
-          display: grid;
-          grid-template-columns: 2fr 1fr;
-          gap: 20px;
-        }
-
-        .gallery figure {
-          margin: 0;
-          background: rgba(255, 255, 255, 0.04);
-          border: 1px solid rgba(255, 255, 255, 0.08);
+        .card {
+          background: white;
           border-radius: 22px;
           overflow: hidden;
+          box-shadow: 0 14px 40px rgba(54, 31, 14, 0.08);
+          border: 1px solid #f0e4d7;
         }
 
-        .gallery .large img {
-          min-height: 460px;
-          object-fit: cover;
+        .cardImage {
+          height: 220px;
+          display: flex;
+          align-items: end;
+          padding: 18px;
+          background:
+            linear-gradient(rgba(62, 33, 18, 0.18), rgba(62, 33, 18, 0.48)),
+            url("https://images.unsplash.com/photo-1504674900247-0877df9cc836?auto=format&fit=crop&w=1200&q=80")
+              center/cover no-repeat;
         }
 
-        .gallery .stack {
-          display: grid;
-          gap: 20px;
+        .cardImage span {
+          color: white;
+          font-weight: 700;
+          font-size: 1.05rem;
         }
 
-        .gallery .stack img {
-          min-height: 220px;
-          object-fit: cover;
+        .cardBody {
+          padding: 22px;
         }
 
-        figcaption {
-          padding: 16px 18px;
-          color: #dbc7b7;
-          font-size: 14px;
-        }
-
-        .cta-panel {
-          background: linear-gradient(
-            135deg,
-            rgba(215, 161, 74, 0.18),
-            rgba(255, 122, 24, 0.12)
-          );
-          border: 1px solid rgba(215, 161, 74, 0.22);
-          border-radius: 24px;
-          padding: 42px 24px;
-          text-align: center;
-        }
-
-        .cta-panel h2 {
+        .cardBody h3 {
           margin-top: 0;
-          color: #fff7ef;
+          color: #3f281a;
         }
 
-        .cta-panel p {
-          color: #e4d2c2;
-          max-width: 760px;
-          margin: 0 auto 22px;
+        .cardBody p {
+          color: #6d5848;
           line-height: 1.7;
+          min-height: 72px;
         }
 
-        .contact-box {
-          background: rgba(255, 255, 255, 0.04);
-          border: 1px solid rgba(255, 255, 255, 0.08);
+        .cardBody strong {
+          color: #b97c48;
+          font-size: 1.05rem;
+        }
+
+        .center {
+          text-align: center;
+          margin-top: 34px;
+        }
+
+        .visitGrid {
+          display: grid;
+          grid-template-columns: 1.2fr 0.8fr;
+          gap: 24px;
+        }
+
+        .visitCard,
+        .quoteCard {
+          background: white;
           border-radius: 24px;
           padding: 28px;
+          box-shadow: 0 14px 40px rgba(54, 31, 14, 0.08);
+          border: 1px solid #f0e4d7;
         }
 
-        .contact-box h2 {
-          margin-top: 0;
-          color: #fff7ef;
+        .visitCard h2,
+        .quoteCard h3 {
+          color: #3f281a;
         }
 
-        .contact-box p {
-          color: #dbc7b7;
-          line-height: 1.7;
-          margin-bottom: 24px;
+        .infoBlock {
+          margin-bottom: 22px;
         }
 
-        .contact-form {
-          display: grid;
-          grid-template-columns: 1fr 1fr auto;
-          gap: 14px;
+        .infoBlock h4 {
+          margin-bottom: 8px;
+          color: #4c2f1d;
         }
 
-        .contact-form input {
-          width: 100%;
-          padding: 15px 16px;
-          border-radius: 14px;
-          border: 1px solid rgba(255, 255, 255, 0.12);
-          background: rgba(255, 255, 255, 0.06);
+        .infoBlock p {
+          margin: 6px 0;
+          color: #6d5848;
+          line-height: 1.6;
+        }
+
+        .quoteCard {
+          display: flex;
+          align-items: center;
+          background:
+            linear-gradient(rgba(56, 32, 18, 0.72), rgba(56, 32, 18, 0.72)),
+            url("https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&fit=crop&w=1200&q=80")
+              center/cover no-repeat;
           color: white;
-          outline: none;
         }
 
-        .contact-form button {
-          padding: 15px 22px;
-          border: none;
-          border-radius: 14px;
-          background: linear-gradient(135deg, #d7a14a, #f1c97a);
-          color: #20120d;
+        .quoteCard .mini,
+        .quoteCard p {
+          color: #f1e5db;
+        }
+
+        .quoteCard h3 {
+          color: white;
+          font-size: 2rem;
+          line-height: 1.3;
+        }
+
+        .inlineBtn {
+          margin-top: 8px;
+        }
+
+        .footer {
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          padding: 24px 28px 40px;
+          max-width: 1250px;
+          margin: 0 auto;
+          color: #6d5848;
+        }
+
+        .footer a {
+          color: #4c2f1d;
           font-weight: 700;
-          cursor: pointer;
         }
 
-        @media (max-width: 980px) {
-          .hero,
-          .cards,
-          .menu-grid,
-          .gallery,
-          .stats,
-          .contact-form {
+        @media (max-width: 960px) {
+          .grid,
+          .visitGrid {
             grid-template-columns: 1fr;
           }
 
-          .hero-card img,
-          .gallery .large img,
-          .gallery .stack img {
-            min-height: 280px;
+          .hero {
+            min-height: auto;
+            padding: 60px 20px;
           }
 
-          .container {
-            padding: 24px 16px 60px;
+          .topbar {
+            padding: 16px 18px;
+          }
+
+          .intro,
+          .bestsellers,
+          .visit,
+          .footer {
+            padding-left: 18px;
+            padding-right: 18px;
           }
         }
       `}</style>
