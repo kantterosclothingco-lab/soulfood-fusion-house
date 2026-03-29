@@ -1,6 +1,12 @@
 import Head from "next/head";
 import Link from "next/link";
 
+const reviewLink =
+  "https://www.google.com/search?sca_esv=1578db8b805c577c&sxsrf=ANbL-n6D8nRjb_fNMoNfjrpx3FLWu0Z8RQ:1774762975084&si=AL3DRZEsmMGCryMMFSHJ3StBhOdZ2-6yYkXd_doETEE1OR-qOdn7PKGMS2CqhpWnURd-em_dI93f_FTD6soC0lZqrBmEJNFVQwA2NFk7OvIIk9SURLjnweEVxpWw3g382Vt6Dbyo107aDNHzg2-Zui6vlEAuE9PwwJmD-8wxId7WF1Ue61sAvWo%3D&q=SoulFood+Fusion+House+Cafe+%26+Restaurant+Reviews&sa=X&ved=2ahUKEwipysKls8STAxVMla8BHacLIl0Q0bkNegQIKBAH&biw=1358&bih=644&dpr=1";
+
+const mapLink =
+  "https://www.google.com/maps/search/?api=1&query=8+High+St,+Bendigo+VIC+3550,+Australia";
+
 const menuSections = [
   {
     title: "Steak & Grill",
@@ -317,13 +323,21 @@ export default function MenuPage() {
 
         <nav className="nav">
           <Link href="/">Home</Link>
-          <a href="#top" className="orderBtn">
-            🛒 Book / Order Now
+          <a href={mapLink} target="_blank" rel="noreferrer" className="menuBtn">
+            📍 Map
+          </a>
+          <a
+            href={reviewLink}
+            target="_blank"
+            rel="noreferrer"
+            className="orderBtn"
+          >
+            ⭐ Reviews
           </a>
         </nav>
       </header>
 
-      <main className="menuPage" id="top">
+      <main className="menuPage">
         <section className="menuHero">
           <div className="menuHeroOverlay" />
           <div className="menuHeroContent">
@@ -419,12 +433,23 @@ export default function MenuPage() {
           flex-wrap: wrap;
         }
 
+        .menuBtn,
         .orderBtn {
           padding: 11px 18px;
           border-radius: 999px;
+          font-weight: 700;
+          display: inline-block;
+        }
+
+        .menuBtn {
+          background: rgba(255, 255, 255, 0.1);
+          border: 1px solid rgba(255, 255, 255, 0.18);
+          color: #fff4e8 !important;
+        }
+
+        .orderBtn {
           background: linear-gradient(135deg, #c79356, #e7c78a);
           color: #1e120d !important;
-          font-weight: 700;
         }
 
         .menuPage {
