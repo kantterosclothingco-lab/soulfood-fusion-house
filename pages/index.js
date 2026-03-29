@@ -1,52 +1,60 @@
 import Head from "next/head";
 import Link from "next/link";
+import { useState } from "react";
 
 const bestSellers = [
   {
     name: "Filo BBQ Ribs",
     price: "$29.9",
     image: "/images/menu/filo-bbq-ribs.jpg",
-    description:
-      "Filo style pork ribs barbecue served with your choice of sides.",
+    description: "Filo style pork ribs barbecue served with your choice of sides.",
   },
   {
     name: "Grilled Chicken Inasal",
     price: "$24.9",
     image: "/images/menu/grilled-chicken-inasal.jpg",
-    description:
-      "Char-grilled chicken marinated in Soulfood special sauce.",
+    description: "Char-grilled chicken marinated in Soulfood special sauce.",
   },
   {
     name: "Soulfood Burger",
     price: "$26",
     image: "/images/menu/soulfood-burger.jpg",
-    description:
-      "Angus beef, melted cheese, bacon, pineapple, and smashed avo.",
+    description: "Angus beef, melted cheese, bacon, pineapple, and smashed avo.",
   },
   {
     name: "Crispy Pork Belly",
     price: "$26.00",
     image: "/images/menu/crispy-pork-belly-bagnet.jpg",
-    description:
-      "Crispy, savory, and full of flavor.",
+    description: "Crispy, savory, and full of flavor.",
   },
   {
     name: "Beef Tapa (Tapsilog)",
     price: "$28.60",
     image: "/images/menu/beef-tapa-tapsilog.jpg",
-    description:
-      "A house favorite made for hearty appetites.",
+    description: "A house favorite made for hearty appetites.",
   },
   {
     name: "Asian Fried Calamari",
     price: "$17.60",
     image: "/images/menu/asian-fried-calamari.jpg",
-    description:
-      "Crispy calamari with salad, mayo, and signature vinegar dip.",
+    description: "Crispy calamari with salad, mayo, and signature vinegar dip.",
   },
 ];
 
+const mapLink =
+  "https://www.google.com/maps/search/?api=1&query=8+High+St,+Bendigo+VIC+3550,+Australia";
+
+const reviewLink =
+  "https://www.google.com/search?sca_esv=1578db8b805c577c&sxsrf=ANbL-n6D8nRjb_fNMoNfjrpx3FLWu0Z8RQ:1774762975084&si=AL3DRZEsmMGCryMMFSHJ3StBhOdZ2-6yYkXd_doETEE1OR-qOdn7PKGMS2CqhpWnURd-em_dI93f_FTD6soC0lZqrBmEJNFVQwA2NFk7OvIIk9SURLjnweEVxpWw3g382Vt6Dbyo107aDNHzg2-Zui6vlEAuE9PwwJmD-8wxId7WF1Ue61sAvWo%3D&q=SoulFood+Fusion+House+Cafe+%26+Restaurant+Reviews&sa=X&ved=2ahUKEwipysKls8STAxVMla8BHacLIl0Q0bkNegQIKBAH&biw=1358&bih=644&dpr=1";
+
 export default function Home() {
+  const [submitted, setSubmitted] = useState(false);
+
+  function handleSubmit(e) {
+    e.preventDefault();
+    setSubmitted(true);
+  }
+
   return (
     <>
       <Head>
@@ -78,7 +86,10 @@ export default function Home() {
           <Link href="/menu" className="menuBtn">
             ☰ Menu
           </Link>
-          <a href="#visit" className="orderBtn">
+          <Link href="/catering" className="cateringBtn">
+            🍽 Catering
+          </Link>
+          <a href="#booking" className="orderBtn">
             🛒 Book / Order Now
           </a>
         </nav>
@@ -92,15 +103,34 @@ export default function Home() {
             <h1>WHERE GOOD FOOD MEETS YOUR SOULFUL CRAVINGS!</h1>
             <p className="heroText">
               Good food, warm service, and bold flavors made to share. Explore
-              our best sellers and discover the full menu.
+              our best sellers, check our location, and browse the full menu.
             </p>
 
             <div className="heroActions">
               <Link href="/menu" className="primaryBtn">
                 View Full Menu
               </Link>
-              <a href="#visit" className="secondaryBtn">
-                📍 Get Directions
+
+              <Link href="/catering" className="cateringBtn">
+                🍽 Catering Services
+              </Link>
+
+              <a
+                href={mapLink}
+                target="_blank"
+                rel="noreferrer"
+                className="secondaryBtn"
+              >
+                📍 Location
+              </a>
+
+              <a
+                href={reviewLink}
+                target="_blank"
+                rel="noreferrer"
+                className="reviewBtn"
+              >
+                ⭐ Reviews
               </a>
             </div>
           </div>
@@ -173,6 +203,27 @@ export default function Home() {
           </div>
         </section>
 
+        <section className="cateringPreviewSection">
+          <div className="cateringPreviewCard">
+            <div>
+              <p className="sectionLabel">Catering Services</p>
+              <h2>Planning a party, event, or office meal?</h2>
+              <p>
+                We offer catering for birthdays, family gatherings, business
+                events, and special occasions. View our catering page to see
+                service details, sample offers, and portfolio sections.
+              </p>
+              <Link href="/catering" className="cateringBtn largeBtn">
+                🍽 View Catering Services
+              </Link>
+            </div>
+            <div className="cateringIconBox">
+              <div className="bigIcon">🍽</div>
+              <p>Food trays, event setup, and group catering options</p>
+            </div>
+          </div>
+        </section>
+
         <section className="visitSection" id="visit">
           <div className="visitGrid">
             <div className="visitCard">
@@ -181,14 +232,27 @@ export default function Home() {
 
               <div className="infoGroup">
                 <h4>Address</h4>
-                <p>8 High Street</p>
-                <p>Bendigo, VIC 3550</p>
+                <p>8 High St, Bendigo VIC 3550, Australia</p>
+                <a
+                  href={mapLink}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="iconLink"
+                >
+                  📍 Open in Google Maps
+                </a>
               </div>
 
               <div className="infoGroup">
                 <h4>Contact</h4>
-                <p>03 5441 2752</p>
-                <p>soulfoodfusionhouse@gmail.com</p>
+                <p>
+                  <a href="tel:+61403036727">+61 403 036 727</a>
+                </p>
+                <p>
+                  <a href="mailto:soulfoodfusionhouse@gmail.com">
+                    soulfoodfusionhouse@gmail.com
+                  </a>
+                </p>
               </div>
 
               <div className="infoGroup">
@@ -202,7 +266,7 @@ export default function Home() {
 
               <div className="actionRow">
                 <a
-                  href="https://maps.google.com/?q=8+High+Street+Bendigo+VIC+3550"
+                  href={mapLink}
                   target="_blank"
                   rel="noreferrer"
                   className="secondaryBtn inlineBtn"
@@ -210,8 +274,17 @@ export default function Home() {
                   📍 Get Directions
                 </a>
 
-                <a href="tel:0354412752" className="orderBtn inlineBtn">
-                  📞 Book / Order Now
+                <a href="tel:+61403036727" className="orderBtn inlineBtn">
+                  📞 Call Now
+                </a>
+
+                <a
+                  href={reviewLink}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="reviewBtn inlineBtn"
+                >
+                  ⭐ Leave a Review
                 </a>
               </div>
             </div>
@@ -222,14 +295,74 @@ export default function Home() {
                 <p className="sectionLabel light">Soulfood Fusion House</p>
                 <h3>From shared meals to comfort favorites, there’s something here for everyone.</h3>
                 <p>
-                  Browse the menu, check opening hours, and find your next
-                  favorite dish.
+                  Browse the menu, check opening hours, get directions, and
+                  leave a review after your visit.
                 </p>
-                <Link href="/menu" className="goldBtn">
-                  Open Full Menu
-                </Link>
+                <div className="quoteButtons">
+                  <Link href="/menu" className="goldBtn">
+                    Open Full Menu
+                  </Link>
+                  <Link href="/catering" className="cateringBtn lightCateringBtn">
+                    🍽 Catering
+                  </Link>
+                  <a
+                    href={reviewLink}
+                    target="_blank"
+                    rel="noreferrer"
+                    className="reviewBtn lightBtn"
+                  >
+                    ⭐ Reviews
+                  </a>
+                </div>
               </div>
             </div>
+          </div>
+        </section>
+
+        <section className="bookingSection" id="booking">
+          <div className="bookingCard">
+            <div className="sectionIntro center small">
+              <p className="sectionLabel">Book / Order</p>
+              <h2>Send your booking or order request</h2>
+              <p>
+                Fill in the form below. After submitting, the page will show a
+                thank you message and a review button.
+              </p>
+            </div>
+
+            {!submitted ? (
+              <form className="bookingForm" onSubmit={handleSubmit}>
+                <input type="text" placeholder="Full name" required />
+                <input type="tel" placeholder="Phone number" required />
+                <input type="text" placeholder="Order or booking details" required />
+                <input type="date" required />
+                <button type="submit" className="orderBtn formBtn">
+                  ✅ Submit Booking / Order
+                </button>
+              </form>
+            ) : (
+              <div className="thankYouBox">
+                <div className="thankYouIcon">✅</div>
+                <h3>Thank you for booking an order</h3>
+                <p>
+                  We’ve received your request. You can also leave a review using
+                  the button below.
+                </p>
+                <div className="thankYouActions">
+                  <a
+                    href={reviewLink}
+                    target="_blank"
+                    rel="noreferrer"
+                    className="reviewBtn"
+                  >
+                    ⭐ Leave a Review
+                  </a>
+                  <a href="tel:+61403036727" className="secondaryBtn">
+                    📞 Call Restaurant
+                  </a>
+                </div>
+              </div>
+            )}
           </div>
         </section>
       </main>
@@ -239,7 +372,12 @@ export default function Home() {
           <strong>Soulfood Fusion House</strong>
           <p>Where good food meets your soulful cravings.</p>
         </div>
-        <Link href="/menu">Menu</Link>
+        <div className="footerLinks">
+          <Link href="/menu">Menu</Link>
+          <Link href="/catering">🍽 Catering</Link>
+          <a href={mapLink} target="_blank" rel="noreferrer">📍 Map</a>
+          <a href={reviewLink} target="_blank" rel="noreferrer">⭐ Reviews</a>
+        </div>
       </footer>
 
       <style jsx global>{`
@@ -330,12 +468,30 @@ export default function Home() {
           font-weight: 700;
         }
 
-        .orderBtn {
+        .orderBtn,
+        .reviewBtn,
+        .cateringBtn {
           padding: 11px 18px;
           border-radius: 999px;
+          font-weight: 700;
+          display: inline-block;
+        }
+
+        .orderBtn {
           background: linear-gradient(135deg, #c79356, #e7c78a);
           color: #1e120d !important;
-          font-weight: 700;
+        }
+
+        .reviewBtn {
+          background: #3a2a20;
+          color: #fff4e8 !important;
+          border: 1px solid rgba(255, 255, 255, 0.08);
+        }
+
+        .cateringBtn {
+          background: linear-gradient(135deg, #8a1f1f, #c24b3f);
+          color: #fff9f4 !important;
+          box-shadow: 0 10px 28px rgba(138, 31, 31, 0.22);
         }
 
         .hero {
@@ -393,10 +549,16 @@ export default function Home() {
           max-width: 650px;
         }
 
-        .heroActions {
+        .heroActions,
+        .quoteButtons,
+        .actionRow,
+        .thankYouActions {
           display: flex;
-          gap: 14px;
+          gap: 12px;
           flex-wrap: wrap;
+        }
+
+        .heroActions {
           margin-top: 30px;
         }
 
@@ -426,13 +588,17 @@ export default function Home() {
         .goldBtn:hover,
         .secondaryBtn:hover,
         .menuBtn:hover,
-        .orderBtn:hover {
+        .orderBtn:hover,
+        .reviewBtn:hover,
+        .cateringBtn:hover {
           transform: translateY(-2px);
         }
 
         .aboutSection,
         .bestSellerSection,
-        .visitSection {
+        .visitSection,
+        .bookingSection,
+        .cateringPreviewSection {
           max-width: 1280px;
           margin: 0 auto;
           padding: 82px 28px;
@@ -447,6 +613,10 @@ export default function Home() {
           text-align: center;
           margin-left: auto;
           margin-right: auto;
+        }
+
+        .sectionIntro.small {
+          max-width: 720px;
         }
 
         .sectionIntro h2 {
@@ -467,7 +637,8 @@ export default function Home() {
           gap: 22px;
         }
 
-        .featureCard {
+        .featureCard,
+        .bookingCard {
           background: linear-gradient(180deg, #ffffff, #f8efe3);
           border: 1px solid #ead7bf;
           border-radius: 24px;
@@ -555,6 +726,48 @@ export default function Home() {
           margin-top: 36px;
         }
 
+        .cateringPreviewCard {
+          display: grid;
+          grid-template-columns: 1.2fr 0.8fr;
+          gap: 24px;
+          background: linear-gradient(135deg, #fff6ef, #f5e3d4);
+          border: 1px solid #ead7bf;
+          border-radius: 28px;
+          padding: 32px;
+          box-shadow: 0 18px 42px rgba(53, 31, 18, 0.08);
+        }
+
+        .cateringPreviewCard h2 {
+          margin: 12px 0;
+          color: #2e1d15;
+        }
+
+        .cateringPreviewCard p {
+          color: #6f5a49;
+          line-height: 1.8;
+        }
+
+        .cateringIconBox {
+          display: flex;
+          flex-direction: column;
+          justify-content: center;
+          align-items: center;
+          text-align: center;
+          background: linear-gradient(135deg, #7f1d1d, #b94135);
+          color: white;
+          border-radius: 24px;
+          padding: 28px;
+        }
+
+        .bigIcon {
+          font-size: 4rem;
+          margin-bottom: 12px;
+        }
+
+        .largeBtn {
+          margin-top: 10px;
+        }
+
         .visitGrid {
           display: grid;
           grid-template-columns: 1.05fr 0.95fr;
@@ -583,21 +796,18 @@ export default function Home() {
           color: #3a2418;
         }
 
-        .infoGroup p {
+        .infoGroup p,
+        .infoGroup a {
           margin: 6px 0;
           color: #6f5a49;
           line-height: 1.65;
         }
 
-        .actionRow {
-          display: flex;
-          flex-wrap: wrap;
-          gap: 12px;
-          margin-top: 20px;
-        }
-
-        .inlineBtn {
-          margin-top: 0;
+        .iconLink {
+          display: inline-block;
+          margin-top: 8px;
+          font-weight: 700;
+          color: #3a2418 !important;
         }
 
         .quotePanel {
@@ -643,6 +853,64 @@ export default function Home() {
           max-width: 520px;
         }
 
+        .lightBtn,
+        .lightCateringBtn {
+          border: 1px solid rgba(255, 255, 255, 0.18);
+        }
+
+        .lightBtn {
+          background: rgba(255, 255, 255, 0.14);
+          color: #fff4e8 !important;
+        }
+
+        .lightCateringBtn {
+          background: rgba(185, 65, 53, 0.82);
+          color: #fff8f1 !important;
+        }
+
+        .bookingForm {
+          display: grid;
+          grid-template-columns: repeat(2, 1fr);
+          gap: 16px;
+        }
+
+        .bookingForm input {
+          width: 100%;
+          padding: 16px 18px;
+          border-radius: 16px;
+          border: 1px solid #dcc7af;
+          background: #fff;
+          font-size: 1rem;
+        }
+
+        .formBtn {
+          border: none;
+          cursor: pointer;
+        }
+
+        .thankYouBox {
+          text-align: center;
+          padding: 20px 10px 10px;
+        }
+
+        .thankYouIcon {
+          font-size: 3rem;
+          margin-bottom: 10px;
+        }
+
+        .thankYouBox h3 {
+          margin: 0 0 10px;
+          color: #2e1d15;
+          font-size: 1.8rem;
+        }
+
+        .thankYouBox p {
+          color: #6f5a49;
+          line-height: 1.75;
+          max-width: 620px;
+          margin: 0 auto 20px;
+        }
+
         .footer {
           max-width: 1280px;
           margin: 0 auto;
@@ -666,6 +934,12 @@ export default function Home() {
           margin: 0;
         }
 
+        .footerLinks {
+          display: flex;
+          gap: 14px;
+          flex-wrap: wrap;
+        }
+
         .footer a {
           color: #3a2418;
           font-weight: 700;
@@ -674,7 +948,9 @@ export default function Home() {
         @media (max-width: 980px) {
           .featureGrid,
           .dishGrid,
-          .visitGrid {
+          .visitGrid,
+          .bookingForm,
+          .cateringPreviewCard {
             grid-template-columns: 1fr;
           }
 
@@ -690,6 +966,8 @@ export default function Home() {
           .aboutSection,
           .bestSellerSection,
           .visitSection,
+          .bookingSection,
+          .cateringPreviewSection,
           .footer {
             padding-left: 18px;
             padding-right: 18px;
