@@ -64,6 +64,8 @@ export default function Home() {
           name="description"
           content="Soulfood Fusion House - Where good food meets your soulful cravings."
         />
+        <link rel="icon" href="/favicon.png" />
+        <link rel="apple-touch-icon" href="/favicon.png" />
       </Head>
 
       <header className="topbar">
