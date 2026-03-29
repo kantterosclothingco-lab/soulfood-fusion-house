@@ -6,37 +6,43 @@ const bestSellers = [
     name: "Filo BBQ Ribs",
     price: "$29.9",
     image: "/images/menu/filo-bbq-ribs.jpg",
-    description: "Filo style pork ribs barbecue served with rich smoky flavor and a premium plated finish.",
+    description:
+      "Filo style pork ribs barbecue served with your choice of sides.",
   },
   {
     name: "Grilled Chicken Inasal",
     price: "$24.9",
     image: "/images/menu/grilled-chicken-inasal.jpg",
-    description: "Char-grilled chicken marinated in signature Soulfood flavor and served with your choice of sides.",
+    description:
+      "Char-grilled chicken marinated in Soulfood special sauce.",
   },
   {
     name: "Soulfood Burger",
     price: "$26",
     image: "/images/menu/soulfood-burger.jpg",
-    description: "Grilled Angus beef with melted cheese, bacon, pineapple, and smashed avo.",
+    description:
+      "Angus beef, melted cheese, bacon, pineapple, and smashed avo.",
   },
   {
     name: "Crispy Pork Belly",
     price: "$26.00",
     image: "/images/menu/crispy-pork-belly-bagnet.jpg",
-    description: "Crunchy, savory, and deeply satisfying with the signature Soulfood touch.",
+    description:
+      "Crispy, savory, and full of flavor.",
   },
   {
     name: "Beef Tapa (Tapsilog)",
     price: "$28.60",
     image: "/images/menu/beef-tapa-tapsilog.jpg",
-    description: "A comforting favorite with rich flavor, perfectly suited for soulful cravings.",
+    description:
+      "A house favorite made for hearty appetites.",
   },
   {
     name: "Asian Fried Calamari",
     price: "$17.60",
     image: "/images/menu/asian-fried-calamari.jpg",
-    description: "Salt and pepper breaded calamari served with salad, yosu mayo, and signature vinegar dip.",
+    description:
+      "Crispy calamari with salad, mayo, and signature vinegar dip.",
   },
 ];
 
@@ -48,13 +54,17 @@ export default function Home() {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <meta
           name="description"
-          content="Soulfood Fusion House — Where good food meets your soulful cravings."
+          content="Soulfood Fusion House - Where good food meets your soulful cravings."
         />
       </Head>
 
       <header className="topbar">
         <div className="brandWrap">
-          <span className="brandMark">SF</span>
+          <img
+            src="/images/logo/logo.png"
+            alt="Soulfood Fusion House Logo"
+            className="logo"
+          />
           <div>
             <h2>Soulfood Fusion House</h2>
             <p>Bendigo, VIC</p>
@@ -68,6 +78,9 @@ export default function Home() {
           <Link href="/menu" className="menuBtn">
             ☰ Menu
           </Link>
+          <a href="#visit" className="orderBtn">
+            🛒 Book / Order Now
+          </a>
         </nav>
       </header>
 
@@ -75,20 +88,19 @@ export default function Home() {
         <section className="hero">
           <div className="heroOverlay" />
           <div className="heroContent">
-            <p className="eyebrow">Luxury Filipino Fusion Dining</p>
+            <p className="eyebrow">Soulfood Fusion House</p>
             <h1>WHERE GOOD FOOD MEETS YOUR SOULFUL CRAVINGS!</h1>
             <p className="heroText">
-              Welcome to Soulfood Fusion House — a warm, elevated food experience
-              where bold Filipino flavors, premium comfort food, and modern
-              hospitality come together beautifully.
+              Good food, warm service, and bold flavors made to share. Explore
+              our best sellers and discover the full menu.
             </p>
 
             <div className="heroActions">
               <Link href="/menu" className="primaryBtn">
-                Explore Full Menu
+                View Full Menu
               </Link>
               <a href="#visit" className="secondaryBtn">
-                Visit Us
+                📍 Get Directions
               </a>
             </div>
           </div>
@@ -97,34 +109,34 @@ export default function Home() {
         <section className="aboutSection" id="about">
           <div className="sectionIntro">
             <p className="sectionLabel">About Us</p>
-            <h2>A richer dining experience with heart, comfort, and bold flavor</h2>
+            <h2>Food that feels familiar, exciting, and satisfying</h2>
             <p>
-              Soulfood Fusion House is designed for people who love flavorful food,
-              warm service, and memorable meals. This luxury-style homepage puts your
-              best dishes first while creating a strong modern restaurant identity.
+              Soulfood Fusion House brings together Filipino favorites,
+              comforting mains, share plates, and fresh sides in a warm and
+              welcoming dining experience.
             </p>
           </div>
 
           <div className="featureGrid">
             <article className="featureCard">
-              <h3>Premium Presentation</h3>
+              <h3>Freshly Prepared</h3>
               <p>
-                A refined visual style inspired by elegant food brands, made to help
-                your restaurant feel modern and polished.
+                Made with care and packed with flavor, from grilled dishes to
+                family-style favorites.
               </p>
             </article>
             <article className="featureCard">
               <h3>Best Sellers First</h3>
               <p>
-                The homepage highlights your most popular dishes, then leads guests
-                directly into the full menu experience.
+                The homepage highlights the dishes people love most before
+                guiding them to the full menu.
               </p>
             </article>
             <article className="featureCard">
-              <h3>Ready for Growth</h3>
+              <h3>Easy To Explore</h3>
               <p>
-                This layout can later support online ordering, table reservations,
-                AI chat, promotions, and a full smart restaurant system.
+                Guests can quickly browse food, check your details, and go to
+                the menu page in one click.
               </p>
             </article>
           </div>
@@ -133,10 +145,8 @@ export default function Home() {
         <section className="bestSellerSection" id="bestsellers">
           <div className="sectionIntro center">
             <p className="sectionLabel">Best Sellers</p>
-            <h2>Signature dishes guests keep coming back for</h2>
-            <p>
-              A curated first look at the menu — rich, flavorful, and made to impress.
-            </p>
+            <h2>Popular picks from the menu</h2>
+            <p>Start with the dishes customers keep coming back for.</p>
           </div>
 
           <div className="dishGrid">
@@ -158,7 +168,7 @@ export default function Home() {
 
           <div className="ctaCenter">
             <Link href="/menu" className="primaryBtn">
-              See Complete Menu
+              See Full Menu
             </Link>
           </div>
         </section>
@@ -167,7 +177,7 @@ export default function Home() {
           <div className="visitGrid">
             <div className="visitCard">
               <p className="sectionLabel">Location & Hours</p>
-              <h2>Visit Soulfood Fusion House in Bendigo</h2>
+              <h2>Visit us in Bendigo</h2>
 
               <div className="infoGroup">
                 <h4>Address</h4>
@@ -190,24 +200,30 @@ export default function Home() {
                 <p><strong>Sunday</strong> — 11:30pm - 5:00pm</p>
               </div>
 
-              <a
-                href="https://maps.google.com/?q=8+High+Street+Bendigo+VIC+3550"
-                target="_blank"
-                rel="noreferrer"
-                className="secondaryBtn inlineBtn"
-              >
-                Get Directions
-              </a>
+              <div className="actionRow">
+                <a
+                  href="https://maps.google.com/?q=8+High+Street+Bendigo+VIC+3550"
+                  target="_blank"
+                  rel="noreferrer"
+                  className="secondaryBtn inlineBtn"
+                >
+                  📍 Get Directions
+                </a>
+
+                <a href="tel:0354412752" className="orderBtn inlineBtn">
+                  📞 Book / Order Now
+                </a>
+              </div>
             </div>
 
             <div className="quotePanel">
               <div className="quoteOverlay" />
               <div className="quoteContent">
-                <p className="sectionLabel light">Soulful Dining</p>
-                <h3>Designed for cravings, family dining, and memorable comfort food moments.</h3>
+                <p className="sectionLabel light">Soulfood Fusion House</p>
+                <h3>From shared meals to comfort favorites, there’s something here for everyone.</h3>
                 <p>
-                  Your homepage now feels more premium and restaurant-focused, while
-                  the full menu page keeps everything easy to explore.
+                  Browse the menu, check opening hours, and find your next
+                  favorite dish.
                 </p>
                 <Link href="/menu" className="goldBtn">
                   Open Full Menu
@@ -272,15 +288,13 @@ export default function Home() {
           gap: 14px;
         }
 
-        .brandMark {
-          width: 46px;
-          height: 46px;
-          border-radius: 50%;
-          display: grid;
-          place-items: center;
-          background: linear-gradient(135deg, #c79356, #f1d099);
-          color: #1d120d;
-          font-weight: 700;
+        .logo {
+          width: 58px;
+          height: 58px;
+          object-fit: contain;
+          border-radius: 14px;
+          background: white;
+          padding: 4px;
         }
 
         .brandWrap h2 {
@@ -298,7 +312,7 @@ export default function Home() {
         .nav {
           display: flex;
           align-items: center;
-          gap: 16px;
+          gap: 14px;
           flex-wrap: wrap;
         }
 
@@ -308,6 +322,15 @@ export default function Home() {
         }
 
         .menuBtn {
+          padding: 11px 18px;
+          border-radius: 999px;
+          background: rgba(255, 255, 255, 0.1);
+          border: 1px solid rgba(255, 255, 255, 0.18);
+          color: #fff4e8 !important;
+          font-weight: 700;
+        }
+
+        .orderBtn {
           padding: 11px 18px;
           border-radius: 999px;
           background: linear-gradient(135deg, #c79356, #e7c78a);
@@ -321,16 +344,19 @@ export default function Home() {
           display: flex;
           align-items: center;
           padding: 90px 28px;
-          background:
-            url("/images/menu/filo-bbq-ribs.jpg") center/cover no-repeat;
+          background: url("/images/menu/filo-bbq-ribs.jpg") center/cover no-repeat;
           overflow: hidden;
         }
 
         .heroOverlay {
           position: absolute;
           inset: 0;
-          background:
-            linear-gradient(90deg, rgba(17, 10, 8, 0.86) 0%, rgba(17, 10, 8, 0.62) 45%, rgba(17, 10, 8, 0.35) 100%);
+          background: linear-gradient(
+            90deg,
+            rgba(17, 10, 8, 0.84) 0%,
+            rgba(17, 10, 8, 0.58) 45%,
+            rgba(17, 10, 8, 0.3) 100%
+          );
         }
 
         .heroContent {
@@ -399,7 +425,8 @@ export default function Home() {
         .primaryBtn:hover,
         .goldBtn:hover,
         .secondaryBtn:hover,
-        .menuBtn:hover {
+        .menuBtn:hover,
+        .orderBtn:hover {
           transform: translateY(-2px);
         }
 
@@ -562,8 +589,15 @@ export default function Home() {
           line-height: 1.65;
         }
 
-        .inlineBtn {
+        .actionRow {
+          display: flex;
+          flex-wrap: wrap;
+          gap: 12px;
           margin-top: 20px;
+        }
+
+        .inlineBtn {
+          margin-top: 0;
         }
 
         .quotePanel {
@@ -571,15 +605,19 @@ export default function Home() {
           min-height: 100%;
           border-radius: 26px;
           overflow: hidden;
-          background:
-            url("/images/menu/grilled-chicken-inasal.jpg") center/cover no-repeat;
+          background: url("/images/menu/grilled-chicken-inasal.jpg") center/cover
+            no-repeat;
           box-shadow: 0 18px 42px rgba(53, 31, 18, 0.08);
         }
 
         .quoteOverlay {
           position: absolute;
           inset: 0;
-          background: linear-gradient(180deg, rgba(18, 10, 8, 0.48), rgba(18, 10, 8, 0.8));
+          background: linear-gradient(
+            180deg,
+            rgba(18, 10, 8, 0.48),
+            rgba(18, 10, 8, 0.8)
+          );
         }
 
         .quoteContent {
