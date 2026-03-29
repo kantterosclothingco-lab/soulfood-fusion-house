@@ -37,7 +37,7 @@ const menuSections = [
         name: "Sizzling Pork Sisig",
         price: "$28",
         image: "/images/menu/sizzling-pork-sisig.jpg",
-        description: "A sizzling Filipino favorite with bold, savory flavor.",
+        description: "A sizzling Filipino favorite with bold flavor.",
       },
       {
         name: "Sizzling Tofu",
@@ -49,7 +49,7 @@ const menuSections = [
         name: "Sizzling Calamari",
         price: "$26",
         image: "/images/menu/sizzling-calamari.jpg",
-        description: "Tender calamari served sizzling hot with rich flavor.",
+        description: "Tender calamari served sizzling hot.",
       },
       {
         name: "Soulfood Burger",
@@ -85,25 +85,25 @@ const menuSections = [
         name: "Lomi Noodle Soup",
         price: "$28",
         image: "/images/menu/lomi-noodle-soup.jpg",
-        description: "Comforting noodle soup with a rich and satisfying broth.",
+        description: "Comforting noodle soup with a rich broth.",
       },
       {
         name: "Pork Sinigang",
         price: "$34",
         image: "/images/menu/pork-sinigang.jpg",
-        description: "Classic sour Filipino soup with pork and comforting depth.",
+        description: "Classic sour Filipino soup with pork.",
       },
       {
         name: "Beef Nilaga",
         price: "$36",
         image: "/images/menu/beef-nilaga.jpg",
-        description: "A hearty beef soup perfect for warm comfort dining.",
+        description: "A hearty beef soup perfect for comfort meals.",
       },
       {
         name: "Sinigang Barramundi Fish",
         price: "$36",
         image: "/images/menu/sinigang-barramundi-fish.jpg",
-        description: "Barramundi in a sour soup base with vibrant Filipino flavor.",
+        description: "Barramundi in a sour soup base with bright flavor.",
       },
     ],
   },
@@ -114,7 +114,7 @@ const menuSections = [
         name: "Chopseuy / Mix Vegetables (VG) (GF)",
         price: "$23",
         image: "/images/menu/chopseuy-mix-vegetables.jpg",
-        description: "Fresh mixed vegetables cooked in a flavorful savory style.",
+        description: "Fresh mixed vegetables cooked in a savory style.",
       },
       {
         name: "Pakbet",
@@ -138,7 +138,7 @@ const menuSections = [
         name: "Asian Fried Calamari",
         price: "$17.60",
         image: "/images/menu/asian-fried-calamari.jpg",
-        description: "Crispy calamari with salad, yosu mayo, and signature vinegar dip.",
+        description: "Crispy calamari with salad, mayo, and signature vinegar dip.",
       },
       {
         name: "Pork Spring Roll (Shang-hai)",
@@ -161,7 +161,7 @@ const menuSections = [
         name: "Steam Rice",
         price: "$7",
         image: "/images/menu/steam-rice.jpg",
-        description: "Simple steamed rice, perfect with mains and grill dishes.",
+        description: "Simple steamed rice for any meal.",
       },
       {
         name: "Young Chow Fried Rice (Family Share)",
@@ -173,7 +173,7 @@ const menuSections = [
         name: "Java Rice",
         price: "$9",
         image: "/images/menu/java-rice.jpg",
-        description: "A signature side with deeper seasoned flavor.",
+        description: "A seasoned side with bold flavor.",
       },
       {
         name: "Garlic Rice",
@@ -191,7 +191,7 @@ const menuSections = [
         name: "Steam Vegetables",
         price: "$15",
         image: "/images/menu/steam-vegetables.jpg",
-        description: "A lighter side option with fresh seasonal vegetables.",
+        description: "A lighter side with fresh vegetables.",
       },
     ],
   },
@@ -202,7 +202,7 @@ const menuSections = [
         name: "Beef Tapa Salad",
         price: "$24.19",
         image: "/images/menu/beef-tapa-salad.jpg",
-        description: "A lighter but flavorful tapa option served as a salad.",
+        description: "A lighter tapa option served as a salad.",
       },
       {
         name: "Prawn & Avo Salad",
@@ -214,19 +214,19 @@ const menuSections = [
         name: "Crispy Pork Belly (Bagnet)",
         price: "$26.00",
         image: "/images/menu/crispy-pork-belly-bagnet.jpg",
-        description: "Golden crispy pork belly with rich savory flavor.",
+        description: "Golden crispy pork belly with rich flavor.",
       },
       {
         name: "Chicken Adobo w/ Egg",
         price: "$28.60",
         image: "/images/menu/chicken-adobo-egg.jpg",
-        description: "Classic adobo served with egg for added richness.",
+        description: "Classic adobo served with egg.",
       },
       {
         name: "Beef Tapa (Tapsilog)",
         price: "$28.60",
         image: "/images/menu/beef-tapa-tapsilog.jpg",
-        description: "A soulful classic with bold beef flavor and comfort.",
+        description: "A house favorite with bold beef flavor.",
       },
       {
         name: "Crispy Pata Family Size",
@@ -238,13 +238,13 @@ const menuSections = [
         name: "Beef Brisket Kare-kare (Share)",
         price: "$34.0",
         image: "/images/menu/beef-brisket-kare-kare.jpg",
-        description: "Beef brisket in a rich and comforting kare-kare style.",
+        description: "Beef brisket in a rich kare-kare style.",
       },
       {
         name: "Creamy Barra Fish",
         price: "$26",
         image: "/images/menu/creamy-barra-fish.jpg",
-        description: "Barramundi with a creamy finish and savory flavor.",
+        description: "Barramundi with a creamy savory finish.",
       },
       {
         name: "Crispy Fried Tilapia (Whole Fish)",
@@ -262,7 +262,7 @@ const menuSections = [
         name: "Dinuguan sa Gata",
         price: "$25.0",
         image: "/images/menu/dinuguan-sa-gata.jpg",
-        description: "A rich house specialty with a deep savory character.",
+        description: "A rich house specialty with deep savory flavor.",
       },
     ],
   },
@@ -306,23 +306,32 @@ export default function MenuPage() {
       </Head>
 
       <header className="topbar">
-        <Link href="/" className="brand">
-          Soulfood Fusion House
+        <Link href="/" className="brand brandWithLogo">
+          <img
+            src="/images/logo/logo.png"
+            alt="Soulfood Fusion House Logo"
+            className="logo"
+          />
+          <span>Soulfood Fusion House</span>
         </Link>
+
         <nav className="nav">
           <Link href="/">Home</Link>
+          <a href="#top" className="orderBtn">
+            🛒 Book / Order Now
+          </a>
         </nav>
       </header>
 
-      <main className="menuPage">
+      <main className="menuPage" id="top">
         <section className="menuHero">
           <div className="menuHeroOverlay" />
           <div className="menuHeroContent">
             <p className="sectionLabel light">Full Menu</p>
-            <h1>Explore the full Soulfood Fusion House experience</h1>
+            <h1>Explore the full menu</h1>
             <p>
-              From steak and grill favorites to soups, vegetables, sides, and house
-              specialties — here’s your complete menu in a premium restaurant layout.
+              From steak and grill favorites to soups, vegetables, sides, and
+              house specials — everything is here in one place.
             </p>
           </div>
         </section>
@@ -378,11 +387,43 @@ export default function MenuPage() {
           background: rgba(17, 10, 8, 0.88);
           backdrop-filter: blur(10px);
           border-bottom: 1px solid rgba(212, 174, 112, 0.18);
+          flex-wrap: wrap;
+          gap: 14px;
         }
 
         .brand,
         .nav a {
           color: #fff4e8;
+          font-weight: 700;
+        }
+
+        .brandWithLogo {
+          display: flex;
+          align-items: center;
+          gap: 12px;
+        }
+
+        .logo {
+          width: 52px;
+          height: 52px;
+          object-fit: contain;
+          border-radius: 12px;
+          background: white;
+          padding: 4px;
+        }
+
+        .nav {
+          display: flex;
+          gap: 14px;
+          align-items: center;
+          flex-wrap: wrap;
+        }
+
+        .orderBtn {
+          padding: 11px 18px;
+          border-radius: 999px;
+          background: linear-gradient(135deg, #c79356, #e7c78a);
+          color: #1e120d !important;
           font-weight: 700;
         }
 
@@ -406,7 +447,11 @@ export default function MenuPage() {
         .menuHeroOverlay {
           position: absolute;
           inset: 0;
-          background: linear-gradient(180deg, rgba(18, 10, 8, 0.28), rgba(18, 10, 8, 0.82));
+          background: linear-gradient(
+            180deg,
+            rgba(18, 10, 8, 0.28),
+            rgba(18, 10, 8, 0.82)
+          );
         }
 
         .menuHeroContent {
