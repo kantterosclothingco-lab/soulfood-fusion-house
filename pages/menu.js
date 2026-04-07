@@ -87,189 +87,53 @@ const menuSections = [
   {
     title: "Soup",
     items: [
-      {
-        name: "Lomi Noodle Soup",
-        price: "$28",
-        image: "/images/menu/lomi-noodle-soup.jpg",
-        description: "Comforting noodle soup with a rich broth.",
-      },
-      {
-        name: "Pork Sinigang",
-        price: "$34",
-        image: "/images/menu/pork-sinigang.jpg",
-        description: "Classic sour Filipino soup with pork.",
-      },
-      {
-        name: "Beef Nilaga",
-        price: "$36",
-        image: "/images/menu/beef-nilaga.jpg",
-        description: "A hearty beef soup perfect for comfort meals.",
-      },
-      {
-        name: "Sinigang Barramundi Fish",
-        price: "$36",
-        image: "/images/menu/sinigang-barramundi-fish.jpg",
-        description: "Barramundi in a sour soup base with bright flavor.",
-      },
+      { name: "Lomi Noodle Soup", price: "$28", image: "/images/menu/lomi-noodle-soup.jpg", description: "Comforting noodle soup with a rich broth." },
+      { name: "Pork Sinigang", price: "$34", image: "/images/menu/pork-sinigang.jpg", description: "Classic sour Filipino soup with pork." },
+      { name: "Beef Nilaga", price: "$36", image: "/images/menu/beef-nilaga.jpg", description: "A hearty beef soup perfect for comfort meals." },
+      { name: "Sinigang Barramundi Fish", price: "$36", image: "/images/menu/sinigang-barramundi-fish.jpg", description: "Barramundi in a sour soup base with bright flavor." },
     ],
   },
   {
     title: "Vegetables",
     items: [
-      {
-        name: "Chopseuy / Mix Vegetables (VG) (GF)",
-        price: "$23",
-        image: "/images/menu/chopseuy-mix-vegetables.jpg",
-        description: "Fresh mixed vegetables cooked in a savory style.",
-      },
-      {
-        name: "Pakbet",
-        price: "$23",
-        image: "/images/menu/pakbet.jpg",
-        description: "Traditional vegetable dish. Add Meat $8, Chicken $7, Pork $8.",
-      },
-      {
-        name: "Stir Fry Noodles (VG) (GF)",
-        price: "$24",
-        image: "/images/menu/stir-fry-noodles.jpg",
-        description:
-          "Choice of rice noodle or Hokkien noodles. Add Chicken $7, Pork $8, Beef $8, Prawn $9.",
-      },
+      { name: "Chopseuy / Mix Vegetables (VG) (GF)", price: "$23", image: "/images/menu/chopseuy-mix-vegetables.jpg", description: "Fresh mixed vegetables cooked in a savory style." },
+      { name: "Pakbet", price: "$23", image: "/images/menu/pakbet.jpg", description: "Traditional vegetable dish. Add Meat $8, Chicken $7, Pork $8." },
+      { name: "Stir Fry Noodles (VG) (GF)", price: "$24", image: "/images/menu/stir-fry-noodles.jpg", description: "Choice of rice noodle or Hokkien noodles. Add Chicken $7, Pork $8, Beef $8, Prawn $9." },
     ],
   },
   {
     title: "Appetizer",
     items: [
-      {
-        name: "Asian Fried Calamari",
-        price: "$17.60",
-        image: "/images/menu/asian-fried-calamari.jpg",
-        description: "Crispy calamari with salad, mayo, and signature vinegar dip.",
-      },
-      {
-        name: "Pork Spring Roll (Shang-hai)",
-        price: "$14.00",
-        image: "/images/menu/pork-spring-roll.jpg",
-        description: "A crispy and flavorful appetizer favorite.",
-      },
-      {
-        name: "Boneless Crispy Chicken Bites",
-        price: "$16.00",
-        image: "/images/menu/boneless-crispy-chicken-bites.jpg",
-        description: "Crunchy bites of chicken with a satisfying finish.",
-      },
+      { name: "Asian Fried Calamari", price: "$17.60", image: "/images/menu/asian-fried-calamari.jpg", description: "Crispy calamari with salad, mayo, and signature vinegar dip." },
+      { name: "Pork Spring Roll (Shang-hai)", price: "$14.00", image: "/images/menu/pork-spring-roll.jpg", description: "A crispy and flavorful appetizer favorite." },
+      { name: "Boneless Crispy Chicken Bites", price: "$16.00", image: "/images/menu/boneless-crispy-chicken-bites.jpg", description: "Crunchy bites of chicken with a satisfying finish." },
     ],
   },
   {
     title: "Sides",
     items: [
-      {
-        name: "Steam Rice",
-        price: "$7",
-        image: "/images/menu/steam-rice.jpg",
-        description: "Simple steamed rice for any meal.",
-      },
-      {
-        name: "Young Chow Fried Rice (Family Share)",
-        price: "$19",
-        image: "/images/menu/young-chow-fried-rice.jpg",
-        description: "A rich fried rice option made for sharing.",
-      },
-      {
-        name: "Java Rice",
-        price: "$9",
-        image: "/images/menu/java-rice.jpg",
-        description: "A seasoned side with bold flavor.",
-      },
-      {
-        name: "Garlic Rice",
-        price: "$9",
-        image: "/images/menu/garlic-rice.jpg",
-        description: "Fragrant garlic rice to complete the meal.",
-      },
-      {
-        name: "Bowl Chips",
-        price: "$12",
-        image: "/images/menu/bowl-chips.jpg",
-        description: "A generous serving of crispy chips.",
-      },
-      {
-        name: "Steam Vegetables",
-        price: "$15",
-        image: "/images/menu/steam-vegetables.jpg",
-        description: "A lighter side with fresh vegetables.",
-      },
+      { name: "Steam Rice", price: "$7", image: "/images/menu/steam-rice.jpg", description: "Simple steamed rice for any meal." },
+      { name: "Young Chow Fried Rice (Family Share)", price: "$19", image: "/images/menu/young-chow-fried-rice.jpg", description: "A rich fried rice option made for sharing." },
+      { name: "Java Rice", price: "$9", image: "/images/menu/java-rice.jpg", description: "A seasoned side with bold flavor." },
+      { name: "Garlic Rice", price: "$9", image: "/images/menu/garlic-rice.jpg", description: "Fragrant garlic rice to complete the meal." },
+      { name: "Bowl Chips", price: "$12", image: "/images/menu/bowl-chips.jpg", description: "A generous serving of crispy chips." },
+      { name: "Steam Vegetables", price: "$15", image: "/images/menu/steam-vegetables.jpg", description: "A lighter side with fresh vegetables." },
     ],
   },
   {
     title: "House Specials",
     items: [
-      {
-        name: "Beef Tapa Salad",
-        price: "$24.19",
-        image: "/images/menu/beef-tapa-salad.jpg",
-        description: "A lighter tapa option served as a salad.",
-      },
-      {
-        name: "Prawn & Avo Salad",
-        price: "$22.50",
-        image: "/images/menu/prawn-avo-salad.jpg",
-        description: "Fresh salad with prawns and creamy avocado.",
-      },
-      {
-        name: "Crispy Pork Belly (Bagnet)",
-        price: "$26.00",
-        image: "/images/menu/crispy-pork-belly-bagnet.jpg",
-        description: "Golden crispy pork belly with rich flavor.",
-      },
-      {
-        name: "Chicken Adobo w/ Egg",
-        price: "$28.60",
-        image: "/images/menu/chicken-adobo-egg.jpg",
-        description: "Classic adobo served with egg.",
-      },
-      {
-        name: "Beef Tapa (Tapsilog)",
-        price: "$28.60",
-        image: "/images/menu/beef-tapa-tapsilog.jpg",
-        description: "A house favorite with bold beef flavor.",
-      },
-      {
-        name: "Crispy Pata Family Size",
-        price: "$39.0",
-        image: "/images/menu/crispy-pata-family.jpg",
-        description: "A family-sized crispy pata made for sharing.",
-      },
-      {
-        name: "Beef Brisket Kare-kare (Share)",
-        price: "$34.0",
-        image: "/images/menu/beef-brisket-kare-kare.jpg",
-        description: "Beef brisket in a rich kare-kare style.",
-      },
-      {
-        name: "Creamy Barra Fish",
-        price: "$26",
-        image: "/images/menu/creamy-barra-fish.jpg",
-        description: "Barramundi with a creamy savory finish.",
-      },
-      {
-        name: "Crispy Fried Tilapia (Whole Fish)",
-        price: "$28 • Additional Sauce $5.0",
-        image: "/images/menu/crispy-fried-tilapia.jpg",
-        description: "Whole crispy fried tilapia with optional extra sauce.",
-      },
-      {
-        name: "Sweet & Sour Barramundi (Whole Fish)",
-        price: "Regular $36.9 • Large $39.90",
-        image: "/images/menu/sweet-sour-barramundi.jpg",
-        description: "Whole barramundi served in a sweet and sour style.",
-      },
-      {
-        name: "Dinuguan sa Gata",
-        price: "$25.0",
-        image: "/images/menu/dinuguan-sa-gata.jpg",
-        description: "A rich house specialty with deep savory flavor.",
-      },
+      { name: "Beef Tapa Salad", price: "$24.19", image: "/images/menu/beef-tapa-salad.jpg", description: "A lighter tapa option served as a salad." },
+      { name: "Prawn & Avo Salad", price: "$22.50", image: "/images/menu/prawn-avo-salad.jpg", description: "Fresh salad with prawns and creamy avocado." },
+      { name: "Crispy Pork Belly (Bagnet)", price: "$26.00", image: "/images/menu/crispy-pork-belly-bagnet.jpg", description: "Golden crispy pork belly with rich flavor." },
+      { name: "Chicken Adobo w/ Egg", price: "$28.60", image: "/images/menu/chicken-adobo-egg.jpg", description: "Classic adobo served with egg." },
+      { name: "Beef Tapa (Tapsilog)", price: "$28.60", image: "/images/menu/beef-tapa-tapsilog.jpg", description: "A house favorite with bold beef flavor." },
+      { name: "Crispy Pata Family Size", price: "$39.0", image: "/images/menu/crispy-pata-family.jpg", description: "A family-sized crispy pata made for sharing." },
+      { name: "Beef Brisket Kare-kare (Share)", price: "$34.0", image: "/images/menu/beef-brisket-kare-kare.jpg", description: "Beef brisket in a rich kare-kare style." },
+      { name: "Creamy Barra Fish", price: "$26", image: "/images/menu/creamy-barra-fish.jpg", description: "Barramundi with a creamy savory finish." },
+      { name: "Crispy Fried Tilapia (Whole Fish)", price: "$28 • Additional Sauce $5.0", image: "/images/menu/crispy-fried-tilapia.jpg", description: "Whole crispy fried tilapia with optional extra sauce." },
+      { name: "Sweet & Sour Barramundi (Whole Fish)", price: "Regular $36.9 • Large $39.90", image: "/images/menu/sweet-sour-barramundi.jpg", description: "Whole barramundi served in a sweet and sour style." },
+      { name: "Dinuguan sa Gata", price: "$25.0", image: "/images/menu/dinuguan-sa-gata.jpg", description: "A rich house specialty with deep savory flavor." },
     ],
   },
 ];
@@ -295,6 +159,9 @@ function MenuSection({ title, items }) {
                 <span>{item.price}</span>
               </div>
               <p>{item.description}</p>
+              <div className="menuActions">
+                <Link href="/checkout" className="orderBtn">🛒 Order Now</Link>
+              </div>
             </div>
           </article>
         ))}
@@ -315,27 +182,15 @@ export default function MenuPage() {
 
       <header className="topbar">
         <Link href="/" className="brand brandWithLogo">
-          <img
-            src="/images/logo/logo.png"
-            alt="Soulfood Fusion House Logo"
-            className="logo"
-          />
+          <img src="/images/logo/logo.png" alt="Soulfood Fusion House Logo" className="logo" />
           <span>Soulfood Fusion House</span>
         </Link>
 
         <nav className="nav">
           <Link href="/">Home</Link>
-          <a href={mapLink} target="_blank" rel="noreferrer" className="menuBtn">
-            📍 Map
-          </a>
-          <a
-            href={reviewLink}
-            target="_blank"
-            rel="noreferrer"
-            className="orderBtn"
-          >
-            ⭐ Reviews
-          </a>
+          <Link href="/checkout" className="orderBtn">🛒 Checkout</Link>
+          <a href={mapLink} target="_blank" rel="noreferrer" className="menuBtn">📍 Map</a>
+          <a href={reviewLink} target="_blank" rel="noreferrer" className="reviewBtn">⭐ Reviews</a>
         </nav>
       </header>
 
@@ -353,275 +208,83 @@ export default function MenuPage() {
         </section>
 
         {menuSections.map((section) => (
-          <MenuSection
-            key={section.title}
-            title={section.title}
-            items={section.items}
-          />
+          <MenuSection key={section.title} title={section.title} items={section.items} />
         ))}
 
         <div className="bottomCta">
-          <Link href="/" className="backBtn">
-            ← Back to Home
-          </Link>
+          <Link href="/checkout" className="backBtn">🛒 Proceed to Checkout</Link>
         </div>
       </main>
 
       <style jsx global>{`
-        * {
-          box-sizing: border-box;
-        }
-
-        html {
-          scroll-behavior: smooth;
-        }
-
-        body {
-          margin: 0;
-          font-family: Arial, sans-serif;
-          background: #f8f4ee;
-          color: #2b1c15;
-        }
-
-        a {
-          text-decoration: none;
-        }
-
-        img {
-          display: block;
-          width: 100%;
-        }
+        * { box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+        body { margin: 0; font-family: Arial, sans-serif; background: #f8f4ee; color: #2b1c15; }
+        a { text-decoration: none; }
+        img { display: block; width: 100%; }
 
         .topbar {
-          position: sticky;
-          top: 0;
-          z-index: 100;
-          display: flex;
-          justify-content: space-between;
-          align-items: center;
-          padding: 18px 28px;
-          background: rgba(17, 10, 8, 0.88);
-          backdrop-filter: blur(10px);
-          border-bottom: 1px solid rgba(212, 174, 112, 0.18);
-          flex-wrap: wrap;
-          gap: 14px;
+          position: sticky; top: 0; z-index: 100; display: flex; justify-content: space-between; align-items: center;
+          padding: 18px 28px; background: rgba(17,10,8,0.88); backdrop-filter: blur(10px);
+          border-bottom: 1px solid rgba(212,174,112,0.18); flex-wrap: wrap; gap: 14px;
         }
+        .brand, .nav a { color: #fff4e8; font-weight: 700; }
+        .brandWithLogo { display: flex; align-items: center; gap: 12px; }
+        .logo { width: 52px; height: 52px; object-fit: contain; border-radius: 12px; background: white; padding: 4px; }
+        .nav { display: flex; gap: 14px; align-items: center; flex-wrap: wrap; }
 
-        .brand,
-        .nav a {
-          color: #fff4e8;
-          font-weight: 700;
+        .menuBtn, .orderBtn, .reviewBtn {
+          padding: 11px 18px; border-radius: 999px; font-weight: 700; display: inline-block;
         }
+        .menuBtn { background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.18); color: #fff4e8 !important; }
+        .orderBtn { background: linear-gradient(135deg, #c79356, #e7c78a); color: #1e120d !important; }
+        .reviewBtn { background: #3a2a20; color: #fff4e8 !important; }
 
-        .brandWithLogo {
-          display: flex;
-          align-items: center;
-          gap: 12px;
-        }
-
-        .logo {
-          width: 52px;
-          height: 52px;
-          object-fit: contain;
-          border-radius: 12px;
-          background: white;
-          padding: 4px;
-        }
-
-        .nav {
-          display: flex;
-          gap: 14px;
-          align-items: center;
-          flex-wrap: wrap;
-        }
-
-        .menuBtn,
-        .orderBtn {
-          padding: 11px 18px;
-          border-radius: 999px;
-          font-weight: 700;
-          display: inline-block;
-        }
-
-        .menuBtn {
-          background: rgba(255, 255, 255, 0.1);
-          border: 1px solid rgba(255, 255, 255, 0.18);
-          color: #fff4e8 !important;
-        }
-
-        .orderBtn {
-          background: linear-gradient(135deg, #c79356, #e7c78a);
-          color: #1e120d !important;
-        }
-
-        .menuPage {
-          max-width: 1280px;
-          margin: 0 auto;
-          padding-bottom: 70px;
-        }
-
+        .menuPage { max-width: 1280px; margin: 0 auto; padding-bottom: 70px; }
         .menuHero {
-          position: relative;
-          min-height: 50vh;
-          margin: 0 28px;
-          border-radius: 0 0 28px 28px;
-          overflow: hidden;
-          background: url("/images/menu/porterhouse-steak.jpg") center/cover no-repeat;
-          display: flex;
-          align-items: end;
+          position: relative; min-height: 50vh; margin: 0 28px; border-radius: 0 0 28px 28px;
+          overflow: hidden; background: url("/images/menu/porterhouse-steak.jpg") center/cover no-repeat;
+          display: flex; align-items: end;
         }
-
         .menuHeroOverlay {
-          position: absolute;
-          inset: 0;
-          background: linear-gradient(
-            180deg,
-            rgba(18, 10, 8, 0.28),
-            rgba(18, 10, 8, 0.82)
-          );
+          position: absolute; inset: 0;
+          background: linear-gradient(180deg, rgba(18,10,8,0.28), rgba(18,10,8,0.82));
         }
+        .menuHeroContent { position: relative; z-index: 2; padding: 42px 32px; max-width: 760px; }
+        .sectionLabel { text-transform: uppercase; letter-spacing: 0.18em; font-size: 0.78rem; font-weight: 700; color: #c99961; }
+        .light { color: #f0d8b3; }
+        .menuHero h1 { font-size: clamp(2.3rem, 6vw, 4.6rem); line-height: 1.02; color: #fff8f0; margin: 12px 0 14px; }
+        .menuHero p { color: #eadbcb; line-height: 1.8; margin: 0; }
 
-        .menuHeroContent {
-          position: relative;
-          z-index: 2;
-          padding: 42px 32px;
-          max-width: 760px;
-        }
+        .menuSection { padding: 64px 28px 0; }
+        .sectionHeading { margin-bottom: 24px; }
+        .sectionHeading h2 { margin: 10px 0 0; font-size: clamp(1.9rem, 4vw, 3rem); color: #2f1d15; }
 
-        .sectionLabel {
-          text-transform: uppercase;
-          letter-spacing: 0.18em;
-          font-size: 0.78rem;
-          font-weight: 700;
-          color: #c99961;
-        }
-
-        .light {
-          color: #f0d8b3;
-        }
-
-        .menuHero h1 {
-          font-size: clamp(2.3rem, 6vw, 4.6rem);
-          line-height: 1.02;
-          color: #fff8f0;
-          margin: 12px 0 14px;
-        }
-
-        .menuHero p {
-          color: #eadbcb;
-          line-height: 1.8;
-          margin: 0;
-        }
-
-        .menuSection {
-          padding: 64px 28px 0;
-        }
-
-        .sectionHeading {
-          margin-bottom: 24px;
-        }
-
-        .sectionHeading h2 {
-          margin: 10px 0 0;
-          font-size: clamp(1.9rem, 4vw, 3rem);
-          color: #2f1d15;
-        }
-
-        .menuGrid {
-          display: grid;
-          grid-template-columns: repeat(3, 1fr);
-          gap: 24px;
-        }
-
+        .menuGrid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
         .menuCard {
-          background: #fff;
-          border: 1px solid #ead7bf;
-          border-radius: 24px;
-          overflow: hidden;
-          box-shadow: 0 18px 42px rgba(53, 31, 18, 0.08);
-          transition: 0.3s ease;
+          background: #fff; border: 1px solid #ead7bf; border-radius: 24px; overflow: hidden;
+          box-shadow: 0 18px 42px rgba(53,31,18,0.08); transition: 0.3s ease;
         }
-
-        .menuCard:hover {
-          transform: translateY(-6px);
-          box-shadow: 0 24px 60px rgba(53, 31, 18, 0.12);
-        }
-
-        .menuImageWrap {
-          height: 250px;
-          overflow: hidden;
-        }
-
-        .menuImageWrap img {
-          height: 100%;
-          object-fit: cover;
-          transition: transform 0.45s ease;
-        }
-
-        .menuCard:hover .menuImageWrap img {
-          transform: scale(1.05);
-        }
-
-        .menuBody {
-          padding: 24px;
-        }
-
-        .menuTop {
-          display: flex;
-          justify-content: space-between;
-          gap: 16px;
-          align-items: flex-start;
-          margin-bottom: 10px;
-        }
-
-        .menuTop h3 {
-          margin: 0;
-          color: #332116;
-        }
-
-        .menuTop span {
-          color: #b57a39;
-          font-weight: 700;
-          white-space: nowrap;
-        }
-
-        .menuBody p {
-          margin: 0;
-          color: #6f5a49;
-          line-height: 1.75;
-        }
-
-        .bottomCta {
-          text-align: center;
-          margin-top: 46px;
-          padding: 0 28px;
-        }
-
+        .menuCard:hover { transform: translateY(-6px); box-shadow: 0 24px 60px rgba(53,31,18,0.12); }
+        .menuImageWrap { height: 250px; overflow: hidden; }
+        .menuImageWrap img { height: 100%; object-fit: cover; transition: transform 0.45s ease; }
+        .menuCard:hover .menuImageWrap img { transform: scale(1.05); }
+        .menuBody { padding: 24px; }
+        .menuTop { display: flex; justify-content: space-between; gap: 16px; align-items: flex-start; margin-bottom: 10px; }
+        .menuTop h3 { margin: 0; color: #332116; }
+        .menuTop span { color: #b57a39; font-weight: 700; white-space: nowrap; }
+        .menuBody p { margin: 0 0 16px; color: #6f5a49; line-height: 1.75; }
+        .menuActions { display: flex; }
+        .bottomCta { text-align: center; margin-top: 46px; padding: 0 28px; }
         .backBtn {
-          display: inline-block;
-          padding: 14px 22px;
-          border-radius: 999px;
-          background: linear-gradient(135deg, #c79356, #ebce97);
-          color: #1e120d;
-          font-weight: 700;
+          display: inline-block; padding: 14px 22px; border-radius: 999px;
+          background: linear-gradient(135deg, #c79356, #ebce97); color: #1e120d; font-weight: 700;
         }
 
         @media (max-width: 980px) {
-          .menuGrid {
-            grid-template-columns: 1fr;
-          }
-
-          .topbar,
-          .menuSection,
-          .bottomCta {
-            padding-left: 18px;
-            padding-right: 18px;
-          }
-
-          .menuHero {
-            margin: 0 18px;
-            min-height: 42vh;
-          }
+          .menuGrid { grid-template-columns: 1fr; }
+          .topbar, .menuSection, .bottomCta { padding-left: 18px; padding-right: 18px; }
+          .menuHero { margin: 0 18px; min-height: 42vh; }
         }
       `}</style>
     </>
