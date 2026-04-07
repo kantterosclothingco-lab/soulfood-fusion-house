@@ -91,9 +91,9 @@ export default function Home() {
           <Link href="/catering" className="cateringBtn">
             🍽 Catering
           </Link>
-          <a href="#booking" className="orderBtn">
-            🛒 Book / Order Now
-          </a>
+          <Link href="/checkout" className="orderBtn">
+            🛒 Order Online
+          </Link>
         </nav>
       </header>
 
@@ -111,6 +111,10 @@ export default function Home() {
             <div className="heroActions">
               <Link href="/menu" className="primaryBtn">
                 View Full Menu
+              </Link>
+
+              <Link href="/checkout" className="orderBtn">
+                🛒 Order Online
               </Link>
 
               <Link href="/catering" className="cateringBtn">
@@ -138,6 +142,36 @@ export default function Home() {
           </div>
         </section>
 
+        <section className="flowSection">
+          <div className="sectionIntro center">
+            <p className="sectionLabel">How It Works</p>
+            <h2>Simple order flow for customers</h2>
+          </div>
+
+          <div className="flowGrid">
+            <article className="flowCard">
+              <div className="flowIcon">1</div>
+              <h3>Browse the menu</h3>
+              <p>Customers explore your dishes and choose what they want.</p>
+            </article>
+            <article className="flowCard">
+              <div className="flowIcon">2</div>
+              <h3>Go to checkout</h3>
+              <p>They enter contact details, pickup or delivery preferences, and payment method.</p>
+            </article>
+            <article className="flowCard">
+              <div className="flowIcon">3</div>
+              <h3>Pay online</h3>
+              <p>Card, digital wallet, and future options like Afterpay can be added here.</p>
+            </article>
+            <article className="flowCard">
+              <div className="flowIcon">4</div>
+              <h3>Order confirmed</h3>
+              <p>They land on a thank-you page with a review button and next steps.</p>
+            </article>
+          </div>
+        </section>
+
         <section className="aboutSection" id="about">
           <div className="sectionIntro">
             <p className="sectionLabel">About Us</p>
@@ -152,24 +186,15 @@ export default function Home() {
           <div className="featureGrid">
             <article className="featureCard">
               <h3>Freshly Prepared</h3>
-              <p>
-                Made with care and packed with flavor, from grilled dishes to
-                family-style favorites.
-              </p>
+              <p>Made with care and packed with flavor, from grilled dishes to family-style favorites.</p>
             </article>
             <article className="featureCard">
               <h3>Best Sellers First</h3>
-              <p>
-                The homepage highlights the dishes people love most before
-                guiding them to the full menu.
-              </p>
+              <p>The homepage highlights the dishes people love most before guiding them to the full menu.</p>
             </article>
             <article className="featureCard">
-              <h3>Easy To Explore</h3>
-              <p>
-                Guests can quickly browse food, check your details, and go to
-                the menu page in one click.
-              </p>
+              <h3>Ready For Online Orders</h3>
+              <p>The website now has a clearer flow for order, checkout, and payment-ready pages.</p>
             </article>
           </div>
         </section>
@@ -193,6 +218,10 @@ export default function Home() {
                     <span>{item.price}</span>
                   </div>
                   <p>{item.description}</p>
+                  <div className="cardActions">
+                    <Link href="/menu" className="miniBtn">View Dish</Link>
+                    <Link href="/checkout" className="miniGoldBtn">Order Now</Link>
+                  </div>
                 </div>
               </article>
             ))}
@@ -202,27 +231,6 @@ export default function Home() {
             <Link href="/menu" className="primaryBtn">
               See Full Menu
             </Link>
-          </div>
-        </section>
-
-        <section className="cateringPreviewSection">
-          <div className="cateringPreviewCard">
-            <div>
-              <p className="sectionLabel">Catering Services</p>
-              <h2>Planning a party, event, or office meal?</h2>
-              <p>
-                We offer catering for birthdays, family gatherings, business
-                events, and special occasions. View our catering page to see
-                service details, sample offers, and portfolio sections.
-              </p>
-              <Link href="/catering" className="cateringBtn largeBtn">
-                🍽 View Catering Services
-              </Link>
-            </div>
-            <div className="cateringIconBox">
-              <div className="bigIcon">🍽</div>
-              <p>Food trays, event setup, and group catering options</p>
-            </div>
           </div>
         </section>
 
@@ -247,14 +255,8 @@ export default function Home() {
 
               <div className="infoGroup">
                 <h4>Contact</h4>
-                <p>
-                  <a href="tel:+61403036727">+61 403 036 727</a>
-                </p>
-                <p>
-                  <a href="mailto:soulfoodfusionhouse@gmail.com">
-                    soulfoodfusionhouse@gmail.com
-                  </a>
-                </p>
+                <p><a href="tel:+61403036727">+61 403 036 727</a></p>
+                <p><a href="mailto:soulfoodfusionhouse@gmail.com">soulfoodfusionhouse@gmail.com</a></p>
               </div>
 
               <div className="infoGroup">
@@ -267,25 +269,13 @@ export default function Home() {
               </div>
 
               <div className="actionRow">
-                <a
-                  href={mapLink}
-                  target="_blank"
-                  rel="noreferrer"
-                  className="secondaryBtn inlineBtn"
-                >
+                <a href={mapLink} target="_blank" rel="noreferrer" className="secondaryBtn inlineBtn">
                   📍 Get Directions
                 </a>
-
-                <a href="tel:+61403036727" className="orderBtn inlineBtn">
-                  📞 Call Now
-                </a>
-
-                <a
-                  href={reviewLink}
-                  target="_blank"
-                  rel="noreferrer"
-                  className="reviewBtn inlineBtn"
-                >
+                <Link href="/checkout" className="orderBtn inlineBtn">
+                  🛒 Start Order
+                </Link>
+                <a href={reviewLink} target="_blank" rel="noreferrer" className="reviewBtn inlineBtn">
                   ⭐ Leave a Review
                 </a>
               </div>
@@ -294,25 +284,17 @@ export default function Home() {
             <div className="quotePanel">
               <div className="quoteOverlay" />
               <div className="quoteContent">
-                <p className="sectionLabel light">Soulfood Fusion House</p>
-                <h3>From shared meals to comfort favorites, there’s something here for everyone.</h3>
+                <p className="sectionLabel light">Online Payment Ready</p>
+                <h3>Checkout can be expanded for card, wallet, and Afterpay-supported payment options.</h3>
                 <p>
-                  Browse the menu, check opening hours, get directions, and
-                  leave a review after your visit.
+                  The next stage is connecting a real payment provider like Stripe
+                  or Square to activate live checkout.
                 </p>
                 <div className="quoteButtons">
-                  <Link href="/menu" className="goldBtn">
-                    Open Full Menu
+                  <Link href="/checkout" className="goldBtn">
+                    Go to Checkout
                   </Link>
-                  <Link href="/catering" className="cateringBtn lightCateringBtn">
-                    🍽 Catering
-                  </Link>
-                  <a
-                    href={reviewLink}
-                    target="_blank"
-                    rel="noreferrer"
-                    className="reviewBtn lightBtn"
-                  >
+                  <a href={reviewLink} target="_blank" rel="noreferrer" className="reviewBtn lightBtn">
                     ⭐ Reviews
                   </a>
                 </div>
@@ -324,11 +306,10 @@ export default function Home() {
         <section className="bookingSection" id="booking">
           <div className="bookingCard">
             <div className="sectionIntro center small">
-              <p className="sectionLabel">Book / Order</p>
-              <h2>Send your booking or order request</h2>
+              <p className="sectionLabel">Book / Order Request</p>
+              <h2>Send a booking or quick order request</h2>
               <p>
-                Fill in the form below. After submitting, the page will show a
-                thank you message and a review button.
+                This is a simple request form. For online payment flow, use the checkout page.
               </p>
             </div>
 
@@ -339,7 +320,7 @@ export default function Home() {
                 <input type="text" placeholder="Order or booking details" required />
                 <input type="date" required />
                 <button type="submit" className="orderBtn formBtn">
-                  ✅ Submit Booking / Order
+                  ✅ Submit Request
                 </button>
               </form>
             ) : (
@@ -347,20 +328,14 @@ export default function Home() {
                 <div className="thankYouIcon">✅</div>
                 <h3>Thank you for booking an order</h3>
                 <p>
-                  We’ve received your request. You can also leave a review using
-                  the button below.
+                  We’ve received your request. You can also proceed to checkout or leave a review below.
                 </p>
                 <div className="thankYouActions">
-                  <a
-                    href={reviewLink}
-                    target="_blank"
-                    rel="noreferrer"
-                    className="reviewBtn"
-                  >
+                  <Link href="/checkout" className="orderBtn">
+                    🛒 Go to Checkout
+                  </Link>
+                  <a href={reviewLink} target="_blank" rel="noreferrer" className="reviewBtn">
                     ⭐ Leave a Review
-                  </a>
-                  <a href="tel:+61403036727" className="secondaryBtn">
-                    📞 Call Restaurant
                   </a>
                 </div>
               </div>
@@ -377,602 +352,182 @@ export default function Home() {
         <div className="footerLinks">
           <Link href="/menu">Menu</Link>
           <Link href="/catering">🍽 Catering</Link>
+          <Link href="/checkout">🛒 Checkout</Link>
           <a href={mapLink} target="_blank" rel="noreferrer">📍 Map</a>
           <a href={reviewLink} target="_blank" rel="noreferrer">⭐ Reviews</a>
         </div>
       </footer>
 
       <style jsx global>{`
-        * {
-          box-sizing: border-box;
-        }
-
-        html {
-          scroll-behavior: smooth;
-        }
-
-        body {
-          margin: 0;
-          font-family: Arial, sans-serif;
-          background: #f8f4ee;
-          color: #2b1c15;
-        }
-
-        a {
-          text-decoration: none;
-        }
-
-        img {
-          display: block;
-          width: 100%;
-        }
+        * { box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+        body { margin: 0; font-family: Arial, sans-serif; background: #f8f4ee; color: #2b1c15; }
+        a { text-decoration: none; }
+        img { display: block; width: 100%; }
 
         .topbar {
-          position: sticky;
-          top: 0;
-          z-index: 100;
-          display: flex;
-          justify-content: space-between;
-          align-items: center;
-          padding: 18px 28px;
-          background: rgba(17, 10, 8, 0.88);
-          backdrop-filter: blur(10px);
-          border-bottom: 1px solid rgba(212, 174, 112, 0.18);
-          flex-wrap: wrap;
-          gap: 16px;
+          position: sticky; top: 0; z-index: 100; display: flex; justify-content: space-between; align-items: center;
+          padding: 18px 28px; background: rgba(17, 10, 8, 0.88); backdrop-filter: blur(10px);
+          border-bottom: 1px solid rgba(212, 174, 112, 0.18); flex-wrap: wrap; gap: 16px;
         }
+        .brandWrap { display: flex; align-items: center; gap: 14px; }
+        .logo { width: 58px; height: 58px; object-fit: contain; border-radius: 14px; background: white; padding: 4px; }
+        .brandWrap h2 { margin: 0; font-size: 1.1rem; color: #fff8f0; }
+        .brandWrap p { margin: 3px 0 0; color: #d9c8b8; font-size: 0.85rem; }
 
-        .brandWrap {
-          display: flex;
-          align-items: center;
-          gap: 14px;
-        }
+        .nav { display: flex; align-items: center; gap: 14px; flex-wrap: wrap; }
+        .nav a { color: #f2e6d8; font-weight: 600; }
 
-        .logo {
-          width: 58px;
-          height: 58px;
-          object-fit: contain;
-          border-radius: 14px;
-          background: white;
-          padding: 4px;
+        .menuBtn, .orderBtn, .reviewBtn, .cateringBtn, .miniBtn, .miniGoldBtn {
+          padding: 11px 18px; border-radius: 999px; font-weight: 700; display: inline-block;
         }
-
-        .brandWrap h2 {
-          margin: 0;
-          font-size: 1.1rem;
-          color: #fff8f0;
-        }
-
-        .brandWrap p {
-          margin: 3px 0 0;
-          color: #d9c8b8;
-          font-size: 0.85rem;
-        }
-
-        .nav {
-          display: flex;
-          align-items: center;
-          gap: 14px;
-          flex-wrap: wrap;
-        }
-
-        .nav a {
-          color: #f2e6d8;
-          font-weight: 600;
-        }
-
-        .menuBtn {
-          padding: 11px 18px;
-          border-radius: 999px;
-          background: rgba(255, 255, 255, 0.1);
-          border: 1px solid rgba(255, 255, 255, 0.18);
-          color: #fff4e8 !important;
-          font-weight: 700;
-        }
-
-        .orderBtn,
-        .reviewBtn,
-        .cateringBtn {
-          padding: 11px 18px;
-          border-radius: 999px;
-          font-weight: 700;
-          display: inline-block;
-        }
-
-        .orderBtn {
-          background: linear-gradient(135deg, #c79356, #e7c78a);
-          color: #1e120d !important;
-        }
-
-        .reviewBtn {
-          background: #3a2a20;
-          color: #fff4e8 !important;
-          border: 1px solid rgba(255, 255, 255, 0.08);
-        }
-
-        .cateringBtn {
-          background: linear-gradient(135deg, #8a1f1f, #c24b3f);
-          color: #fff9f4 !important;
-          box-shadow: 0 10px 28px rgba(138, 31, 31, 0.22);
-        }
+        .menuBtn { background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.18); color: #fff4e8 !important; }
+        .orderBtn, .miniGoldBtn { background: linear-gradient(135deg, #c79356, #e7c78a); color: #1e120d !important; }
+        .reviewBtn { background: #3a2a20; color: #fff4e8 !important; border: 1px solid rgba(255,255,255,0.08); }
+        .cateringBtn { background: linear-gradient(135deg, #8a1f1f, #c24b3f); color: #fff9f4 !important; box-shadow: 0 10px 28px rgba(138,31,31,0.22); }
+        .miniBtn { background: #efe4d7; color: #3a2418 !important; padding: 9px 14px; }
+        .miniGoldBtn { padding: 9px 14px; }
 
         .hero {
-          position: relative;
-          min-height: 88vh;
-          display: flex;
-          align-items: center;
-          padding: 90px 28px;
-          background: url("/images/menu/filo-bbq-ribs.jpg") center/cover no-repeat;
-          overflow: hidden;
+          position: relative; min-height: 88vh; display: flex; align-items: center; padding: 90px 28px;
+          background: url("/images/menu/filo-bbq-ribs.jpg") center/cover no-repeat; overflow: hidden;
         }
-
         .heroOverlay {
-          position: absolute;
-          inset: 0;
-          background: linear-gradient(
-            90deg,
-            rgba(17, 10, 8, 0.84) 0%,
-            rgba(17, 10, 8, 0.58) 45%,
-            rgba(17, 10, 8, 0.3) 100%
-          );
+          position: absolute; inset: 0;
+          background: linear-gradient(90deg, rgba(17,10,8,0.84) 0%, rgba(17,10,8,0.58) 45%, rgba(17,10,8,0.3) 100%);
         }
-
-        .heroContent {
-          position: relative;
-          z-index: 2;
-          max-width: 760px;
+        .heroContent { position: relative; z-index: 2; max-width: 760px; }
+        .eyebrow, .sectionLabel {
+          text-transform: uppercase; letter-spacing: 0.18em; font-size: 0.78rem; font-weight: 700; color: #d8b27d;
         }
-
-        .eyebrow,
-        .sectionLabel {
-          text-transform: uppercase;
-          letter-spacing: 0.18em;
-          font-size: 0.78rem;
-          font-weight: 700;
-          color: #d8b27d;
-        }
-
-        .light {
-          color: #f0d8b3;
-        }
-
+        .light { color: #f0d8b3; }
         .hero h1 {
-          font-size: clamp(2.8rem, 7vw, 5.8rem);
-          line-height: 0.96;
-          margin: 18px 0;
-          color: #fff8f0;
-          max-width: 880px;
+          font-size: clamp(2.8rem, 7vw, 5.8rem); line-height: 0.96; margin: 18px 0; color: #fff8f0; max-width: 880px;
         }
+        .heroText { color: #f2e6d8; font-size: 1.08rem; line-height: 1.8; max-width: 650px; }
 
-        .heroText {
-          color: #f2e6d8;
-          font-size: 1.08rem;
-          line-height: 1.8;
-          max-width: 650px;
+        .heroActions, .quoteButtons, .actionRow, .thankYouActions, .cardActions {
+          display: flex; gap: 12px; flex-wrap: wrap;
         }
-
-        .heroActions,
-        .quoteButtons,
-        .actionRow,
-        .thankYouActions {
-          display: flex;
-          gap: 12px;
-          flex-wrap: wrap;
+        .heroActions { margin-top: 30px; }
+        .primaryBtn, .secondaryBtn, .goldBtn {
+          display: inline-block; padding: 14px 22px; border-radius: 999px; font-weight: 700; transition: 0.25s ease;
         }
+        .primaryBtn, .goldBtn { background: linear-gradient(135deg, #c79356, #ebce97); color: #1e120d; }
+        .secondaryBtn { background: rgba(255,255,255,0.94); border: 1px solid #dcc7af; color: #3b261b; }
+        .primaryBtn:hover, .goldBtn:hover, .secondaryBtn:hover, .menuBtn:hover, .orderBtn:hover, .reviewBtn:hover, .cateringBtn:hover { transform: translateY(-2px); }
 
-        .heroActions {
-          margin-top: 30px;
+        .aboutSection, .bestSellerSection, .visitSection, .bookingSection, .flowSection {
+          max-width: 1280px; margin: 0 auto; padding: 82px 28px;
         }
-
-        .primaryBtn,
-        .secondaryBtn,
-        .goldBtn {
-          display: inline-block;
-          padding: 14px 22px;
-          border-radius: 999px;
-          font-weight: 700;
-          transition: 0.25s ease;
-        }
-
-        .primaryBtn,
-        .goldBtn {
-          background: linear-gradient(135deg, #c79356, #ebce97);
-          color: #1e120d;
-        }
-
-        .secondaryBtn {
-          background: rgba(255, 255, 255, 0.94);
-          border: 1px solid #dcc7af;
-          color: #3b261b;
-        }
-
-        .primaryBtn:hover,
-        .goldBtn:hover,
-        .secondaryBtn:hover,
-        .menuBtn:hover,
-        .orderBtn:hover,
-        .reviewBtn:hover,
-        .cateringBtn:hover {
-          transform: translateY(-2px);
-        }
-
-        .aboutSection,
-        .bestSellerSection,
-        .visitSection,
-        .bookingSection,
-        .cateringPreviewSection {
-          max-width: 1280px;
-          margin: 0 auto;
-          padding: 82px 28px;
-        }
-
-        .sectionIntro {
-          max-width: 860px;
-          margin-bottom: 36px;
-        }
-
-        .sectionIntro.center {
-          text-align: center;
-          margin-left: auto;
-          margin-right: auto;
-        }
-
-        .sectionIntro.small {
-          max-width: 720px;
-        }
-
+        .sectionIntro { max-width: 860px; margin-bottom: 36px; }
+        .sectionIntro.center { text-align: center; margin-left: auto; margin-right: auto; }
+        .sectionIntro.small { max-width: 720px; }
         .sectionIntro h2 {
-          font-size: clamp(2rem, 4vw, 3.4rem);
-          line-height: 1.1;
-          margin: 12px 0 14px;
-          color: #2e1d15;
+          font-size: clamp(2rem, 4vw, 3.4rem); line-height: 1.1; margin: 12px 0 14px; color: #2e1d15;
         }
+        .sectionIntro p { line-height: 1.8; color: #6f5a49; }
 
-        .sectionIntro p {
-          line-height: 1.8;
-          color: #6f5a49;
+        .flowGrid, .featureGrid {
+          display: grid; grid-template-columns: repeat(4, 1fr); gap: 22px;
         }
+        .featureGrid { grid-template-columns: repeat(3, 1fr); }
 
-        .featureGrid {
-          display: grid;
-          grid-template-columns: repeat(3, 1fr);
-          gap: 22px;
-        }
-
-        .featureCard,
-        .bookingCard {
+        .flowCard, .featureCard, .bookingCard {
           background: linear-gradient(180deg, #ffffff, #f8efe3);
-          border: 1px solid #ead7bf;
-          border-radius: 24px;
-          padding: 26px;
+          border: 1px solid #ead7bf; border-radius: 24px; padding: 26px;
           box-shadow: 0 16px 40px rgba(53, 31, 18, 0.06);
         }
-
-        .featureCard h3 {
-          margin-top: 0;
-          color: #332116;
+        .flowIcon {
+          width: 46px; height: 46px; border-radius: 50%; display: grid; place-items: center;
+          background: linear-gradient(135deg, #c79356, #ebce97); color: #1e120d; font-weight: 700; margin-bottom: 14px;
         }
-
-        .featureCard p {
-          margin-bottom: 0;
-          color: #6f5a49;
-          line-height: 1.75;
-        }
+        .flowCard h3, .featureCard h3 { margin-top: 0; color: #332116; }
+        .flowCard p, .featureCard p { margin-bottom: 0; color: #6f5a49; line-height: 1.75; }
 
         .dishGrid {
-          display: grid;
-          grid-template-columns: repeat(3, 1fr);
-          gap: 24px;
+          display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px;
         }
-
         .dishCard {
-          overflow: hidden;
-          border-radius: 24px;
-          background: #fff;
-          border: 1px solid #ead7bf;
-          box-shadow: 0 18px 42px rgba(53, 31, 18, 0.08);
-          transition: 0.3s ease;
+          overflow: hidden; border-radius: 24px; background: #fff; border: 1px solid #ead7bf;
+          box-shadow: 0 18px 42px rgba(53,31,18,0.08); transition: 0.3s ease;
         }
-
-        .dishCard:hover {
-          transform: translateY(-6px);
-          box-shadow: 0 24px 60px rgba(53, 31, 18, 0.12);
-        }
-
-        .dishImageWrap {
-          height: 260px;
-          overflow: hidden;
-        }
-
-        .dishImageWrap img {
-          height: 100%;
-          object-fit: cover;
-          transition: transform 0.45s ease;
-        }
-
-        .dishCard:hover .dishImageWrap img {
-          transform: scale(1.05);
-        }
-
-        .dishBody {
-          padding: 24px;
-        }
-
+        .dishCard:hover { transform: translateY(-6px); box-shadow: 0 24px 60px rgba(53,31,18,0.12); }
+        .dishImageWrap { height: 260px; overflow: hidden; }
+        .dishImageWrap img { height: 100%; object-fit: cover; transition: transform 0.45s ease; }
+        .dishCard:hover .dishImageWrap img { transform: scale(1.05); }
+        .dishBody { padding: 24px; }
         .dishTop {
-          display: flex;
-          justify-content: space-between;
-          gap: 16px;
-          align-items: flex-start;
-          margin-bottom: 10px;
+          display: flex; justify-content: space-between; gap: 16px; align-items: flex-start; margin-bottom: 10px;
         }
+        .dishTop h3 { margin: 0; color: #332116; }
+        .dishTop span { color: #b57a39; font-weight: 700; white-space: nowrap; }
+        .dishBody p { margin: 0 0 16px; color: #6f5a49; line-height: 1.75; }
+        .ctaCenter { text-align: center; margin-top: 36px; }
 
-        .dishTop h3 {
-          margin: 0;
-          color: #332116;
-        }
-
-        .dishTop span {
-          color: #b57a39;
-          font-weight: 700;
-          white-space: nowrap;
-        }
-
-        .dishBody p {
-          margin: 0;
-          color: #6f5a49;
-          line-height: 1.75;
-        }
-
-        .ctaCenter {
-          text-align: center;
-          margin-top: 36px;
-        }
-
-        .cateringPreviewCard {
-          display: grid;
-          grid-template-columns: 1.2fr 0.8fr;
-          gap: 24px;
-          background: linear-gradient(135deg, #fff6ef, #f5e3d4);
-          border: 1px solid #ead7bf;
-          border-radius: 28px;
-          padding: 32px;
-          box-shadow: 0 18px 42px rgba(53, 31, 18, 0.08);
-        }
-
-        .cateringPreviewCard h2 {
-          margin: 12px 0;
-          color: #2e1d15;
-        }
-
-        .cateringPreviewCard p {
-          color: #6f5a49;
-          line-height: 1.8;
-        }
-
-        .cateringIconBox {
-          display: flex;
-          flex-direction: column;
-          justify-content: center;
-          align-items: center;
-          text-align: center;
-          background: linear-gradient(135deg, #7f1d1d, #b94135);
-          color: white;
-          border-radius: 24px;
-          padding: 28px;
-        }
-
-        .bigIcon {
-          font-size: 4rem;
-          margin-bottom: 12px;
-        }
-
-        .largeBtn {
-          margin-top: 10px;
-        }
-
-        .visitGrid {
-          display: grid;
-          grid-template-columns: 1.05fr 0.95fr;
-          gap: 24px;
-        }
-
+        .visitGrid { display: grid; grid-template-columns: 1.05fr 0.95fr; gap: 24px; }
         .visitCard {
-          background: linear-gradient(180deg, #ffffff, #f8efe3);
-          border: 1px solid #ead7bf;
-          border-radius: 26px;
-          padding: 30px;
-          box-shadow: 0 18px 42px rgba(53, 31, 18, 0.08);
+          background: linear-gradient(180deg, #ffffff, #f8efe3); border: 1px solid #ead7bf; border-radius: 26px;
+          padding: 30px; box-shadow: 0 18px 42px rgba(53,31,18,0.08);
         }
-
-        .visitCard h2 {
-          margin-top: 12px;
-          color: #2e1d15;
-        }
-
-        .infoGroup {
-          margin-top: 24px;
-        }
-
-        .infoGroup h4 {
-          margin: 0 0 10px;
-          color: #3a2418;
-        }
-
-        .infoGroup p,
-        .infoGroup a {
-          margin: 6px 0;
-          color: #6f5a49;
-          line-height: 1.65;
-        }
-
-        .iconLink {
-          display: inline-block;
-          margin-top: 8px;
-          font-weight: 700;
-          color: #3a2418 !important;
-        }
+        .visitCard h2 { margin-top: 12px; color: #2e1d15; }
+        .infoGroup { margin-top: 24px; }
+        .infoGroup h4 { margin: 0 0 10px; color: #3a2418; }
+        .infoGroup p, .infoGroup a { margin: 6px 0; color: #6f5a49; line-height: 1.65; }
+        .iconLink { display: inline-block; margin-top: 8px; font-weight: 700; color: #3a2418 !important; }
 
         .quotePanel {
-          position: relative;
-          min-height: 100%;
-          border-radius: 26px;
-          overflow: hidden;
-          background: url("/images/menu/grilled-chicken-inasal.jpg") center/cover
-            no-repeat;
-          box-shadow: 0 18px 42px rgba(53, 31, 18, 0.08);
+          position: relative; min-height: 100%; border-radius: 26px; overflow: hidden;
+          background: url("/images/menu/grilled-chicken-inasal.jpg") center/cover no-repeat;
+          box-shadow: 0 18px 42px rgba(53,31,18,0.08);
         }
-
         .quoteOverlay {
-          position: absolute;
-          inset: 0;
-          background: linear-gradient(
-            180deg,
-            rgba(18, 10, 8, 0.48),
-            rgba(18, 10, 8, 0.8)
-          );
+          position: absolute; inset: 0;
+          background: linear-gradient(180deg, rgba(18,10,8,0.48), rgba(18,10,8,0.8));
         }
-
         .quoteContent {
-          position: relative;
-          z-index: 2;
-          padding: 34px;
-          min-height: 100%;
-          display: flex;
-          flex-direction: column;
-          justify-content: end;
+          position: relative; z-index: 2; padding: 34px; min-height: 100%;
+          display: flex; flex-direction: column; justify-content: end;
         }
-
         .quoteContent h3 {
-          color: #fff7ee;
-          font-size: clamp(1.8rem, 4vw, 2.6rem);
-          line-height: 1.2;
-          margin: 12px 0;
+          color: #fff7ee; font-size: clamp(1.8rem, 4vw, 2.6rem); line-height: 1.2; margin: 12px 0;
         }
-
-        .quoteContent p {
-          color: #eadbcb;
-          line-height: 1.75;
-          max-width: 520px;
-        }
-
-        .lightBtn,
-        .lightCateringBtn {
-          border: 1px solid rgba(255, 255, 255, 0.18);
-        }
-
-        .lightBtn {
-          background: rgba(255, 255, 255, 0.14);
-          color: #fff4e8 !important;
-        }
-
-        .lightCateringBtn {
-          background: rgba(185, 65, 53, 0.82);
-          color: #fff8f1 !important;
-        }
+        .quoteContent p { color: #eadbcb; line-height: 1.75; max-width: 520px; }
+        .lightBtn { background: rgba(255,255,255,0.14); color: #fff4e8 !important; border: 1px solid rgba(255,255,255,0.18); }
 
         .bookingForm {
-          display: grid;
-          grid-template-columns: repeat(2, 1fr);
-          gap: 16px;
+          display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px;
         }
-
         .bookingForm input {
-          width: 100%;
-          padding: 16px 18px;
-          border-radius: 16px;
-          border: 1px solid #dcc7af;
-          background: #fff;
-          font-size: 1rem;
+          width: 100%; padding: 16px 18px; border-radius: 16px; border: 1px solid #dcc7af; background: #fff; font-size: 1rem;
         }
+        .formBtn { border: none; cursor: pointer; }
 
-        .formBtn {
-          border: none;
-          cursor: pointer;
-        }
-
-        .thankYouBox {
-          text-align: center;
-          padding: 20px 10px 10px;
-        }
-
-        .thankYouIcon {
-          font-size: 3rem;
-          margin-bottom: 10px;
-        }
-
-        .thankYouBox h3 {
-          margin: 0 0 10px;
-          color: #2e1d15;
-          font-size: 1.8rem;
-        }
-
+        .thankYouBox { text-align: center; padding: 20px 10px 10px; }
+        .thankYouIcon { font-size: 3rem; margin-bottom: 10px; }
+        .thankYouBox h3 { margin: 0 0 10px; color: #2e1d15; font-size: 1.8rem; }
         .thankYouBox p {
-          color: #6f5a49;
-          line-height: 1.75;
-          max-width: 620px;
-          margin: 0 auto 20px;
+          color: #6f5a49; line-height: 1.75; max-width: 620px; margin: 0 auto 20px;
         }
 
         .footer {
-          max-width: 1280px;
-          margin: 0 auto;
-          padding: 28px;
-          display: flex;
-          justify-content: space-between;
-          align-items: center;
-          gap: 18px;
-          border-top: 1px solid #ead7bf;
-          color: #6f5a49;
-          flex-wrap: wrap;
+          max-width: 1280px; margin: 0 auto; padding: 28px;
+          display: flex; justify-content: space-between; align-items: center; gap: 18px;
+          border-top: 1px solid #ead7bf; color: #6f5a49; flex-wrap: wrap;
         }
-
-        .footer strong {
-          display: block;
-          color: #332116;
-          margin-bottom: 6px;
-        }
-
-        .footer p {
-          margin: 0;
-        }
-
-        .footerLinks {
-          display: flex;
-          gap: 14px;
-          flex-wrap: wrap;
-        }
-
-        .footer a {
-          color: #3a2418;
-          font-weight: 700;
-        }
+        .footer strong { display: block; color: #332116; margin-bottom: 6px; }
+        .footer p { margin: 0; }
+        .footerLinks { display: flex; gap: 14px; flex-wrap: wrap; }
+        .footer a { color: #3a2418; font-weight: 700; }
 
         @media (max-width: 980px) {
-          .featureGrid,
-          .dishGrid,
-          .visitGrid,
-          .bookingForm,
-          .cateringPreviewCard {
+          .flowGrid, .featureGrid, .dishGrid, .visitGrid, .bookingForm {
             grid-template-columns: 1fr;
           }
-
-          .topbar {
-            padding: 16px 18px;
-          }
-
-          .hero {
-            min-height: auto;
-            padding: 80px 18px;
-          }
-
-          .aboutSection,
-          .bestSellerSection,
-          .visitSection,
-          .bookingSection,
-          .cateringPreviewSection,
-          .footer {
-            padding-left: 18px;
-            padding-right: 18px;
+          .topbar { padding: 16px 18px; }
+          .hero { min-height: auto; padding: 80px 18px; }
+          .aboutSection, .bestSellerSection, .visitSection, .bookingSection, .flowSection, .footer {
+            padding-left: 18px; padding-right: 18px;
           }
         }
       `}</style>
