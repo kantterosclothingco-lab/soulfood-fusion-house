@@ -56,6 +56,9 @@ export default async function handler(req, res) {
 
     return res.status(200).json({
       url: data.payment_link.url,
+      orderId: data.payment_link.order_id,
+      total,
+      amount,
     });
   } catch (error) {
     console.error("API error:", error);
