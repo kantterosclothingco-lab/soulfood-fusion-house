@@ -59,6 +59,7 @@ export default function CheckoutPage() {
         return;
       }
 
+      console.error("Checkout error:", data);
       alert(data.error || "Failed to start payment");
     } catch (error) {
       console.error(error);
@@ -191,7 +192,7 @@ export default function CheckoutPage() {
             </form>
 
             <p className="note">
-              The total sent to Square will match the cart total automatically.
+              The total sent to Square should match the cart total automatically.
             </p>
           </aside>
         </div>
