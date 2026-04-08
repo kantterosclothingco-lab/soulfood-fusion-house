@@ -3,7 +3,6 @@ import Link from "next/link";
 import { useEffect, useMemo, useState } from "react";
 import {
   getCart,
-  getCartTotal,
   removeFromCart,
   updateQuantity,
   clearCart,
@@ -11,6 +10,7 @@ import {
 
 export default function CheckoutPage() {
   const [cart, setCart] = useState([]);
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     setCart(getCart());
@@ -33,7 +33,7 @@ export default function CheckoutPage() {
     setCart(updated);
   }
 
-  function handleCheckout(e) {
+  async function handleCheckout(e) {
     e.preventDefault();
 
     if (cart.length === 0) {
@@ -41,7 +41,31 @@ export default function CheckoutPage() {
       return;
     }
 
-    window.location.href = "https://square.link/u/AH4xQ2h4";
+    setLoading(true);
+
+    try {
+      const res = await fetch("/api/create-square-checkout", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({ cart })
+      });
+
+      const data = await res.json();
+
+      if (data.url) {
+        window.location.href = data.url;
+        return;
+      }
+
+      alert(data.error || "Failed to start payment");
+    } catch (error) {
+      console.error(error);
+      alert("Error starting payment");
+    } finally {
+      setLoading(false);
+    }
   }
 
   return (
@@ -74,7 +98,7 @@ export default function CheckoutPage() {
         <section className="checkoutHero">
           <p className="eyebrow">Checkout</p>
           <h1>Your cart</h1>
-          <p>Review your selected items before paying with Square.</p>
+          <p>Review your selected items before paying securely.</p>
         </section>
 
         <div className="checkoutGrid">
@@ -149,20 +173,15 @@ export default function CheckoutPage() {
               <input type="text" placeholder="Full name" required />
               <input type="tel" placeholder="Phone number" required />
               <input type="email" placeholder="Email address" required />
-              <input
-                type="text"
-                placeholder="Preferred pickup time"
-                required
-              />
+              <input type="text" placeholder="Preferred pickup time" required />
 
-              <button type="submit" className="payBtn">
-                Pay with Square
+              <button type="submit" className="payBtn" disabled={loading}>
+                {loading ? "Starting payment..." : "Pay with Square"}
               </button>
             </form>
 
             <p className="note">
-              On the Square page, enter the same order total and include your
-              cart items in the order details field.
+              The total sent to Square will match the cart total automatically.
             </p>
           </aside>
         </div>
