@@ -12,7 +12,8 @@ export default async function handler(req, res) {
 
     const total = cart.reduce((sum, item) => {
       const price = Number(String(item.price).replace(/[^0-9.]/g, ""));
-      return sum + price * item.quantity;
+      const quantity = Number(item.quantity || 1);
+      return sum + price * quantity;
     }, 0);
 
     const amount = Math.round(total * 100);
@@ -31,7 +32,7 @@ export default async function handler(req, res) {
           quick_pay: {
             name: "Soulfood Fusion House Order",
             price_money: {
-              amount,
+              amount: amount,
               currency: "AUD",
             },
             location_id: process.env.SQUARE_LOCATION_ID,
@@ -46,15 +47,18 @@ export default async function handler(req, res) {
     const data = await response.json();
 
     if (!response.ok) {
-      console.error(data);
-      return res.status(500).json({ error: "Square checkout creation failed" });
+      console.error("Square error:", data);
+      return res.status(500).json({
+        error: data?.errors?.[0]?.detail || "Square checkout creation failed",
+      });
     }
 
     return res.status(200).json({
       url: data.payment_link.url,
+      orderId: data.payment_link.order_id,
     });
   } catch (error) {
-    console.error(error);
+    console.error("API error:", error);
     return res.status(500).json({ error: "Checkout error" });
   }
 }
