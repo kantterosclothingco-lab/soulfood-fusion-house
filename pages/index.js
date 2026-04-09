@@ -260,13 +260,13 @@ export default function Home() {
               </div>
 
               <div className="infoGroup">
-                <h4>Opening Hours</h4>
-                <p><strong>Monday</strong> — CLOSED</p>
-                <p><strong>Tuesday - Friday</strong> — 11:30am to 3:00pm Lunch</p>
-                <p><strong>Tuesday - Friday</strong> — 5:00pm to 5:00pm Dinner</p>
-                <p><strong>Saturday</strong> — 11:30am - 10:00pm Dinner</p>
-                <p><strong>Sunday</strong> — 11:30pm - 5:00pm</p>
-              </div>
+  <h4>Opening Hours</h4>
+  <p><strong>Monday</strong> — 12:00pm to 3:00pm Lunch • 5:00pm to 8:00pm Dinner</p>
+  <p><strong>Tuesday - Wednesday</strong> — CLOSED</p>
+  <p><strong>Thursday - Friday</strong> — 12:00pm to 3:00pm Lunch • 5:00pm to 8:00pm Dinner</p>
+  <p><strong>Saturday</strong> — 12:00pm to 9:00pm</p>
+  <p><strong>Sunday</strong> — 12:00pm to 8:00pm</p>
+</div>
 
               <div className="actionRow">
                 <a href={mapLink} target="_blank" rel="noreferrer" className="secondaryBtn inlineBtn">
