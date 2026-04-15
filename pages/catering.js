@@ -9,34 +9,22 @@ export default function CateringPage() {
     <>
       <Head>
         <title>Soulfood Fusion Catering</title>
-
         <meta name="viewport" content="width=device-width, initial-scale=1" />
-
-        {/* CLEAN PROFESSIONAL FONT */}
         <link
           href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap"
           rel="stylesheet"
         />
-
-        <link rel="icon" href="/favicon.png" />
       </Head>
 
-      {/* NAV */}
       <header className="topbar">
-        <Link href="/" className="brand brandWithLogo">
-          <img
-            src="/images/logo/logo.png"
-            alt="Logo"
-            className="logo"
-          />
-          <span>Soulfood Fusion Catering</span>
+        <Link href="/" className="brand">
+          Soulfood Fusion Catering
         </Link>
 
         <nav className="nav">
-          <Link href="/">Home</Link>
           <a href="#about">About</a>
+          <a href="#packages">Packages</a>
           <a href="#menus">Menus</a>
-          <a href="#gallery">Gallery</a>
           <a href="#contact">Contact</a>
         </nav>
       </header>
@@ -44,31 +32,21 @@ export default function CateringPage() {
       <main>
         {/* HERO VIDEO */}
         <section className="hero">
-          <video
-            className="heroVideo"
-            autoPlay
-            muted
-            loop
-            playsInline
-          >
+          <video autoPlay muted loop playsInline className="heroVideo">
             <source src="/videos/catering.mp4" type="video/mp4" />
           </video>
 
-          <div className="heroOverlay" />
+          <div className="overlay" />
 
           <div className="heroContent">
             <p className="eyebrow">Soulfood Fusion Catering</p>
-
-            <h1>
-              Catering for events, gatherings, and shared meals in Bendigo
-            </h1>
-
+            <h1>Catering for events, gatherings, and shared meals</h1>
             <p>
-              Simple food, generous servings, and reliable service for birthdays,
-              private events, and group catering.
+              Filipino-inspired dishes, shared trays, and flexible catering for
+              birthdays, private events, and special occasions.
             </p>
 
-            <div className="heroButtons">
+            <div className="buttons">
               <a href="#about" className="primaryBtn">About</a>
               <a href="#menus" className="secondaryBtn">Menus</a>
               <a href="#contact" className="secondaryBtn">Contact</a>
@@ -76,55 +54,77 @@ export default function CateringPage() {
           </div>
         </section>
 
-        {/* INTRO */}
-        <section className="section intro">
-          <p>
-            A Bendigo-based catering service focused on good food, simple
-            ordering, and events that run smoothly.
-          </p>
-        </section>
-
         {/* ABOUT */}
         <section className="section" id="about">
           <h2>About</h2>
           <p>
-            Soulfood Fusion Catering provides shared meals and food trays for
-            birthdays, office lunches, and private events. Our focus is on food
-            that is easy to serve, satisfying, and enjoyable for groups.
+            Soulfood Fusion Catering provides food for events, parties, and
+            gatherings. Simple service, good food, and reliable setup for your
+            event.
           </p>
         </section>
 
-        {/* MENUS */}
-        <section className="section" id="menus">
-          <h2>Menus</h2>
+        {/* PACKAGES */}
+        <section className="section" id="packages">
+          <h2>Packages</h2>
 
           <div className="grid">
             <div>
-              <h3>Party Catering</h3>
-              <p>Food trays for birthdays and gatherings.</p>
+              <h3>Bronze</h3>
+              <p>1 rice, 4 mains, dessert, drinks (min 50 pax)</p>
             </div>
 
             <div>
-              <h3>Office Catering</h3>
-              <p>Meals for meetings and team lunches.</p>
+              <h3>Silver</h3>
+              <p>1 rice, appetizer, 4 mains, desserts, drinks</p>
             </div>
 
             <div>
-              <h3>Custom Catering</h3>
-              <p>Flexible menu based on your event.</p>
+              <h3>Gold</h3>
+              <p>Rice, salad, appetizer, 5 mains, desserts</p>
+            </div>
+
+            <div>
+              <h3>Platinum</h3>
+              <p>Full service with lechon belly and platters</p>
             </div>
           </div>
         </section>
 
-        {/* GALLERY */}
-        <section className="section" id="gallery">
-          <h2>Gallery</h2>
+        {/* MENU */}
+        <section className="section" id="menus">
+          <h2>Menu Options</h2>
 
-          <div className="gallery">
-            <img src="/images/menu/filo-bbq-ribs.jpg" />
-            <img src="/images/menu/grilled-chicken-inasal.jpg" />
-            <img src="/images/menu/pinoy-barbeque-skewers.jpg" />
-            <img src="/images/menu/crispy-pork-belly-bagnet.jpg" />
+          <div className="grid">
+            <div>
+              <h3>Chicken</h3>
+              <p>Inasal, Adobo, Curry, Fried Chicken, Teriyaki</p>
+            </div>
+
+            <div>
+              <h3>Pork</h3>
+              <p>Sisig, Lechon Belly, BBQ Ribs, Bicol Express</p>
+            </div>
+
+            <div>
+              <h3>Beef</h3>
+              <p>Kare-kare, Rendang, Caldereta, Stroganoff</p>
+            </div>
+
+            <div>
+              <h3>Seafood</h3>
+              <p>Prawns, Barramundi, Seafood dishes</p>
+            </div>
+
+            <div>
+              <h3>Noodles & Rice</h3>
+              <p>Pancit, Pad Thai, Java Rice, Fried Rice</p>
+            </div>
+
+            <div>
+              <h3>Desserts</h3>
+              <p>Mango Float, Ube Desserts, Cakes</p>
+            </div>
           </div>
         </section>
 
@@ -132,12 +132,12 @@ export default function CateringPage() {
         <section className="section" id="contact">
           <h2>Contact</h2>
 
-          <p><strong>Phone:</strong> +61 403 036 727</p>
+          <p><strong>Phone:</strong> 2413326097</p>
           <p><strong>Email:</strong> soulfoodfusionhouse@gmail.com</p>
           <p><strong>Address:</strong> 8 High St, Bendigo VIC 3550</p>
 
-          <div className="heroButtons">
-            <a href="tel:+61403036727" className="primaryBtn">Call</a>
+          <div className="buttons">
+            <a href="tel:2413326097" className="primaryBtn">Call</a>
             <a href={mapLink} target="_blank" className="secondaryBtn">
               Map
             </a>
@@ -145,53 +145,31 @@ export default function CateringPage() {
         </section>
       </main>
 
-      {/* FOOTER */}
       <footer className="footer">
         <p>Soulfood Fusion Catering</p>
       </footer>
 
-      {/* STYLES */}
       <style jsx global>{`
-        * {
-          box-sizing: border-box;
-        }
-
         body {
           margin: 0;
           font-family: 'Inter', sans-serif;
-          background: #faf7f2;
-          color: #2a1c15;
-        }
-
-        a {
-          text-decoration: none;
         }
 
         .topbar {
           display: flex;
           justify-content: space-between;
           padding: 20px 40px;
-          background: #1a120e;
+          background: #111;
         }
 
-        .nav a,
-        .brand {
+        .topbar a {
           color: white;
-          margin-left: 16px;
-          font-weight: 500;
-        }
-
-        .logo {
-          width: 40px;
+          margin-left: 15px;
         }
 
         .hero {
-          position: relative;
-          width: 100%;
           height: 90vh;
-          overflow: hidden;
-          display: flex;
-          align-items: center;
+          position: relative;
         }
 
         .heroVideo {
@@ -201,7 +179,7 @@ export default function CateringPage() {
           object-fit: cover;
         }
 
-        .heroOverlay {
+        .overlay {
           position: absolute;
           width: 100%;
           height: 100%;
@@ -210,73 +188,35 @@ export default function CateringPage() {
 
         .heroContent {
           position: relative;
-          z-index: 2;
-          padding: 60px;
-          margin-left: 80px;
           color: white;
-        }
-
-        .heroContent h1 {
-          font-size: 3rem;
-          font-weight: 500;
-          margin: 10px 0;
-        }
-
-        .heroContent p {
-          max-width: 500px;
-          line-height: 1.7;
-          opacity: 0.9;
-        }
-
-        .eyebrow {
-          font-size: 0.75rem;
-          letter-spacing: 2px;
-          text-transform: uppercase;
-          opacity: 0.7;
-        }
-
-        .heroButtons {
-          margin-top: 20px;
-          display: flex;
-          gap: 10px;
-        }
-
-        .primaryBtn {
-          background: #c79356;
-          padding: 12px 20px;
-          border-radius: 999px;
-          color: black;
-        }
-
-        .secondaryBtn {
-          border: 1px solid white;
-          padding: 12px 20px;
-          border-radius: 999px;
-          color: white;
+          padding: 80px;
         }
 
         .section {
-          padding: 60px 40px;
+          padding: 60px;
           max-width: 900px;
           margin: auto;
         }
 
         .grid {
           display: grid;
-          grid-template-columns: repeat(3, 1fr);
+          grid-template-columns: repeat(2,1fr);
           gap: 20px;
         }
 
-        .gallery {
-          display: grid;
-          grid-template-columns: repeat(4, 1fr);
-          gap: 10px;
+        .buttons {
+          margin-top: 20px;
         }
 
-        .gallery img {
-          height: 200px;
-          object-fit: cover;
-          width: 100%;
+        .primaryBtn {
+          background: #c79356;
+          padding: 10px 20px;
+          margin-right: 10px;
+        }
+
+        .secondaryBtn {
+          border: 1px solid black;
+          padding: 10px 20px;
         }
 
         .footer {
@@ -285,18 +225,9 @@ export default function CateringPage() {
           border-top: 1px solid #ddd;
         }
 
-        @media(max-width: 900px){
-          .grid, .gallery {
+        @media(max-width:768px){
+          .grid {
             grid-template-columns: 1fr;
-          }
-
-          .heroContent {
-            margin-left: 20px;
-            padding: 30px;
-          }
-
-          .heroContent h1 {
-            font-size: 2rem;
           }
         }
       `}</style>
