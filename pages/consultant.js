@@ -17,6 +17,30 @@ export default function ConsultantPage() {
     }
   }
 
+  async function updateStatus(id, status) {
+    try {
+      const res = await fetch("/api/create-consultation-request", {
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({ id, status }),
+      });
+
+      const data = await res.json();
+
+      if (!res.ok) {
+        alert(data.error || "Failed to update request");
+        return;
+      }
+
+      loadRequests();
+    } catch (error) {
+      console.error(error);
+      alert("Something went wrong.");
+    }
+  }
+
   useEffect(() => {
     loadRequests();
     const interval = setInterval(loadRequests, 3000);
@@ -74,9 +98,27 @@ export default function ConsultantPage() {
                     </div>
 
                     <div className="requestActions">
-                      <button type="button">Answer</button>
-                      <button type="button" className="secondary">
+                      <button
+                        type="button"
+                        onClick={() => updateStatus(request.id, "answered")}
+                      >
+                        Answer
+                      </button>
+
+                      <button
+                        type="button"
+                        className="secondary"
+                        onClick={() => updateStatus(request.id, "declined")}
+                      >
                         Decline
+                      </button>
+
+                      <button
+                        type="button"
+                        className="tertiary"
+                        onClick={() => updateStatus(request.id, "ringing")}
+                      >
+                        Ringing
                       </button>
                     </div>
                   </article>
@@ -196,6 +238,7 @@ export default function ConsultantPage() {
           display: flex;
           gap: 10px;
           margin-top: 14px;
+          flex-wrap: wrap;
         }
 
         .requestActions button {
@@ -210,6 +253,11 @@ export default function ConsultantPage() {
         .requestActions .secondary {
           background: #efe5d8;
           color: #3a2418;
+        }
+
+        .requestActions .tertiary {
+          background: #e3efe8;
+          color: #244631;
         }
       `}</style>
     </>
