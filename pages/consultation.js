@@ -1,6 +1,6 @@
 import Head from "next/head";
 import Link from "next/link";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 export default function ConsultationPage() {
   const [form, setForm] = useState({
@@ -15,6 +15,7 @@ export default function ConsultationPage() {
   const [loading, setLoading] = useState(false);
   const [submitted, setSubmitted] = useState(false);
   const [requestId, setRequestId] = useState("");
+  const [status, setStatus] = useState("waiting");
 
   function handleChange(e) {
     setForm({ ...form, [e.target.name]: e.target.value });
@@ -43,6 +44,7 @@ export default function ConsultationPage() {
 
       setSubmitted(true);
       setRequestId(data.request.id);
+      setStatus(data.request.status);
     } catch (error) {
       console.error(error);
       alert("Something went wrong.");
@@ -50,6 +52,29 @@ export default function ConsultationPage() {
       setLoading(false);
     }
   }
+
+  useEffect(() => {
+    if (!requestId) return;
+
+    const interval = setInterval(async () => {
+      try {
+        const res = await fetch("/api/create-consultation-request");
+        const data = await res.json();
+
+        const currentRequest = (data.requests || []).find(
+          (request) => request.id === requestId
+        );
+
+        if (currentRequest) {
+          setStatus(currentRequest.status);
+        }
+      } catch (error) {
+        console.error(error);
+      }
+    }, 3000);
+
+    return () => clearInterval(interval);
+  }, [requestId]);
 
   return (
     <>
@@ -143,15 +168,39 @@ export default function ConsultationPage() {
               <div className="successBox">
                 <h2>Consultation request received</h2>
                 <p>
-                  Your request has been submitted successfully.
-                </p>
-                <p>
                   <strong>Request ID:</strong> {requestId}
                 </p>
-                <p>
-                  Next step: connect this request to the consultant phone app so
-                  the consultant can receive and answer it.
-                </p>
+
+                <div className="statusBox">
+                  <p className="statusLabel">Current Status</p>
+                  <div className={`statusPill ${status}`}>{status}</div>
+                </div>
+
+                {status === "waiting" && (
+                  <p>
+                    Your consultation request is waiting for a consultant.
+                  </p>
+                )}
+
+                {status === "ringing" && (
+                  <p>
+                    A consultant is being notified now. Please stay on this page.
+                  </p>
+                )}
+
+                {status === "answered" && (
+                  <p>
+                    A consultant has answered. Next step: connect both sides into
+                    the video call room.
+                  </p>
+                )}
+
+                {status === "declined" && (
+                  <p>
+                    This consultation request was declined. You can submit a new
+                    request or contact the restaurant directly.
+                  </p>
+                )}
               </div>
             )}
 
@@ -256,13 +305,50 @@ export default function ConsultationPage() {
           cursor: not-allowed;
         }
 
-        .successBox {
-          padding: 6px 0;
-        }
-
         .successBox p {
           line-height: 1.8;
           color: #6f5a49;
+        }
+
+        .statusBox {
+          margin: 18px 0;
+        }
+
+        .statusLabel {
+          font-size: 0.78rem;
+          text-transform: uppercase;
+          letter-spacing: 0.12em;
+          color: #8a6b4d;
+          margin-bottom: 8px;
+        }
+
+        .statusPill {
+          display: inline-block;
+          padding: 8px 12px;
+          font-size: 0.82rem;
+          text-transform: uppercase;
+          letter-spacing: 0.08em;
+          font-weight: 600;
+        }
+
+        .statusPill.waiting {
+          background: #f3e5d3;
+          color: #7a5635;
+        }
+
+        .statusPill.ringing {
+          background: #e9f1fb;
+          color: #315a8b;
+        }
+
+        .statusPill.answered {
+          background: #e3efe8;
+          color: #244631;
+        }
+
+        .statusPill.declined {
+          background: #f7e2e2;
+          color: #7a2e2e;
         }
 
         .backLink {
