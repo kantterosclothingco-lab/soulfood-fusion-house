@@ -10,6 +10,8 @@ export default function handler(req, res) {
       });
     }
 
+    const roomId = `room-${Date.now()}`;
+
     const newRequest = {
       id: Date.now().toString(),
       fullName,
@@ -19,6 +21,8 @@ export default function handler(req, res) {
       eventDate,
       notes: notes || "",
       status: "waiting",
+      roomId,
+      roomUrl: `/call-room?roomId=${roomId}`,
       createdAt: new Date().toISOString(),
     };
 
