@@ -472,7 +472,7 @@ export default function CateringPage() {
           <div className="contactGrid">
             <div className="contactCard">
               <p className="contactLabel">Phone</p>
-              <p>2413326097</p>
+              <p>+61 403 036 727</p>
             </div>
 
             <div className="contactCard">
