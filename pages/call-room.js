@@ -24,7 +24,11 @@ export default function CallRoomPage() {
 
     try {
       const stream = await navigator.mediaDevices.getUserMedia({
-        video: true,
+        video: {
+          facingMode: "user",
+          width: { ideal: 1280 },
+          height: { ideal: 720 },
+        },
         audio: true,
       });
 
@@ -32,16 +36,37 @@ export default function CallRoomPage() {
 
       if (localVideoRef.current) {
         localVideoRef.current.srcObject = stream;
+
+        try {
+          await localVideoRef.current.play();
+        } catch (playError) {
+          console.error("Video play error:", playError);
+        }
       }
 
       setJoined(true);
-      setCameraOn(true);
-      setMicOn(true);
+
+      const videoTracks = stream.getVideoTracks();
+      const audioTracks = stream.getAudioTracks();
+
+      setCameraOn(videoTracks[0]?.enabled ?? true);
+      setMicOn(audioTracks[0]?.enabled ?? true);
     } catch (err) {
-      console.error(err);
-      setError(
-        "Could not access camera or microphone. Please allow permissions and try again."
-      );
+      console.error("Media access error:", err);
+
+      if (err.name === "NotAllowedError") {
+        setError(
+          "Camera or microphone permission was blocked. Please allow both in your browser settings, then refresh the page."
+        );
+      } else if (err.name === "NotFoundError") {
+        setError(
+          "No camera or microphone was found on this device. Please check your device and try again."
+        );
+      } else {
+        setError(
+          "Could not access camera or microphone. Please allow permissions and try again."
+        );
+      }
     } finally {
       setLoadingMedia(false);
     }
@@ -63,12 +88,14 @@ export default function CallRoomPage() {
     setJoined(false);
     setCameraOn(true);
     setMicOn(true);
+    setError("");
   }
 
   function toggleCamera() {
     if (!localStreamRef.current) return;
 
     const videoTracks = localStreamRef.current.getVideoTracks();
+
     videoTracks.forEach((track) => {
       track.enabled = !track.enabled;
     });
@@ -80,6 +107,7 @@ export default function CallRoomPage() {
     if (!localStreamRef.current) return;
 
     const audioTracks = localStreamRef.current.getAudioTracks();
+
     audioTracks.forEach((track) => {
       track.enabled = !track.enabled;
     });
@@ -104,9 +132,9 @@ export default function CallRoomPage() {
             <p className="eyebrow">Consultation Call Room</p>
             <h1>Video consultation room</h1>
             <p>
-              Camera and microphone are now connected on this page. The next
-              step after this is linking both customer and consultant into the
-              same live call.
+              This room now connects to your local camera and microphone. The
+              next step is linking both customer and consultant into the same
+              live call.
             </p>
           </div>
         </section>
@@ -121,21 +149,29 @@ export default function CallRoomPage() {
                     autoPlay
                     muted
                     playsInline
+                    controls={false}
                     className="videoElement"
                   />
                 ) : (
                   <div className="placeholder">
-                    {loadingMedia ? "Connecting camera and microphone..." : "Waiting to join room"}
+                    {loadingMedia
+                      ? "Connecting camera and microphone..."
+                      : "Waiting to join room"}
                   </div>
                 )}
               </div>
 
               <div className="videoRow">
                 <div className="videoBox small">
-                  {joined ? "Your camera is connected" : "Local preview"}
+                  <div className="smallBoxText">
+                    {joined ? "Your camera is connected" : "Local preview"}
+                  </div>
                 </div>
+
                 <div className="videoBox small">
-                  Remote participant preview
+                  <div className="smallBoxText">
+                    Remote participant preview
+                  </div>
                 </div>
               </div>
             </div>
@@ -201,13 +237,15 @@ export default function CallRoomPage() {
               </div>
 
               <div className="panel">
-                <h2>Next Step</h2>
-                <p>
-                  Next we connect this room to a real signaling system so both
-                  the customer and consultant can see and hear each other in the
-                  same room.
-                </p>
+                <h2>Check These If Video Is Blank</h2>
+                <p>Use HTTPS.</p>
+                <p>Allow camera and microphone permissions in the browser.</p>
+                <p>Refresh the page after allowing permissions.</p>
+                <p>Close other apps that may be using the camera.</p>
+              </div>
 
+              <div className="panel">
+                <h2>Links</h2>
                 <div className="links">
                   <Link href="/consultation">Customer Consultation Page</Link>
                   <Link href="/consultant">Consultant Dashboard</Link>
@@ -293,6 +331,7 @@ export default function CallRoomPage() {
 
         .videoBox.large {
           min-height: 420px;
+          background: #000000;
         }
 
         .videoRow {
@@ -309,12 +348,20 @@ export default function CallRoomPage() {
         .videoElement {
           width: 100%;
           height: 100%;
+          min-height: 420px;
+          display: block;
           object-fit: cover;
-          background: black;
+          background: #000000;
+          transform: scaleX(-1);
         }
 
         .placeholder {
           padding: 20px;
+          color: #ffffff;
+        }
+
+        .smallBoxText {
+          color: #6b584b;
         }
 
         .sidebar {
@@ -400,6 +447,10 @@ export default function CallRoomPage() {
           }
 
           .videoBox.large {
+            min-height: 280px;
+          }
+
+          .videoElement {
             min-height: 280px;
           }
         }
