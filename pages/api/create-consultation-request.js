@@ -36,5 +36,26 @@ export default function handler(req, res) {
     });
   }
 
+  if (req.method === "PATCH") {
+    const { id, status } = req.body;
+
+    if (!id || !status) {
+      return res.status(400).json({
+        error: "Missing request id or status",
+      });
+    }
+
+    consultationRequests = consultationRequests.map((request) =>
+      request.id === id ? { ...request, status } : request
+    );
+
+    const updated = consultationRequests.find((request) => request.id === id);
+
+    return res.status(200).json({
+      success: true,
+      request: updated,
+    });
+  }
+
   return res.status(405).json({ error: "Method not allowed" });
 }
