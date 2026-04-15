@@ -46,16 +46,17 @@ export default function CateringPage() {
             <p className="eyebrow">Soulfood Fusion Catering</p>
             <h1>Catering for events, gatherings, and shared meals</h1>
             <p>
-              Filipino-inspired dishes, shared trays, and flexible catering for
-              birthdays, private events, and special occasions.
+              Filipino-inspired dishes, generous servings, and flexible catering
+              for birthdays, private events, corporate functions, and special
+              occasions.
             </p>
 
             <div className="heroButtons">
               <a href="#about" className="primaryBtn">
                 About
               </a>
-              <a href="#packages" className="secondaryBtn">
-                Packages
+              <a href="#menus" className="secondaryBtn">
+                Menus
               </a>
               <a href="#contact" className="secondaryBtn">
                 Contact
@@ -66,30 +67,30 @@ export default function CateringPage() {
 
         <section className="section introSection">
           <p className="introText">
-            A Bendigo-based catering service offering generous servings,
-            flavorful food, and reliable service for all types of events.
+            A Bendigo-based catering service offering warm hospitality,
+            flavourful food, and reliable service for memorable events.
           </p>
         </section>
 
         <section className="section contentSection" id="about">
-          <div className="textBlock">
+          <div className="textBlock narrow">
             <p className="sectionLabel">About</p>
-            <h2>Simple catering that works for real events</h2>
+            <h2>Simple catering that feels generous and well-planned</h2>
             <p>
               Soulfood Fusion Catering is designed for birthdays, private
-              functions, office lunches, and family gatherings. We focus on food
-              that is satisfying, easy to serve, and enjoyable for groups.
+              functions, office lunches, and family gatherings. Our focus is on
+              food that is satisfying, easy to serve, and enjoyable for groups.
             </p>
           </div>
         </section>
 
         <section className="section contentSection" id="packages">
-          <div className="textBlock">
+          <div className="textBlock narrow">
             <p className="sectionLabel">Packages</p>
             <h2>Soulfood Catering Menu Packages</h2>
             <p>
-              Minimum of 50 pax for package catering. You can add more dishes or
-              dessert menu choices to suit your catering needs.
+              Minimum of 50 pax for package catering. Additional dishes and
+              dessert menu options can be added to suit your event.
             </p>
           </div>
 
@@ -154,115 +155,43 @@ export default function CateringPage() {
 
           <div className="noteBox">
             <p>
-              <strong>Note:</strong> You can add more dish or dessert menu items
-              as needed to alter your catering requirements.
+              <strong>Note:</strong> You can add more dishes or dessert menu
+              items to alter your catering package based on your event needs.
             </p>
           </div>
         </section>
 
         <section className="section contentSection" id="menus">
-          <div className="textBlock">
+          <div className="textBlock menusIntro">
             <p className="sectionLabel">Menus</p>
-            <h2>Catering menu selections</h2>
+            <h2>Menus designed around the style of your event</h2>
             <p>
-              Clean category layout for easy browsing. Extra dish by tray price
-              follows upon request where applicable.
+              The menu is at the heart of every successful catered event. At
+              Soulfood Fusion Catering, we understand that no two functions are
+              the same, and the right menu helps shape the overall atmosphere of
+              the occasion.
+            </p>
+            <p>
+              Whether you are planning a generous buffet-style gathering, shared
+              platters for a relaxed celebration, or a menu built around
+              canapés, mains, sides, and desserts, we offer a broad range of
+              menu selections that can be adapted to suit your needs.
+            </p>
+            <p>
+              The categories below are a sample collection of what we can offer.
+              They are designed to give you a clear view of the range available,
+              while still leaving room to tailor the final menu around your
+              event, guest numbers, and preferred service style.
+            </p>
+            <p className="dietNote">
+              Dietary requirements may be accommodated with notice. Please
+              contact us in advance to discuss your event requirements.
             </p>
           </div>
 
           <div className="menuGrid">
-            <article className="menuCard">
-              <h3>Soulfood Sweet Dessert</h3>
-              <p className="smallLead">Desserts · Minimum of 20 orders</p>
-              <p>
-                Mango Graham Float, Ube Graham Float, Triple Chocolate Mousse,
-                Flavoured Pannacotta, Cream Brulee, Buko Pandan with Jelly,
-                Cream Caramel Flan, Italian Tiramisu, Ube Biko, Pandan Biko.
-              </p>
-              <p className="smallText">
-                Flavoured Pannacotta: Strawberry, Mango, Ube, Caramel, Pandan.
-              </p>
-            </article>
-
-            <article className="menuCard">
-              <h3>Drinks</h3>
-              <p>
-                Soda in can: Coke, Sprite, Fanta, Coke Zero, Diet Coke,
-                Mountain Dew. Bottle Water. Sparkling Water.
-              </p>
-            </article>
-
-            <article className="menuCard">
-              <h3>Special Drinks</h3>
-              <p className="smallLead">Drinks in jugs · Unlimited for 20 pax</p>
-              <p>
-                Ice tea, Tropical, Pine apple orange, Refreshing Peach & Lemon
-                ice tea with mint, Sago&apos;t gulaman, Lemon lime bitters,
-                Raspberry bitters.
-              </p>
-            </article>
-
-            <article className="menuCard">
-              <h3>Coffee &amp; Teas</h3>
-              <p>
-                White blend coffee, Black blend coffee, Decaf Coffees, Hot
-                chocolates, Green Tea, Earl Grey Tea, Lemon &amp; Ginger Tea.
-              </p>
-            </article>
-
-            <article className="menuCard">
-              <h3>Seafood</h3>
-              <p>
-                Coconut prawn with veg, Cream Coconut barramundi fried fish,
-                Garlic butter prawn, Leeks oyster prawn, Relyenong Bangus,
-                Sweet &amp; Sour Barramundi Fish, Fried mixed seafoods &amp;
-                chips, Sauteed Asara Clam, Sinugnong Tilapia, Daing na Bangus,
-                Cajun Seafoods, Seafood Paella.
-              </p>
-              <p className="smallText">
-                Extra Dish By Tray price to Follow Upon Request.
-              </p>
-            </article>
-
-            <article className="menuCard">
-              <h3>Vegetables</h3>
-              <p>
-                Chopsuey, Herb roast vegetables, Vegetable tempura, Korean
-                Vegetable pancake, Gising-gising, Sauteed chinese broccoli with
-                oyster sauce, Sauteed water spinach with crispy tufo, chilli
-                tufo, Pakbet, Spicy Taro leaves (Laing).
-              </p>
-              <p className="smallText">
-                Extra Dish By Tray price to Follow Upon Request.
-              </p>
-            </article>
-
-            <article className="menuCard">
-              <h3>Roast / Lechon / Carving</h3>
-              <p>Boneless Lechon Belly, Lamb Roast, Beef Roast.</p>
-            </article>
-
-            <article className="menuCard">
-              <h3>Platter Menu</h3>
-              <p>
-                Fruit Platter, Antipasto, Canapes.
-              </p>
-              <p className="smallText">
-                Fruit Platter: seasonal fruit slice and arranged beautifully in
-                a platter.
-              </p>
-              <p className="smallText">
-                Antipasto: mixed cold cuts, biscuit, cheese, dried nuts well
-                presented in a platter.
-              </p>
-              <p className="smallText">
-                Canapes: mini assorted canapes arranged in a platter.
-              </p>
-            </article>
-
-            <article className="menuCard">
-              <h3>Special Function &amp; Event Catering</h3>
-              <p className="smallLead">Entree / Starter</p>
+            <article className="menuCard featuredMenu">
+              <h3>Entree / Starter</h3>
               <p>
                 Pork BBQ Skewers, Chicken BBQ Skewers, Chicken Satay Skewers,
                 Chicken Teriyaki Skewers, Cajun Prawn and bacon, Beef Kofta,
@@ -322,7 +251,7 @@ export default function CateringPage() {
             <article className="menuCard">
               <h3>Rice</h3>
               <p>
-                plain steam rice, Java rice, garlic rice, young chow fried
+                Plain steam rice, Java rice, garlic rice, young chow fried
                 rice, vegetable fried rice, Nasi goreng, Rice pilaf, Seafood
                 Paella Valenciana.
               </p>
@@ -385,6 +314,56 @@ export default function CateringPage() {
             </article>
 
             <article className="menuCard">
+              <h3>Seafood</h3>
+              <p>
+                Coconut prawn with Veg, Cream Coconut barramundi fried fish,
+                Garlic butter prawn, Leeks oyster prawn, Relyenong Bangus,
+                Sweet &amp; Sour Barramundi Fish, Fried mixed seafoods &amp;
+                chips, Sauteed Asara Clam, Sinugnong Tilapia, Daing na Bangus,
+                Cajun Seafoods, Seafood Paella.
+              </p>
+              <p className="smallText">
+                Extra Dish By Tray price to Follow Upon Request.
+              </p>
+            </article>
+
+            <article className="menuCard">
+              <h3>Vegetables</h3>
+              <p>
+                Chopsuey, Herb roast vegetables, Vegetable tempura, Korean
+                Vegetable pancake, Gising-gising, Sauteed chinese broccoli with
+                oyster sauce, Sauteed water spinach with crispy tufo, chilli
+                tufo, Pakbet, Spicy Taro leaves (Laing).
+              </p>
+              <p className="smallText">
+                Extra Dish By Tray price to Follow Upon Request.
+              </p>
+            </article>
+
+            <article className="menuCard">
+              <h3>Roast / Lechon / Carving</h3>
+              <p>Boneless Lechon Belly, Lamb Roast, Beef Roast.</p>
+            </article>
+
+            <article className="menuCard">
+              <h3>Platter Menu</h3>
+              <p>
+                Fruit Platter, Antipasto, Canapes.
+              </p>
+              <p className="smallText">
+                Fruit platter: seasonal fruit slice and arranged beautifully in
+                a platter.
+              </p>
+              <p className="smallText">
+                Antipasto: mixed cold cuts, biscuit, cheese, dried nuts well
+                presented in a platter.
+              </p>
+              <p className="smallText">
+                Canapes: mini assorted canapes arranged in a platter.
+              </p>
+            </article>
+
+            <article className="menuCard">
               <h3>Hot Platters</h3>
               <p>
                 Mini Assorted Pizzas, Mixed Asian Bites Platter, Mini Gourmet
@@ -431,6 +410,19 @@ export default function CateringPage() {
             </article>
 
             <article className="menuCard">
+              <h3>Soulfood Sweet Dessert</h3>
+              <p className="smallLead">Desserts · Minimum of 20 orders</p>
+              <p>
+                Mango Graham Float, Ube Graham Float, Triple Chocolate Mousse,
+                Flavoured Pannacotta, Cream Brulee, Buko Pandan with Jelly,
+                Cream Caramel Flan, Italian Tiramisu, Ube Biko, Pandan Biko.
+              </p>
+              <p className="smallText">
+                Flavoured Pannacotta: Strawberry, Mango, Ube, Caramel, Pandan.
+              </p>
+            </article>
+
+            <article className="menuCard">
               <h3>Dessert Bar</h3>
               <p>
                 Rumballs, Banana Bread, Fruit Platter, Tim Tam Cheesecake,
@@ -442,11 +434,37 @@ export default function CateringPage() {
                 Cheesecake.
               </p>
             </article>
+
+            <article className="menuCard">
+              <h3>Drinks</h3>
+              <p>
+                Soda in can: Coke, Sprite, Fanta, Coke Zero, Diet Coke,
+                Mountain Dew. Bottle Water. Sparkling Water.
+              </p>
+            </article>
+
+            <article className="menuCard">
+              <h3>Special Drinks</h3>
+              <p className="smallLead">Drinks in jugs · Unlimited for 20 pax</p>
+              <p>
+                Ice tea, Tropical, Pine apple orange, Refreshing Peach & Lemon
+                ice tea with mint, Sago&apos;t gulaman, Lemon lime bitters,
+                Raspberry bitters.
+              </p>
+            </article>
+
+            <article className="menuCard">
+              <h3>Coffee &amp; Teas</h3>
+              <p>
+                White blend coffee, black blend coffee, Decaf Coffees, Hot
+                chocolates, Green Tea, Earl Grey Tea, Lemon &amp; Ginger Tea.
+              </p>
+            </article>
           </div>
         </section>
 
         <section className="section contentSection" id="contact">
-          <div className="textBlock">
+          <div className="textBlock narrow">
             <p className="sectionLabel">Contact</p>
             <h2>Get in touch about your event</h2>
           </div>
@@ -511,7 +529,7 @@ export default function CateringPage() {
 
         body {
           margin: 0;
-          font-family: 'Inter', sans-serif;
+          font-family: "Inter", sans-serif;
           background: #faf7f2;
           color: #2a1c15;
         }
@@ -565,7 +583,7 @@ export default function CateringPage() {
         .heroOverlay {
           position: absolute;
           inset: 0;
-          background: rgba(0, 0, 0, 0.52);
+          background: rgba(0, 0, 0, 0.54);
         }
 
         .heroContent {
@@ -637,7 +655,7 @@ export default function CateringPage() {
         }
 
         .section {
-          padding: 60px 40px;
+          padding: 64px 40px;
         }
 
         .introSection {
@@ -656,28 +674,44 @@ export default function CateringPage() {
         }
 
         .contentSection {
-          max-width: 1100px;
+          max-width: 1180px;
           margin: 0 auto;
         }
 
         .textBlock {
-          max-width: 760px;
-          margin: 0 auto 28px;
+          max-width: 860px;
+          margin: 0 auto 30px;
           text-align: center;
+        }
+
+        .textBlock.narrow {
+          max-width: 760px;
         }
 
         .textBlock h2 {
           font-size: clamp(1.9rem, 4vw, 2.8rem);
-          margin: 8px 0 10px;
+          margin: 8px 0 12px;
           color: #2e1d15;
           font-weight: 500;
           letter-spacing: -0.01em;
         }
 
         .textBlock p {
-          line-height: 1.8;
+          line-height: 1.82;
           color: #6f5a49;
           font-size: 0.95rem;
+          margin: 0 0 12px;
+        }
+
+        .menusIntro p {
+          max-width: 820px;
+          margin-left: auto;
+          margin-right: auto;
+        }
+
+        .dietNote {
+          font-size: 0.86rem !important;
+          color: #8a6d52 !important;
         }
 
         .packageGrid,
@@ -708,6 +742,11 @@ export default function CateringPage() {
           background: #fffdf9;
           border: 1px solid #f0e6d8;
           padding: 18px;
+        }
+
+        .featuredMenu {
+          border-color: #e6d2b4;
+          background: #fffaf4;
         }
 
         .packageCard h3,
