@@ -18,6 +18,19 @@ export default function CallRoomPage() {
     };
   }, []);
 
+  async function attachStreamToVideo(stream) {
+    const video = localVideoRef.current;
+    if (!video) return;
+
+    video.srcObject = stream;
+
+    try {
+      await video.play();
+    } catch (playError) {
+      console.error("Video play error:", playError);
+    }
+  }
+
   async function startLocalStream() {
     setError("");
     setLoadingMedia(true);
@@ -33,24 +46,14 @@ export default function CallRoomPage() {
       });
 
       localStreamRef.current = stream;
-
-      if (localVideoRef.current) {
-        localVideoRef.current.srcObject = stream;
-
-        try {
-          await localVideoRef.current.play();
-        } catch (playError) {
-          console.error("Video play error:", playError);
-        }
-      }
-
-      setJoined(true);
+      await attachStreamToVideo(stream);
 
       const videoTracks = stream.getVideoTracks();
       const audioTracks = stream.getAudioTracks();
 
       setCameraOn(videoTracks[0]?.enabled ?? true);
       setMicOn(audioTracks[0]?.enabled ?? true);
+      setJoined(true);
     } catch (err) {
       console.error("Media access error:", err);
 
@@ -95,7 +98,6 @@ export default function CallRoomPage() {
     if (!localStreamRef.current) return;
 
     const videoTracks = localStreamRef.current.getVideoTracks();
-
     videoTracks.forEach((track) => {
       track.enabled = !track.enabled;
     });
@@ -107,7 +109,6 @@ export default function CallRoomPage() {
     if (!localStreamRef.current) return;
 
     const audioTracks = localStreamRef.current.getAudioTracks();
-
     audioTracks.forEach((track) => {
       track.enabled = !track.enabled;
     });
@@ -143,17 +144,17 @@ export default function CallRoomPage() {
           <div className="callLayout">
             <div className="videoArea">
               <div className="videoBox large">
-                {joined ? (
-                  <video
-                    ref={localVideoRef}
-                    autoPlay
-                    muted
-                    playsInline
-                    controls={false}
-                    className="videoElement"
-                  />
-                ) : (
-                  <div className="placeholder">
+                <video
+                  ref={localVideoRef}
+                  autoPlay
+                  muted
+                  playsInline
+                  controls={false}
+                  className="videoElement"
+                />
+
+                {!joined && (
+                  <div className="placeholderOverlay">
                     {loadingMedia
                       ? "Connecting camera and microphone..."
                       : "Waiting to join room"}
@@ -327,6 +328,7 @@ export default function CallRoomPage() {
           color: #6b584b;
           font-size: 0.95rem;
           overflow: hidden;
+          position: relative;
         }
 
         .videoBox.large {
@@ -355,9 +357,15 @@ export default function CallRoomPage() {
           transform: scaleX(-1);
         }
 
-        .placeholder {
+        .placeholderOverlay {
+          position: absolute;
+          inset: 0;
+          display: grid;
+          place-items: center;
           padding: 20px;
           color: #ffffff;
+          background: rgba(0, 0, 0, 0.4);
+          text-align: center;
         }
 
         .smallBoxText {
