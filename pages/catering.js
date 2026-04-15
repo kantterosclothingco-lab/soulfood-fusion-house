@@ -487,7 +487,7 @@ export default function CateringPage() {
           </div>
 
           <div className="contactButtons">
-            <a href="tel:2413326097" className="primaryBtn">
+            <a href="tel:+61 403 036 727" className="primaryBtn">
               Call Now
             </a>
             <a
