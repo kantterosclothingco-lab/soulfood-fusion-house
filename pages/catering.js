@@ -31,6 +31,9 @@ export default function CateringPage() {
           <a href="#packages">Packages</a>
           <a href="#menus">Menus</a>
           <a href="#contact">Contact</a>
+          <Link href="/consultation" className="consultBtn">
+            Free Consultation
+          </Link>
         </nav>
       </header>
 
@@ -155,13 +158,6 @@ export default function CateringPage() {
               </ul>
             </article>
           </div>
-
-          <div className="noteBox">
-            <p>
-              <strong>Note:</strong> You can add more dishes or dessert menu
-              items to alter your catering package based on your event needs.
-            </p>
-          </div>
         </section>
 
         <section className="section contentSection" id="menus">
@@ -174,31 +170,15 @@ export default function CateringPage() {
               the same, and the right menu helps shape the overall atmosphere of
               the occasion.
             </p>
-            <p>
-              Whether you are planning a generous buffet-style gathering, shared
-              platters for a relaxed celebration, or a menu built around
-              canapés, mains, sides, and desserts, we offer a broad range of
-              menu selections that can be adapted to suit your needs.
-            </p>
-            <p>
-              The categories below are a sample collection of what we can offer.
-              They are designed to give you a clear view of the range available,
-              while still leaving room to tailor the final menu around your
-              event, guest numbers, and preferred service style.
-            </p>
-            <p className="dietNote">
-              Dietary requirements may be accommodated with notice. Please
-              contact us in advance to discuss your event requirements.
-            </p>
           </div>
 
           <div className="menuGrid">
-            <article className="menuCard featuredMenu">
+            <article className="menuCard">
               <h3>Entree / Starter</h3>
               <p>
                 Pork BBQ Skewers, Chicken BBQ Skewers, Chicken Satay Skewers,
                 Chicken Teriyaki Skewers, Cajun Prawn and bacon, Beef Kofta,
-                Cheesy Beef Taco&apos;s, Fried Pork Boritos, Spring roll veg /
+                Cheesy Beef Taco's, Fried Pork Boritos, Spring roll veg /
                 Lumpiang Toge, Spring roll meat / Lumpiang Shanghai, Cheese
                 burger spring roll, Pulled pork adobo slider, Steam Tofu with
                 meat balls, Cheese Arancini balls, Baked Mussel Cheese
@@ -213,9 +193,6 @@ export default function CateringPage() {
                 salad with chicken, Greek salad, Mediterranean Salad, Quinua
                 salad with goat cheese.
               </p>
-              <p className="smallText">
-                Extra Dish By Tray price to Follow Upon Request.
-              </p>
             </article>
 
             <article className="menuCard">
@@ -224,22 +201,16 @@ export default function CateringPage() {
                 Creamy Mashed Potato, Sweet Potato mashed, Lyonnaise Potatoes,
                 Herb Roast Potato, Chips, Potato wedges.
               </p>
-              <p className="smallText">
-                Extra Dish By Tray price to Follow Upon Request.
-              </p>
             </article>
 
             <article className="menuCard">
               <h3>Pasta</h3>
               <p>
-                Baked mac &amp; cheese, Beef Lasagne, Vegetable Lasagne,
-                Spinach Ricotta Lasagne, Pinoy Spagetti, Pasta Bolognese, Meat
-                &amp; Cheese Cannelloni, Spinach Ricotta, Chicken Pesto pasta,
-                Beef Ragu pasta, Smoke salmon pesto pasta, Clam pasta, Creamy
-                Carbonara pasta.
-              </p>
-              <p className="smallText">
-                Extra Dish By Tray price to Follow Upon Request.
+                Baked mac & cheese, Beef Lasagne, Vegetable Lasagne, Spinach
+                Ricotta Lasagne, Pinoy Spagetti, Pasta Bolognese, Meat & Cheese
+                Cannelloni, Spinach Ricotta, Chicken Pesto pasta, Beef Ragu
+                pasta, Smoke salmon pesto pasta, Clam pasta, Creamy Carbonara
+                pasta.
               </p>
             </article>
 
@@ -257,208 +228,6 @@ export default function CateringPage() {
                 Plain steam rice, Java rice, garlic rice, young chow fried
                 rice, vegetable fried rice, Nasi goreng, Rice pilaf, Seafood
                 Paella Valenciana.
-              </p>
-              <p className="smallText">
-                Extra Dish By Tray price to Follow Upon Request.
-              </p>
-            </article>
-
-            <article className="menuCard">
-              <h3>Main Menu · Beef</h3>
-              <p>
-                Pot roast beef (Brasato Di Manzo), Beef Curry, Beef Rendang,
-                Beef Teriyaki w/ Stir fry veg, Beef Stroganoff, Stir fry beef
-                &amp; Veg, Beef Asado, Beef Stew Caldereta, Beef Tapa, Beef
-                Broccoli, Beef Kare-kare, Beef Lengua in creamy mushroom sauce,
-                Spanish Beef Callos, Beef Goulash, Beef Pares, Beef pochero.
-              </p>
-              <p className="smallText">
-                Extra Dish By Tray price to Follow Upon Request.
-              </p>
-            </article>
-
-            <article className="menuCard">
-              <h3>Main Menu · Lamb</h3>
-              <p>
-                Lamb curry, Musaka, Shepherds Pie, Lamb Kebab, Lamp Cofta,
-                Cheesy Lamb Rissole napoli, Lamb in red wine jus, Lamb Rib BBQ.
-              </p>
-              <p className="smallText">
-                Extra Dish By Tray price to Follow Upon Request.
-              </p>
-            </article>
-
-            <article className="menuCard">
-              <h3>Main Menu · Pork</h3>
-              <p>
-                Pork Sisig, Crispy pork pata (Knuckle), Pork meatloaf
-                (Embutido), Pork Menudo, Sweet &amp; Sour Pork, Smokey Pork BBQ
-                spare ribs, Grilled spice pork chop, Maple glazed pork, Pork
-                Adobo w/egg, Spicy Bicol Express, Pork Lechon Paksiw, Crispy
-                Pork Bagnet, Pork Asado, Pork Afritada, Pork Igado, Pork
-                Dinuguan, Pork Dinak-dakan, Pork Patatim.
-              </p>
-              <p className="smallText">
-                Extra Dish By Tray price to Follow Upon Request.
-              </p>
-            </article>
-
-            <article className="menuCard">
-              <h3>Main Menu · Chicken</h3>
-              <p>
-                Grilled Chicken Inasal boneless, Lemon Chicken, Chicken Curry,
-                Chicken Cordon Bleu, Chicken sweet &amp; sour, Chicken Adobo
-                w/egg, Chicken Afritada, Chicken Ala king, Chicken Roulade,
-                Chicken pastel, Chicken Cacciatore, Chicken Honey Soy, Fried
-                Chicken w/gravy, Chicken Teriyaki w/stir fry veg, Chicken
-                Bufalo wings, Korean chicken bonchon, Chicken karaage, Peri
-                peri Chicken, Jamaican Jerk Chicken.
-              </p>
-            </article>
-
-            <article className="menuCard">
-              <h3>Seafood</h3>
-              <p>
-                Coconut prawn with Veg, Cream Coconut barramundi fried fish,
-                Garlic butter prawn, Leeks oyster prawn, Relyenong Bangus,
-                Sweet &amp; Sour Barramundi Fish, Fried mixed seafoods &amp;
-                chips, Sauteed Asara Clam, Sinugnong Tilapia, Daing na Bangus,
-                Cajun Seafoods, Seafood Paella.
-              </p>
-              <p className="smallText">
-                Extra Dish By Tray price to Follow Upon Request.
-              </p>
-            </article>
-
-            <article className="menuCard">
-              <h3>Vegetables</h3>
-              <p>
-                Chopsuey, Herb roast vegetables, Vegetable tempura, Korean
-                Vegetable pancake, Gising-gising, Sauteed chinese broccoli with
-                oyster sauce, Sauteed water spinach with crispy tufo, chilli
-                tufo, Pakbet, Spicy Taro leaves (Laing).
-              </p>
-              <p className="smallText">
-                Extra Dish By Tray price to Follow Upon Request.
-              </p>
-            </article>
-
-            <article className="menuCard">
-              <h3>Roast / Lechon / Carving</h3>
-              <p>Boneless Lechon Belly, Lamb Roast, Beef Roast.</p>
-            </article>
-
-            <article className="menuCard">
-              <h3>Platter Menu</h3>
-              <p>Fruit Platter, Antipasto, Canapes.</p>
-              <p className="smallText">
-                Fruit platter: seasonal fruit slice and arranged beautifully in
-                a platter.
-              </p>
-              <p className="smallText">
-                Antipasto: mixed cold cuts, biscuit, cheese, dried nuts well
-                presented in a platter.
-              </p>
-              <p className="smallText">
-                Canapes: mini assorted canapes arranged in a platter.
-              </p>
-            </article>
-
-            <article className="menuCard">
-              <h3>Hot Platters</h3>
-              <p>
-                Mini Assorted Pizzas, Mixed Asian Bites Platter, Mini Gourmet
-                Pies, Mini Halloumi Sliders, Mini Beef Sliders, Mini Pulled
-                Pork sliders, Crispy Prawn Mini Bao, Filipino BBQ Pork
-                Skewers, Filipino BBQ Chicken Skewers, Italian Meatballs in
-                Napoli Sauce, Satay Chicken Skewers, Morocca Chicken Skewers,
-                Lamb Kofta with Tzatziki, Crumbed Barramundi Fillet Bites,
-                Salt &amp; Pepper Calamari, Korean fried Chicken bites with
-                Gochujang Mayo, Buffalo wings with Blue Cheese Dressing,
-                Chicken Drumettes with sriracha Mayo, Mexican fried Burritos,
-                Potato Croquettes with Quezo Dip, Pumpkin Truffle Arancini
-                Balls.
-              </p>
-            </article>
-
-            <article className="menuCard">
-              <h3>Cold Platters</h3>
-              <p>
-                King Prawn Cocktail Cups, Kani Vietnamese, Rice paper Rolls
-                Vietnamese, Rice Paper rolls Salmon Crostini, Bread &amp;
-                Crackers with Trio Dips, Vegetable Crudites With Dips,
-                Bruschetta, Italian Cheese Antipasto Platter, Mixed-Sushi.
-              </p>
-            </article>
-
-            <article className="menuCard">
-              <h3>Sandwiches</h3>
-              <p>
-                Chicken &amp; Veg wrap, Marinated Veg wrap, Chicken Ceasar
-                wrap, Chicken cheese croissant, Ham &amp; Cheese Croissant,
-                Tempura Veg Croissant, BLT Croissant, Roast Beef Croissant.
-              </p>
-            </article>
-
-            <article className="menuCard">
-              <h3>Sandwiches and Baguettes</h3>
-              <p>
-                Gourmet egg sandwich, Gourmet BLT sandwich, Gourmet Roast Beef
-                Sandwich, Turkey Rueben Sandwich, Smoke salmon gormet
-                baguettes, Italian Roasted Vege Gourmet Baguettes, Gourmet
-                Roast Chicken, Gourmet Ham &amp; Cheese sandwich.
-              </p>
-            </article>
-
-            <article className="menuCard">
-              <h3>Soulfood Sweet Dessert</h3>
-              <p className="smallLead">Desserts · Minimum of 20 orders</p>
-              <p>
-                Mango Graham Float, Ube Graham Float, Triple Chocolate Mousse,
-                Flavoured Pannacotta, Cream Brulee, Buko Pandan with Jelly,
-                Cream Caramel Flan, Italian Tiramisu, Ube Biko, Pandan Biko.
-              </p>
-              <p className="smallText">
-                Flavoured Pannacotta: Strawberry, Mango, Ube, Caramel, Pandan.
-              </p>
-            </article>
-
-            <article className="menuCard">
-              <h3>Dessert Bar</h3>
-              <p>
-                Rumballs, Banana Bread, Fruit Platter, Tim Tam Cheesecake,
-                Black forest Cake, Passionfruit Cheesecake, Mexed berry
-                Cheesecake, Lemon Tart, Jelly Cups (Orange or Strawberry),
-                Carrot cake, Mixed Macarons, Ube Pannacotta, Nutella &amp;
-                Ferrero Rocher Mousse, Tiramisu, Lemon Meringue, Vanilla Bean
-                Pannacotta, Mango Pannacotta, Mini Pavlova, Lotus Biscoff
-                Cheesecake.
-              </p>
-            </article>
-
-            <article className="menuCard">
-              <h3>Drinks</h3>
-              <p>
-                Soda in can: Coke, Sprite, Fanta, Coke Zero, Diet Coke,
-                Mountain Dew. Bottle Water. Sparkling Water.
-              </p>
-            </article>
-
-            <article className="menuCard">
-              <h3>Special Drinks</h3>
-              <p className="smallLead">Drinks in jugs · Unlimited for 20 pax</p>
-              <p>
-                Ice tea, Tropical, Pine apple orange, Refreshing Peach & Lemon
-                ice tea with mint, Sago&apos;t gulaman, Lemon lime bitters,
-                Raspberry bitters.
-              </p>
-            </article>
-
-            <article className="menuCard">
-              <h3>Coffee &amp; Teas</h3>
-              <p>
-                White blend coffee, black blend coffee, Decaf Coffees, Hot
-                chocolates, Green Tea, Earl Grey Tea, Lemon &amp; Ginger Tea.
               </p>
             </article>
           </div>
@@ -514,12 +283,6 @@ export default function CateringPage() {
 
       <footer className="footer">
         <p>Soulfood Fusion Catering</p>
-        <div className="footerLinks">
-          <a href="#about">About</a>
-          <a href="#packages">Packages</a>
-          <a href="#menus">Menus</a>
-          <a href="#contact">Contact</a>
-        </div>
       </footer>
 
       <style jsx global>{`
@@ -565,6 +328,7 @@ export default function CateringPage() {
           display: flex;
           gap: 18px;
           flex-wrap: wrap;
+          align-items: center;
         }
 
         .hero {
@@ -661,7 +425,7 @@ export default function CateringPage() {
 
         .consultBtn {
           background: #2f4f3e;
-          color: #ffffff;
+          color: #ffffff !important;
           border: 1px solid #2f4f3e;
         }
 
@@ -714,17 +478,6 @@ export default function CateringPage() {
           margin: 0 0 12px;
         }
 
-        .menusIntro p {
-          max-width: 820px;
-          margin-left: auto;
-          margin-right: auto;
-        }
-
-        .dietNote {
-          font-size: 0.86rem !important;
-          color: #8a6d52 !important;
-        }
-
         .packageGrid,
         .menuGrid,
         .contactGrid {
@@ -734,7 +487,6 @@ export default function CateringPage() {
 
         .packageGrid {
           grid-template-columns: repeat(2, 1fr);
-          margin-bottom: 20px;
         }
 
         .menuGrid {
@@ -748,16 +500,10 @@ export default function CateringPage() {
 
         .packageCard,
         .menuCard,
-        .contactCard,
-        .noteBox {
+        .contactCard {
           background: #fffdf9;
           border: 1px solid #f0e6d8;
           padding: 18px;
-        }
-
-        .featuredMenu {
-          border-color: #e6d2b4;
-          background: #fffaf4;
         }
 
         .packageCard h3,
@@ -777,25 +523,11 @@ export default function CateringPage() {
         }
 
         .menuCard p,
-        .contactCard p,
-        .noteBox p {
+        .contactCard p {
           font-size: 0.88rem;
           line-height: 1.6;
           color: #6f5a49;
           margin: 0;
-        }
-
-        .menuCard .smallLead {
-          font-size: 0.8rem;
-          line-height: 1.5;
-          color: #9b7a55;
-          margin-bottom: 8px;
-        }
-
-        .menuCard .smallText {
-          font-size: 0.82rem;
-          line-height: 1.58;
-          margin-top: 8px;
         }
 
         .contactLabel {
@@ -810,24 +542,9 @@ export default function CateringPage() {
           max-width: 1200px;
           margin: 0 auto;
           padding: 30px 40px;
-          display: flex;
-          justify-content: space-between;
-          gap: 18px;
-          flex-wrap: wrap;
           border-top: 1px solid #eadcc8;
           color: #6f5a49;
-        }
-
-        .footerLinks {
-          display: flex;
-          gap: 14px;
-          flex-wrap: wrap;
-        }
-
-        .footer a {
-          color: #3a2418;
-          font-weight: 600;
-          font-size: 0.92rem;
+          text-align: center;
         }
 
         @media (max-width: 980px) {
