@@ -1,11 +1,91 @@
 import Head from "next/head";
 import Link from "next/link";
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 export default function CallRoomPage() {
+  const localVideoRef = useRef(null);
+  const localStreamRef = useRef(null);
+
   const [joined, setJoined] = useState(false);
   const [cameraOn, setCameraOn] = useState(true);
   const [micOn, setMicOn] = useState(true);
+  const [error, setError] = useState("");
+  const [loadingMedia, setLoadingMedia] = useState(false);
+
+  useEffect(() => {
+    return () => {
+      stopLocalStream();
+    };
+  }, []);
+
+  async function startLocalStream() {
+    setError("");
+    setLoadingMedia(true);
+
+    try {
+      const stream = await navigator.mediaDevices.getUserMedia({
+        video: true,
+        audio: true,
+      });
+
+      localStreamRef.current = stream;
+
+      if (localVideoRef.current) {
+        localVideoRef.current.srcObject = stream;
+      }
+
+      setJoined(true);
+      setCameraOn(true);
+      setMicOn(true);
+    } catch (err) {
+      console.error(err);
+      setError(
+        "Could not access camera or microphone. Please allow permissions and try again."
+      );
+    } finally {
+      setLoadingMedia(false);
+    }
+  }
+
+  function stopLocalStream() {
+    if (localStreamRef.current) {
+      localStreamRef.current.getTracks().forEach((track) => track.stop());
+      localStreamRef.current = null;
+    }
+
+    if (localVideoRef.current) {
+      localVideoRef.current.srcObject = null;
+    }
+  }
+
+  function leaveRoom() {
+    stopLocalStream();
+    setJoined(false);
+    setCameraOn(true);
+    setMicOn(true);
+  }
+
+  function toggleCamera() {
+    if (!localStreamRef.current) return;
+
+    const videoTracks = localStreamRef.current.getVideoTracks();
+    videoTracks.forEach((track) => {
+      track.enabled = !track.enabled;
+    });
+
+    setCameraOn(videoTracks[0]?.enabled ?? false);
+  }
+
+  function toggleMic() {
+    if (!localStreamRef.current) return;
+
+    const audioTracks = localStreamRef.current.getAudioTracks();
+    audioTracks.forEach((track) => {
+      track.enabled = !track.enabled;
+    });
+
+    setMicOn(audioTracks[0]?.enabled ?? false);
+  }
 
   return (
     <>
@@ -24,8 +104,9 @@ export default function CallRoomPage() {
             <p className="eyebrow">Consultation Call Room</p>
             <h1>Video consultation room</h1>
             <p>
-              This is the shared room page for the customer and consultant.
-              The next step after this is connecting a real video engine.
+              Camera and microphone are now connected on this page. The next
+              step after this is linking both customer and consultant into the
+              same live call.
             </p>
           </div>
         </section>
@@ -34,15 +115,27 @@ export default function CallRoomPage() {
           <div className="callLayout">
             <div className="videoArea">
               <div className="videoBox large">
-                {joined ? "Consultation video area" : "Waiting to join room"}
+                {joined ? (
+                  <video
+                    ref={localVideoRef}
+                    autoPlay
+                    muted
+                    playsInline
+                    className="videoElement"
+                  />
+                ) : (
+                  <div className="placeholder">
+                    {loadingMedia ? "Connecting camera and microphone..." : "Waiting to join room"}
+                  </div>
+                )}
               </div>
 
               <div className="videoRow">
                 <div className="videoBox small">
-                  {joined ? "Your camera preview" : "Local preview"}
+                  {joined ? "Your camera is connected" : "Local preview"}
                 </div>
                 <div className="videoBox small">
-                  {joined ? "Consultant / Customer preview" : "Remote preview"}
+                  Remote participant preview
                 </div>
               </div>
             </div>
@@ -54,16 +147,17 @@ export default function CallRoomPage() {
                 {!joined ? (
                   <button
                     className="primaryBtn full"
-                    onClick={() => setJoined(true)}
+                    onClick={startLocalStream}
                     type="button"
+                    disabled={loadingMedia}
                   >
-                    Join Consultation Room
+                    {loadingMedia ? "Joining..." : "Join Consultation Room"}
                   </button>
                 ) : (
                   <>
                     <button
                       className="primaryBtn full"
-                      onClick={() => setCameraOn((prev) => !prev)}
+                      onClick={toggleCamera}
                       type="button"
                     >
                       {cameraOn ? "Turn Camera Off" : "Turn Camera On"}
@@ -71,7 +165,7 @@ export default function CallRoomPage() {
 
                     <button
                       className="secondaryBtn full"
-                      onClick={() => setMicOn((prev) => !prev)}
+                      onClick={toggleMic}
                       type="button"
                     >
                       {micOn ? "Mute Microphone" : "Unmute Microphone"}
@@ -79,13 +173,15 @@ export default function CallRoomPage() {
 
                     <button
                       className="dangerBtn full"
-                      onClick={() => setJoined(false)}
+                      onClick={leaveRoom}
                       type="button"
                     >
                       Leave Room
                     </button>
                   </>
                 )}
+
+                {error && <p className="errorText">{error}</p>}
               </div>
 
               <div className="panel">
@@ -105,10 +201,11 @@ export default function CallRoomPage() {
               </div>
 
               <div className="panel">
-                <h2>Next Build Step</h2>
+                <h2>Next Step</h2>
                 <p>
-                  Next we connect this room to a real video calling system so
-                  the consultant app and customer website can meet here.
+                  Next we connect this room to a real signaling system so both
+                  the customer and consultant can see and hear each other in the
+                  same room.
                 </p>
 
                 <div className="links">
@@ -191,6 +288,7 @@ export default function CallRoomPage() {
           place-items: center;
           color: #6b584b;
           font-size: 0.95rem;
+          overflow: hidden;
         }
 
         .videoBox.large {
@@ -205,6 +303,18 @@ export default function CallRoomPage() {
 
         .videoBox.small {
           min-height: 160px;
+          padding: 16px;
+        }
+
+        .videoElement {
+          width: 100%;
+          height: 100%;
+          object-fit: cover;
+          background: black;
+        }
+
+        .placeholder {
+          padding: 20px;
         }
 
         .sidebar {
@@ -260,6 +370,12 @@ export default function CallRoomPage() {
         .full {
           width: 100%;
           margin-bottom: 10px;
+        }
+
+        .errorText {
+          color: #8b2c2c !important;
+          font-size: 0.88rem !important;
+          margin-top: 10px !important;
         }
 
         .links {
