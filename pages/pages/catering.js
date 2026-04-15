@@ -4,57 +4,16 @@ import Link from "next/link";
 const mapLink =
   "https://www.google.com/maps/search/?api=1&query=8+High+St,+Bendigo+VIC+3550,+Australia";
 
-const reviewLink =
-  "https://www.google.com/search?sca_esv=1578db8b805c577c&sxsrf=ANbL-n6D8nRjb_fNMoNfjrpx3FLWu0Z8RQ:1774762975084&si=AL3DRZEsmMGCryMMFSHJ3StBhOdZ2-6yYkXd_doETEE1OR-qOdn7PKGMS2CqhpWnURd-em_dI93f_FTD6soC0lZqrBmEJNFVQwA2NFk7OvIIk9SURLjnweEVxpWw3g382Vt6Dbyo107aDNHzg2-Zui6vlEAuE9PwwJmD-8wxId7WF1Ue61sAvWo%3D&q=SoulFood+Fusion+House+Cafe+%26+Restaurant+Reviews&sa=X&ved=2ahUKEwipysKls8STAxVMla8BHacLIl0Q0bkNegQIKBAH&biw=1358&bih=644&dpr=1";
-
-const offers = [
-  {
-    title: "Party Trays",
-    text: "Great for birthdays, family gatherings, and celebrations with shareable food options.",
-  },
-  {
-    title: "Corporate Catering",
-    text: "Meal service for meetings, office lunches, staff events, and business functions.",
-  },
-  {
-    title: "Private Events",
-    text: "Catering support for intimate parties, milestone events, and special occasions.",
-  },
-  {
-    title: "Custom Packages",
-    text: "Flexible menu planning based on guest count, food style, and event needs.",
-  },
-];
-
-const portfolio = [
-  {
-    title: "Birthday Catering",
-    image: "/images/menu/filo-bbq-ribs.jpg",
-    text: "Shared trays, grilled favorites, and dishes made for celebrations.",
-  },
-  {
-    title: "Family Gatherings",
-    image: "/images/menu/grilled-chicken-inasal.jpg",
-    text: "Comfort food selections that suit both small and large group dining.",
-  },
-  {
-    title: "Office Events",
-    image: "/images/menu/pinoy-barbeque-skewers.jpg",
-    text: "Easy group meals for work teams, meetings, and company lunches.",
-  },
-  {
-    title: "Special Occasions",
-    image: "/images/menu/crispy-pork-belly-bagnet.jpg",
-    text: "Food service for events that need a warm and memorable spread.",
-  },
-];
-
 export default function CateringPage() {
   return (
     <>
       <Head>
-        <title>Catering Services | Soulfood Fusion House</title>
+        <title>Soulfood Fusion Catering</title>
         <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <meta
+          name="description"
+          content="Soulfood Fusion Catering in Bendigo for events, parties, office catering, and special occasions."
+        />
         <link rel="icon" href="/favicon.png" />
         <link rel="apple-touch-icon" href="/favicon.png" />
       </Head>
@@ -66,149 +25,257 @@ export default function CateringPage() {
             alt="Soulfood Fusion House Logo"
             className="logo"
           />
-          <span>Soulfood Fusion House</span>
+          <span>Soulfood Fusion Catering</span>
         </Link>
 
         <nav className="nav">
           <Link href="/">Home</Link>
-          <Link href="/menu">Menu</Link>
-          <a href={mapLink} target="_blank" rel="noreferrer" className="menuBtn">
-            📍 Map
-          </a>
-          <a
-            href={reviewLink}
-            target="_blank"
-            rel="noreferrer"
-            className="reviewBtn"
-          >
-            ⭐ Reviews
-          </a>
+          <a href="#about">About</a>
+          <a href="#menus">Menus</a>
+          <a href="#gallery">Gallery</a>
+          <a href="#contact">Contact</a>
         </nav>
       </header>
 
-      <main className="cateringPage">
+      <main className="page">
         <section className="hero">
           <div className="heroOverlay" />
           <div className="heroContent">
-            <p className="eyebrow">Catering Services</p>
-            <h1>Food for events, parties, and group gatherings</h1>
-            <p className="heroText">
-              Soulfood Fusion House offers catering for family celebrations,
-              office meals, private events, and more. Browse our service
-              options, sample offers, and portfolio below.
+            <p className="eyebrow">Soulfood Fusion Catering</p>
+            <h1>
+              Bendigo-based catering for delicious food, warm service, and
+              memorable gatherings.
+            </h1>
+            <p>
+              Soulfood Fusion Catering brings together flavorful food, generous
+              shared meals, and friendly service for birthdays, private events,
+              office catering, and special occasions.
             </p>
 
-            <div className="heroActions">
-              <a href="#offers" className="primaryBtn">
-                View Offers
+            <div className="heroButtons">
+              <a href="#about" className="primaryBtn">
+                About
               </a>
-              <a href="#portfolio" className="cateringBtn">
-                🍽 View Portfolio
+              <a href="#menus" className="secondaryBtn">
+                Menus
               </a>
-              <a href="tel:+61403036727" className="secondaryBtn">
-                📞 Call Now
+              <a href="#contact" className="secondaryBtn">
+                Contact
               </a>
             </div>
           </div>
         </section>
 
-        <section className="section" id="offers">
-          <div className="sectionIntro center">
-            <p className="sectionLabel">What We Offer</p>
-            <h2>Catering options for different events</h2>
-            <p>
-              We can prepare group meals and food service setups for a range of
-              occasions.
-            </p>
-          </div>
+        <section className="section introSection">
+          <p className="introText">
+            A Bendigo-based vibrant catering service offering delicious food,
+            soulful flavors, and warm hospitality for every kind of gathering.
+          </p>
+        </section>
 
-          <div className="offerGrid">
-            {offers.map((item) => (
-              <article className="offerCard" key={item.title}>
-                <div className="offerIcon">🍽</div>
-                <h3>{item.title}</h3>
-                <p>{item.text}</p>
-              </article>
-            ))}
+        <section className="section contentSection" id="about">
+          <div className="textBlock">
+            <p className="sectionLabel">About</p>
+            <h2>Fresh food, shared moments, and simple catering that works</h2>
+            <p>
+              Soulfood Fusion Catering is perfect for family celebrations,
+              private functions, birthdays, office lunches, and special events.
+              Our menu is built around crowd-pleasing dishes, shared trays, and
+              comforting meals that people enjoy together.
+            </p>
+            <p>
+              We focus on food that feels generous, flavorful, and easy to
+              serve, so your event feels smooth and enjoyable from start to
+              finish.
+            </p>
           </div>
         </section>
 
-        <section className="section">
-          <div className="serviceBanner">
-            <div>
-              <p className="sectionLabel">Service Details</p>
-              <h2>What can be included</h2>
-              <ul>
-                <li>Tray meals and group food packages</li>
-                <li>Shared mains and side selections</li>
-                <li>Family-style and event-style food setup</li>
-                <li>Flexible quantities for small or large groups</li>
-                <li>Phone-based inquiries for custom requests</li>
-              </ul>
+        <section className="section contentSection" id="menus">
+          <div className="textBlock">
+            <p className="sectionLabel">Menus</p>
+            <h2>Catering menu options for different events</h2>
+            <p>
+              We can prepare catering selections based on your guest count,
+              event type, and preferred dishes. Popular catering choices include
+              grilled dishes, shared mains, noodle trays, rice trays, sides, and
+              house favorites.
+            </p>
+          </div>
+
+          <div className="menuGrid">
+            <article className="menuCard">
+              <h3>Party Catering</h3>
+              <p>
+                Great for birthdays, family lunches, celebrations, and private
+                gatherings.
+              </p>
+            </article>
+
+            <article className="menuCard">
+              <h3>Office Catering</h3>
+              <p>
+                Ideal for meetings, work lunches, staff food trays, and group
+                meal setups.
+              </p>
+            </article>
+
+            <article className="menuCard">
+              <h3>Custom Event Catering</h3>
+              <p>
+                Flexible options based on your event size, food style, and
+                service needs.
+              </p>
+            </article>
+          </div>
+        </section>
+
+        <section className="section contentSection" id="gallery">
+          <div className="textBlock">
+            <p className="sectionLabel">Gallery</p>
+            <h2>Food made for sharing</h2>
+            <p>
+              A simple look at the kind of dishes and catering presentation
+              available for your next event.
+            </p>
+          </div>
+
+          <div className="galleryGrid">
+            <img
+              src="/images/menu/filo-bbq-ribs.jpg"
+              alt="Filo BBQ Ribs"
+            />
+            <img
+              src="/images/menu/grilled-chicken-inasal.jpg"
+              alt="Grilled Chicken Inasal"
+            />
+            <img
+              src="/images/menu/pinoy-barbeque-skewers.jpg"
+              alt="Pinoy Barbeque Skewers"
+            />
+            <img
+              src="/images/menu/crispy-pork-belly-bagnet.jpg"
+              alt="Crispy Pork Belly"
+            />
+          </div>
+        </section>
+
+        <section className="section contentSection">
+          <div className="textBlock">
+            <p className="sectionLabel">Testimonials</p>
+            <h2>What customers can expect</h2>
+          </div>
+
+          <div className="testimonialGrid">
+            <article className="testimonialCard">
+              <p>
+                “Fresh food, generous servings, and warm service that made the
+                event feel easy and enjoyable.”
+              </p>
+            </article>
+
+            <article className="testimonialCard">
+              <p>
+                “Great catering option for family events and special occasions.
+                The food was full of flavor and perfect for sharing.”
+              </p>
+            </article>
+
+            <article className="testimonialCard">
+              <p>
+                “A simple and reliable choice for group food trays and event
+                meals in Bendigo.”
+              </p>
+            </article>
+          </div>
+        </section>
+
+        <section className="section contentSection" id="contact">
+          <div className="textBlock">
+            <p className="sectionLabel">Contact</p>
+            <h2>Get in touch about your event</h2>
+            <p>
+              Contact Soulfood Fusion Catering to discuss guest numbers, event
+              date, food options, and catering requirements.
+            </p>
+          </div>
+
+          <div className="contactGrid">
+            <div className="contactCard">
+              <p><strong>Phone</strong></p>
+              <p>+61 403 036 727</p>
             </div>
-            <div className="serviceIcon">🥘</div>
-          </div>
-        </section>
 
-        <section className="section" id="portfolio">
-          <div className="sectionIntro center">
-            <p className="sectionLabel">Portfolio</p>
-            <h2>Sample catering service showcase</h2>
-            <p>
-              Use this section to show the kind of events and food setup you
-              offer. You can later replace these with real catering photos.
-            </p>
-          </div>
-
-          <div className="portfolioGrid">
-            {portfolio.map((item) => (
-              <article className="portfolioCard" key={item.title}>
-                <div className="portfolioImage">
-                  <img src={item.image} alt={item.title} />
-                </div>
-                <div className="portfolioBody">
-                  <h3>{item.title}</h3>
-                  <p>{item.text}</p>
-                </div>
-              </article>
-            ))}
-          </div>
-        </section>
-
-        <section className="section">
-          <div className="contactCard">
-            <p className="sectionLabel">Catering Inquiry</p>
-            <h2>Need catering for your event?</h2>
-            <p>
-              Call us directly to discuss guest count, food selections, and your
-              preferred event date.
-            </p>
-
-            <div className="contactActions">
-              <a href="tel:+61403036727" className="primaryBtn">
-                📞 Call +61 403 036 727
-              </a>
-              <a href="mailto:soulfoodfusionhouse@gmail.com" className="secondaryBtn">
-                ✉️ Email Us
-              </a>
-              <a href={mapLink} target="_blank" rel="noreferrer" className="menuBtn darkText">
-                📍 Find Us
-              </a>
+            <div className="contactCard">
+              <p><strong>Email</strong></p>
+              <p>soulfoodfusionhouse@gmail.com</p>
             </div>
+
+            <div className="contactCard">
+              <p><strong>Address</strong></p>
+              <p>8 High St, Bendigo VIC 3550, Australia</p>
+            </div>
+          </div>
+
+          <div className="contactButtons">
+            <a href="tel:+61403036727" className="primaryBtn">
+              Call Now
+            </a>
+            <a
+              href="mailto:soulfoodfusionhouse@gmail.com"
+              className="secondaryBtn"
+            >
+              Email Us
+            </a>
+            <a
+              href={mapLink}
+              target="_blank"
+              rel="noreferrer"
+              className="secondaryBtn"
+            >
+              Open Map
+            </a>
+          </div>
+        </section>
+
+        <section className="section contentSection">
+          <div className="textBlock">
+            <p className="sectionLabel">Policies</p>
+            <h2>Catering notes</h2>
+            <p>
+              Catering orders are best discussed in advance so we can confirm
+              availability, menu selection, guest numbers, and pickup or event
+              arrangements. For larger functions, direct phone contact is
+              recommended.
+            </p>
           </div>
         </section>
       </main>
+
+      <footer className="footer">
+        <p>Soulfood Fusion Catering</p>
+        <div className="footerLinks">
+          <a href="#about">About</a>
+          <a href="#menus">Menus</a>
+          <a href="#gallery">Gallery</a>
+          <a href="#contact">Contact</a>
+        </div>
+      </footer>
 
       <style jsx global>{`
         * {
           box-sizing: border-box;
         }
 
+        html {
+          scroll-behavior: smooth;
+        }
+
         body {
           margin: 0;
           font-family: Arial, sans-serif;
-          background: #f8f4ee;
-          color: #2b1c15;
+          background: #faf7f2;
+          color: #2a1c15;
         }
 
         a {
@@ -228,9 +295,8 @@ export default function CateringPage() {
           justify-content: space-between;
           align-items: center;
           padding: 18px 28px;
-          background: rgba(17, 10, 8, 0.88);
-          backdrop-filter: blur(10px);
-          border-bottom: 1px solid rgba(212, 174, 112, 0.18);
+          background: #22150f;
+          border-bottom: 1px solid rgba(255, 255, 255, 0.08);
           flex-wrap: wrap;
           gap: 14px;
         }
@@ -248,11 +314,11 @@ export default function CateringPage() {
         }
 
         .logo {
-          width: 52px;
-          height: 52px;
+          width: 50px;
+          height: 50px;
           object-fit: contain;
-          border-radius: 12px;
-          background: white;
+          border-radius: 10px;
+          background: #fff;
           padding: 4px;
         }
 
@@ -263,228 +329,223 @@ export default function CateringPage() {
           flex-wrap: wrap;
         }
 
-        .menuBtn,
-        .reviewBtn,
-        .cateringBtn,
-        .primaryBtn,
-        .secondaryBtn {
-          padding: 12px 18px;
-          border-radius: 999px;
-          font-weight: 700;
-          display: inline-block;
-        }
-
-        .menuBtn {
-          background: rgba(255, 255, 255, 0.1);
-          border: 1px solid rgba(255, 255, 255, 0.18);
-          color: #fff4e8 !important;
-        }
-
-        .reviewBtn {
-          background: #3a2a20;
-          color: #fff4e8 !important;
-        }
-
-        .cateringBtn {
-          background: linear-gradient(135deg, #8a1f1f, #c24b3f);
-          color: #fff9f4 !important;
-        }
-
-        .primaryBtn {
-          background: linear-gradient(135deg, #c79356, #ebce97);
-          color: #1e120d;
-        }
-
-        .secondaryBtn {
-          background: #fff;
-          color: #3b261b;
-          border: 1px solid #dcc7af;
+        .page {
+          max-width: 1200px;
+          margin: 0 auto;
+          padding-bottom: 60px;
         }
 
         .hero {
           position: relative;
-          min-height: 65vh;
+          min-height: 75vh;
+          margin: 0 28px;
+          background: url("/images/menu/grilled-chicken-inasal.jpg") center/cover
+            no-repeat;
           display: flex;
           align-items: center;
-          padding: 90px 28px;
-          background: url("/images/menu/pinoy-barbeque-skewers.jpg") center/cover no-repeat;
-          overflow: hidden;
         }
 
         .heroOverlay {
           position: absolute;
           inset: 0;
-          background: linear-gradient(
-            90deg,
-            rgba(17, 10, 8, 0.84) 0%,
-            rgba(17, 10, 8, 0.58) 45%,
-            rgba(17, 10, 8, 0.3) 100%
-          );
+          background: rgba(20, 10, 6, 0.45);
         }
 
         .heroContent {
           position: relative;
           z-index: 2;
           max-width: 760px;
+          padding: 42px;
+          color: #fff8f0;
         }
 
         .eyebrow,
         .sectionLabel {
           text-transform: uppercase;
-          letter-spacing: 0.18em;
+          letter-spacing: 0.16em;
           font-size: 0.78rem;
           font-weight: 700;
-          color: #d8b27d;
+          color: #e2bf8e;
         }
 
-        .hero h1 {
-          font-size: clamp(2.6rem, 6vw, 5rem);
-          line-height: 1;
-          margin: 18px 0;
-          color: #fff8f0;
+        .sectionLabel {
+          color: #b57a39;
         }
 
-        .heroText {
-          color: #f2e6d8;
-          font-size: 1.08rem;
+        .heroContent h1 {
+          font-size: clamp(2.4rem, 5vw, 4.8rem);
+          line-height: 1.03;
+          margin: 12px 0 16px;
+        }
+
+        .heroContent p {
           line-height: 1.8;
-          max-width: 650px;
+          font-size: 1.05rem;
+          max-width: 640px;
         }
 
-        .heroActions,
-        .contactActions {
+        .heroButtons,
+        .contactButtons {
           display: flex;
           gap: 12px;
           flex-wrap: wrap;
-          margin-top: 26px;
+          margin-top: 24px;
+        }
+
+        .primaryBtn,
+        .secondaryBtn {
+          display: inline-block;
+          padding: 12px 18px;
+          border-radius: 999px;
+          font-weight: 700;
+        }
+
+        .primaryBtn {
+          background: #c79356;
+          color: #1e120d;
+        }
+
+        .secondaryBtn {
+          background: #fff;
+          color: #2a1c15;
+          border: 1px solid #ddd0bf;
         }
 
         .section {
-          max-width: 1280px;
-          margin: 0 auto;
-          padding: 82px 28px;
+          padding: 60px 28px 0;
         }
 
-        .sectionIntro.center {
-          text-align: center;
+        .introSection {
+          padding-top: 36px;
+        }
+
+        .introText {
           max-width: 860px;
-          margin: 0 auto 36px;
+          margin: 0 auto;
+          text-align: center;
+          font-size: 1.15rem;
+          line-height: 1.9;
+          color: #5f4a3d;
         }
 
-        .sectionIntro h2 {
-          font-size: clamp(2rem, 4vw, 3.2rem);
-          margin: 12px 0;
+        .contentSection {
+          max-width: 980px;
+          margin: 0 auto;
+        }
+
+        .textBlock {
+          max-width: 760px;
+          margin: 0 auto 28px;
+          text-align: center;
+        }
+
+        .textBlock h2 {
+          font-size: clamp(1.9rem, 4vw, 3rem);
+          margin: 10px 0 14px;
           color: #2e1d15;
         }
 
-        .sectionIntro p {
+        .textBlock p {
+          line-height: 1.85;
           color: #6f5a49;
-          line-height: 1.8;
         }
 
-        .offerGrid,
-        .portfolioGrid {
+        .menuGrid,
+        .testimonialGrid,
+        .contactGrid,
+        .galleryGrid {
           display: grid;
+          gap: 22px;
+        }
+
+        .menuGrid {
+          grid-template-columns: repeat(3, 1fr);
+        }
+
+        .testimonialGrid {
+          grid-template-columns: repeat(3, 1fr);
+        }
+
+        .contactGrid {
+          grid-template-columns: repeat(3, 1fr);
+        }
+
+        .galleryGrid {
           grid-template-columns: repeat(4, 1fr);
-          gap: 24px;
         }
 
-        .offerCard,
-        .portfolioCard,
+        .menuCard,
+        .testimonialCard,
         .contactCard {
-          background: linear-gradient(180deg, #ffffff, #f8efe3);
-          border: 1px solid #ead7bf;
-          border-radius: 24px;
-          padding: 26px;
-          box-shadow: 0 16px 40px rgba(53, 31, 18, 0.06);
+          background: #fff;
+          border: 1px solid #eadcc8;
+          padding: 24px;
         }
 
-        .offerIcon {
-          font-size: 2.5rem;
-          margin-bottom: 12px;
-        }
-
-        .offerCard h3,
-        .portfolioBody h3,
-        .contactCard h2 {
-          color: #332116;
+        .menuCard h3,
+        .contactCard p:first-child {
           margin-top: 0;
+          color: #332116;
         }
 
-        .offerCard p,
-        .portfolioBody p,
+        .menuCard p,
+        .testimonialCard p,
         .contactCard p {
           color: #6f5a49;
           line-height: 1.75;
+          margin-bottom: 0;
         }
 
-        .serviceBanner {
-          display: grid;
-          grid-template-columns: 1.2fr 0.8fr;
-          gap: 24px;
-          align-items: center;
-          background: linear-gradient(135deg, #fff6ef, #f5e3d4);
-          border: 1px solid #ead7bf;
-          border-radius: 28px;
-          padding: 32px;
-          box-shadow: 0 18px 42px rgba(53, 31, 18, 0.08);
-        }
-
-        .serviceBanner h2 {
-          margin: 12px 0;
-          color: #2e1d15;
-        }
-
-        .serviceBanner ul {
-          margin: 0;
-          padding-left: 20px;
-          color: #6f5a49;
-          line-height: 1.8;
-        }
-
-        .serviceIcon {
-          font-size: 5rem;
-          text-align: center;
-        }
-
-        .portfolioCard {
-          padding: 0;
-          overflow: hidden;
-        }
-
-        .portfolioImage {
-          height: 240px;
-        }
-
-        .portfolioImage img {
-          height: 100%;
+        .galleryGrid img {
+          height: 260px;
           object-fit: cover;
         }
 
-        .portfolioBody {
-          padding: 22px;
+        .footer {
+          max-width: 1200px;
+          margin: 0 auto;
+          padding: 30px 28px;
+          display: flex;
+          justify-content: space-between;
+          gap: 18px;
+          flex-wrap: wrap;
+          border-top: 1px solid #eadcc8;
+          color: #6f5a49;
         }
 
-        .darkText {
-          color: #2b1c15 !important;
+        .footerLinks {
+          display: flex;
+          gap: 14px;
+          flex-wrap: wrap;
         }
 
-        @media (max-width: 980px) {
-          .offerGrid,
-          .portfolioGrid,
-          .serviceBanner {
+        .footer a {
+          color: #3a2418;
+          font-weight: 700;
+        }
+
+        @media (max-width: 900px) {
+          .menuGrid,
+          .testimonialGrid,
+          .contactGrid,
+          .galleryGrid {
             grid-template-columns: 1fr;
-          }
-
-          .topbar,
-          .section {
-            padding-left: 18px;
-            padding-right: 18px;
           }
 
           .hero {
             min-height: auto;
-            padding: 80px 18px;
+            margin: 0 18px;
+          }
+
+          .heroContent,
+          .section,
+          .footer {
+            padding-left: 18px;
+            padding-right: 18px;
+          }
+
+          .topbar {
+            padding: 16px 18px;
           }
         }
       `}</style>
