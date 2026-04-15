@@ -12,13 +12,43 @@ export default function ConsultationPage() {
     notes: "",
   });
 
+  const [loading, setLoading] = useState(false);
+  const [submitted, setSubmitted] = useState(false);
+  const [requestId, setRequestId] = useState("");
+
   function handleChange(e) {
     setForm({ ...form, [e.target.name]: e.target.value });
   }
 
-  function handleSubmit(e) {
+  async function handleSubmit(e) {
     e.preventDefault();
-    alert("Consultation request form saved. Next step: connect this to consultant app.");
+    setLoading(true);
+
+    try {
+      const res = await fetch("/api/create-consultation-request", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify(form),
+      });
+
+      const data = await res.json();
+
+      if (!res.ok) {
+        alert(data.error || "Failed to submit consultation request");
+        setLoading(false);
+        return;
+      }
+
+      setSubmitted(true);
+      setRequestId(data.request.id);
+    } catch (error) {
+      console.error(error);
+      alert("Something went wrong.");
+    } finally {
+      setLoading(false);
+    }
   }
 
   return (
@@ -46,64 +76,84 @@ export default function ConsultationPage() {
 
         <section className="formSection">
           <div className="formCard">
-            <h2>Consultation Request</h2>
+            {!submitted ? (
+              <>
+                <h2>Consultation Request</h2>
 
-            <form onSubmit={handleSubmit} className="formGrid">
-              <input
-                type="text"
-                name="fullName"
-                placeholder="Full name"
-                value={form.fullName}
-                onChange={handleChange}
-                required
-              />
+                <form onSubmit={handleSubmit} className="formGrid">
+                  <input
+                    type="text"
+                    name="fullName"
+                    placeholder="Full name"
+                    value={form.fullName}
+                    onChange={handleChange}
+                    required
+                  />
 
-              <input
-                type="tel"
-                name="phone"
-                placeholder="Phone number"
-                value={form.phone}
-                onChange={handleChange}
-                required
-              />
+                  <input
+                    type="tel"
+                    name="phone"
+                    placeholder="Phone number"
+                    value={form.phone}
+                    onChange={handleChange}
+                    required
+                  />
 
-              <input
-                type="email"
-                name="email"
-                placeholder="Email address"
-                value={form.email}
-                onChange={handleChange}
-                required
-              />
+                  <input
+                    type="email"
+                    name="email"
+                    placeholder="Email address"
+                    value={form.email}
+                    onChange={handleChange}
+                    required
+                  />
 
-              <input
-                type="text"
-                name="eventType"
-                placeholder="Event type"
-                value={form.eventType}
-                onChange={handleChange}
-                required
-              />
+                  <input
+                    type="text"
+                    name="eventType"
+                    placeholder="Event type"
+                    value={form.eventType}
+                    onChange={handleChange}
+                    required
+                  />
 
-              <input
-                type="text"
-                name="eventDate"
-                placeholder="Event date"
-                value={form.eventDate}
-                onChange={handleChange}
-                required
-              />
+                  <input
+                    type="text"
+                    name="eventDate"
+                    placeholder="Event date"
+                    value={form.eventDate}
+                    onChange={handleChange}
+                    required
+                  />
 
-              <textarea
-                name="notes"
-                placeholder="Tell us about your event"
-                value={form.notes}
-                onChange={handleChange}
-                rows="6"
-              />
+                  <textarea
+                    name="notes"
+                    placeholder="Tell us about your event"
+                    value={form.notes}
+                    onChange={handleChange}
+                    rows="6"
+                  />
 
-              <button type="submit">Request Free Consultation</button>
-            </form>
+                  <button type="submit" disabled={loading}>
+                    {loading ? "Submitting..." : "Request Free Consultation"}
+                  </button>
+                </form>
+              </>
+            ) : (
+              <div className="successBox">
+                <h2>Consultation request received</h2>
+                <p>
+                  Your request has been submitted successfully.
+                </p>
+                <p>
+                  <strong>Request ID:</strong> {requestId}
+                </p>
+                <p>
+                  Next step: connect this request to the consultant phone app so
+                  the consultant can receive and answer it.
+                </p>
+              </div>
+            )}
 
             <div className="backLink">
               <Link href="/catering">← Back to Catering</Link>
@@ -199,6 +249,20 @@ export default function ConsultationPage() {
           font-size: 0.95rem;
           font-weight: 600;
           cursor: pointer;
+        }
+
+        .formGrid button:disabled {
+          opacity: 0.7;
+          cursor: not-allowed;
+        }
+
+        .successBox {
+          padding: 6px 0;
+        }
+
+        .successBox p {
+          line-height: 1.8;
+          color: #6f5a49;
         }
 
         .backLink {
