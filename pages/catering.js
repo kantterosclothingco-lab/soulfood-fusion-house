@@ -61,6 +61,9 @@ export default function CateringPage() {
               <a href="#contact" className="secondaryBtn">
                 Contact
               </a>
+              <Link href="/consultation" className="consultBtn">
+                Free Consultation
+              </Link>
             </div>
           </div>
         </section>
@@ -347,9 +350,7 @@ export default function CateringPage() {
 
             <article className="menuCard">
               <h3>Platter Menu</h3>
-              <p>
-                Fruit Platter, Antipasto, Canapes.
-              </p>
+              <p>Fruit Platter, Antipasto, Canapes.</p>
               <p className="smallText">
                 Fruit platter: seasonal fruit slice and arranged beautifully in
                 a platter.
@@ -472,7 +473,7 @@ export default function CateringPage() {
           <div className="contactGrid">
             <div className="contactCard">
               <p className="contactLabel">Phone</p>
-              <p>+61 403 036 727</p>
+              <p>2413326097</p>
             </div>
 
             <div className="contactCard">
@@ -487,7 +488,7 @@ export default function CateringPage() {
           </div>
 
           <div className="contactButtons">
-            <a href="tel:+61 403 036 727" className="primaryBtn">
+            <a href="tel:2413326097" className="primaryBtn">
               Call Now
             </a>
             <a
@@ -504,6 +505,9 @@ export default function CateringPage() {
             >
               Open Map
             </a>
+            <Link href="/consultation" className="consultBtn">
+              Free Consultation
+            </Link>
           </div>
         </section>
       </main>
@@ -635,7 +639,8 @@ export default function CateringPage() {
         }
 
         .primaryBtn,
-        .secondaryBtn {
+        .secondaryBtn,
+        .consultBtn {
           display: inline-block;
           padding: 12px 20px;
           border-radius: 999px;
@@ -652,6 +657,12 @@ export default function CateringPage() {
           border: 1px solid #d5c6b4;
           color: #2a1c15;
           background: #ffffff;
+        }
+
+        .consultBtn {
+          background: #2f4f3e;
+          color: #ffffff;
+          border: 1px solid #2f4f3e;
         }
 
         .section {
