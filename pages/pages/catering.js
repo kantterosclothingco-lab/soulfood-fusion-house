@@ -39,7 +39,18 @@ export default function CateringPage() {
 
       <main className="page">
         <section className="hero">
+          <video
+            className="heroVideo"
+            autoPlay
+            muted
+            loop
+            playsInline
+          >
+            <source src="/videos/catering.mp4" type="video/mp4" />
+          </video>
+
           <div className="heroOverlay" />
+
           <div className="heroContent">
             <p className="eyebrow">Soulfood Fusion Catering</p>
             <h1>
@@ -49,7 +60,7 @@ export default function CateringPage() {
             <p>
               Soulfood Fusion Catering brings together flavorful food, generous
               shared meals, and friendly service for birthdays, private events,
-              office catering, and special occasions.
+              and special occasions.
             </p>
 
             <div className="heroButtons">
@@ -339,16 +350,23 @@ export default function CateringPage() {
           position: relative;
           min-height: 75vh;
           margin: 0 28px;
-          background: url("/images/menu/grilled-chicken-inasal.jpg") center/cover
-            no-repeat;
+          overflow: hidden;
           display: flex;
           align-items: center;
+        }
+
+        .heroVideo {
+          position: absolute;
+          inset: 0;
+          width: 100%;
+          height: 100%;
+          object-fit: cover;
         }
 
         .heroOverlay {
           position: absolute;
           inset: 0;
-          background: rgba(20, 10, 6, 0.45);
+          background: rgba(20, 10, 6, 0.55);
         }
 
         .heroContent {
