@@ -95,6 +95,7 @@ export default function ConsultantPage() {
                       <p><strong>Event Date:</strong> {request.eventDate}</p>
                       <p><strong>Notes:</strong> {request.notes || "No notes"}</p>
                       <p><strong>Created:</strong> {request.createdAt}</p>
+                      <p><strong>Room:</strong> {request.roomId}</p>
                     </div>
 
                     <div className="requestActions">
@@ -120,6 +121,12 @@ export default function ConsultantPage() {
                       >
                         Ringing
                       </button>
+
+                      {request.roomUrl && (
+                        <a href={request.roomUrl} className="openRoomBtn">
+                          Open Room
+                        </a>
+                      )}
                     </div>
                   </article>
                 ))}
@@ -241,13 +248,16 @@ export default function ConsultantPage() {
           flex-wrap: wrap;
         }
 
-        .requestActions button {
+        .requestActions button,
+        .openRoomBtn {
           border: none;
           background: #c79356;
           color: #1e120d;
           padding: 10px 16px;
           font-weight: 600;
           cursor: pointer;
+          text-decoration: none;
+          display: inline-block;
         }
 
         .requestActions .secondary {
@@ -258,6 +268,11 @@ export default function ConsultantPage() {
         .requestActions .tertiary {
           background: #e3efe8;
           color: #244631;
+        }
+
+        .openRoomBtn {
+          background: #2f4f3e;
+          color: white;
         }
       `}</style>
     </>
