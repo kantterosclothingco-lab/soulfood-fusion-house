@@ -16,6 +16,7 @@ export default function ConsultationPage() {
   const [submitted, setSubmitted] = useState(false);
   const [requestId, setRequestId] = useState("");
   const [status, setStatus] = useState("waiting");
+  const [roomUrl, setRoomUrl] = useState("");
 
   function handleChange(e) {
     setForm({ ...form, [e.target.name]: e.target.value });
@@ -45,6 +46,7 @@ export default function ConsultationPage() {
       setSubmitted(true);
       setRequestId(data.request.id);
       setStatus(data.request.status);
+      setRoomUrl(data.request.roomUrl);
     } catch (error) {
       console.error(error);
       alert("Something went wrong.");
@@ -67,6 +69,7 @@ export default function ConsultationPage() {
 
         if (currentRequest) {
           setStatus(currentRequest.status);
+          setRoomUrl(currentRequest.roomUrl || "");
         }
       } catch (error) {
         console.error(error);
@@ -177,22 +180,22 @@ export default function ConsultationPage() {
                 </div>
 
                 {status === "waiting" && (
-                  <p>
-                    Your consultation request is waiting for a consultant.
-                  </p>
+                  <p>Your consultation request is waiting for a consultant.</p>
                 )}
 
                 {status === "ringing" && (
-                  <p>
-                    A consultant is being notified now. Please stay on this page.
-                  </p>
+                  <p>A consultant is being notified now. Please stay on this page.</p>
                 )}
 
                 {status === "answered" && (
-                  <p>
-                    A consultant has answered. Next step: connect both sides into
-                    the video call room.
-                  </p>
+                  <div className="joinBox">
+                    <p>A consultant has answered your request.</p>
+                    {roomUrl && (
+                      <a href={roomUrl} className="joinBtn">
+                        Join Consultation Room
+                      </a>
+                    )}
+                  </div>
                 )}
 
                 {status === "declined" && (
@@ -290,7 +293,8 @@ export default function ConsultationPage() {
           color: #2a1c15;
         }
 
-        .formGrid button {
+        .formGrid button,
+        .joinBtn {
           border: none;
           background: #c79356;
           color: #1e120d;
@@ -298,6 +302,8 @@ export default function ConsultationPage() {
           font-size: 0.95rem;
           font-weight: 600;
           cursor: pointer;
+          text-decoration: none;
+          display: inline-block;
         }
 
         .formGrid button:disabled {
@@ -349,6 +355,10 @@ export default function ConsultationPage() {
         .statusPill.declined {
           background: #f7e2e2;
           color: #7a2e2e;
+        }
+
+        .joinBox {
+          margin-top: 10px;
         }
 
         .backLink {
