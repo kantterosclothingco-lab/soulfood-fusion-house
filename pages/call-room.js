@@ -4,13 +4,25 @@ import io from "socket.io-client";
 
 export default function CallRoom() {
   const router = useRouter();
-  const { roomId, role, autostart, requestId } = router.query;
+  const {
+    roomId,
+    role,
+    autostart,
+    requestId,
+    fullName,
+    phone,
+    email,
+    eventType,
+    eventDate,
+    notes,
+  } = router.query;
 
   const socketRef = useRef(null);
   const peerConnectionRef = useRef(null);
   const localStreamRef = useRef(null);
   const remoteStreamRef = useRef(null);
-  const callStartLoggedRef = useRef(false);
+  const leavingRef = useRef(false);
+  const joinedRef = useRef(false);
 
   const localVideoRef = useRef(null);
   const remoteVideoRef = useRef(null);
@@ -60,11 +72,21 @@ export default function CallRoom() {
       }
     });
 
-    socket.on("user-left", () => {
+    socket.on("user-left", async () => {
       setRemoteConnected(false);
-      setStatusText("Other participant left");
+      setStatusText("Other participant ended the call");
       setCallEnded(true);
-      logCallEnded("other-participant-left");
+
+      await logCallEnded("other-participant-left");
+      cleanup();
+
+      setTimeout(() => {
+        if (role === "consultant") {
+          window.location.href = "/consultant-app";
+        } else {
+          window.location.href = "/?review=1";
+        }
+      }, 1200);
     });
 
     socket.on("webrtc-offer", async ({ offer }) => {
@@ -100,14 +122,35 @@ export default function CallRoom() {
       }
     });
 
+    const handleBeforeUnload = () => {
+      if (socketRef.current && joinedRef.current && roomId && !leavingRef.current) {
+        socketRef.current.emit("leave-room", {
+          roomId,
+          reason: "page-close",
+        });
+      }
+    };
+
+    window.addEventListener("beforeunload", handleBeforeUnload);
+
     return () => {
+      window.removeEventListener("beforeunload", handleBeforeUnload);
+
+      if (socketRef.current && joinedRef.current && roomId && !leavingRef.current) {
+        socketRef.current.emit("leave-room", {
+          roomId,
+          reason: "component-unmount",
+        });
+      }
+
       if (socketRef.current) {
         socketRef.current.disconnect();
       }
+
       cleanup();
       socketRef.current = null;
     };
-  }, [router.isReady, roomId, role]);
+  }, [router.isReady, roomId, role, facingMode]);
 
   useEffect(() => {
     if (!router.isReady || !roomId || !ready || joined) return;
@@ -200,14 +243,8 @@ export default function CallRoom() {
         });
 
         await attachVideo(remoteVideoRef.current, remoteStream, false);
-
         setRemoteConnected(true);
         setStatusText("Connected");
-
-        if (!callStartLoggedRef.current) {
-          logCallStarted();
-          callStartLoggedRef.current = true;
-        }
       };
 
       pc.onicecandidate = (event) => {
@@ -223,11 +260,6 @@ export default function CallRoom() {
         if (pc.connectionState === "connected") {
           setRemoteConnected(true);
           setStatusText("Connected");
-
-          if (!callStartLoggedRef.current) {
-            logCallStarted();
-            callStartLoggedRef.current = true;
-          }
         }
 
         if (
@@ -283,6 +315,7 @@ export default function CallRoom() {
         userType: role || "user",
       });
 
+      joinedRef.current = true;
       setStatusText("Joining...");
       setJoined(true);
     } catch (err) {
@@ -355,27 +388,7 @@ export default function CallRoom() {
     }
   }
 
-  async function logCallStarted() {
-    try {
-      await fetch("/api/call-records", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json"
-        },
-        body: JSON.stringify({
-          requestId: requestId || "",
-          roomId,
-          role: role || "user",
-          event: "started",
-          time: new Date().toISOString(),
-        }),
-      });
-    } catch (err) {
-      console.error("Failed to log call start:", err);
-    }
-  }
-
-  async function logCallEnded(reason = "ended") {
+  async function logCallEnded(eventName) {
     try {
       await fetch("/api/call-records", {
         method: "PATCH",
@@ -384,10 +397,16 @@ export default function CallRoom() {
         },
         body: JSON.stringify({
           requestId: requestId || "",
-          roomId,
-          role: role || "user",
-          event: reason,
+          roomId: roomId || "",
+          role: role || "",
+          event: eventName,
           time: new Date().toISOString(),
+          fullName: fullName || "",
+          phone: phone || "",
+          email: email || "",
+          eventType: eventType || "",
+          eventDate: eventDate || "",
+          notes: notes || "",
         }),
       });
     } catch (err) {
@@ -396,16 +415,28 @@ export default function CallRoom() {
   }
 
   async function leaveCall() {
+    leavingRef.current = true;
+
     await logCallEnded("ended-by-user");
 
-    if (socketRef.current) {
-      socketRef.current.disconnect();
+    if (socketRef.current && roomId) {
+      socketRef.current.emit("leave-room", {
+        roomId,
+        reason: "ended-by-user",
+      });
     }
 
     cleanup();
     setJoined(false);
-    setStatusText("Call ended");
     setCallEnded(true);
+
+    setTimeout(() => {
+      if (role === "consultant") {
+        window.location.href = "/consultant-app";
+      } else {
+        window.location.href = "/?review=1";
+      }
+    }, 800);
   }
 
   function cleanup() {
@@ -423,112 +454,8 @@ export default function CallRoom() {
       remoteStreamRef.current.getTracks().forEach((track) => track.stop());
       remoteStreamRef.current = null;
     }
-  }
 
-  if (callEnded && role === "consultant") {
-    return (
-      <div className="postCallScreen">
-        <div className="postCard">
-          <h1>Call ended</h1>
-          <p>Returning to consultant dashboard…</p>
-          <a className="primaryBtn" href="/consultant-app">Back to Dashboard</a>
-        </div>
-
-        <style jsx>{`
-          .postCallScreen {
-            min-height: 100vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            background: #101114;
-            color: white;
-            font-family: Inter, Arial, sans-serif;
-            padding: 24px;
-          }
-          .postCard {
-            width: 100%;
-            max-width: 420px;
-            padding: 28px;
-            border-radius: 24px;
-            background: rgba(255,255,255,0.06);
-            text-align: center;
-          }
-          .primaryBtn {
-            display: inline-block;
-            margin-top: 16px;
-            padding: 14px 18px;
-            border-radius: 999px;
-            background: #23c46e;
-            color: white;
-            text-decoration: none;
-            font-weight: 700;
-          }
-        `}</style>
-      </div>
-    );
-  }
-
-  if (callEnded && role === "customer") {
-    return (
-      <div className="postCallScreen">
-        <div className="postCard">
-          <h1>Thank you for your call</h1>
-          <p>We’d love your feedback.</p>
-          <div className="btnRow">
-            <a className="primaryBtn" href="https://www.google.com/search?q=Soulfood+Fusion+House+review" target="_blank" rel="noreferrer">
-              Rate us!
-            </a>
-            <a className="secondaryBtn" href="/">
-              Back to Home
-            </a>
-          </div>
-        </div>
-
-        <style jsx>{`
-          .postCallScreen {
-            min-height: 100vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            background: #101114;
-            color: white;
-            font-family: Inter, Arial, sans-serif;
-            padding: 24px;
-          }
-          .postCard {
-            width: 100%;
-            max-width: 420px;
-            padding: 28px;
-            border-radius: 24px;
-            background: rgba(255,255,255,0.06);
-            text-align: center;
-          }
-          .btnRow {
-            display: flex;
-            gap: 12px;
-            justify-content: center;
-            margin-top: 16px;
-            flex-wrap: wrap;
-          }
-          .primaryBtn,
-          .secondaryBtn {
-            display: inline-block;
-            padding: 14px 18px;
-            border-radius: 999px;
-            text-decoration: none;
-            font-weight: 700;
-          }
-          .primaryBtn {
-            background: #23c46e;
-            color: white;
-          }
-          .secondaryBtn {
-            background: rgba(255,255,255,0.12);
-            color: white;
-          }
-        `}</style>
-      </div>
-    );
+    joinedRef.current = false;
   }
 
   return (
@@ -784,29 +711,6 @@ export default function CallRoom() {
         .endBtn {
           background: #db3d35;
           color: #fff;
-        }
-
-        @media (max-width: 520px) {
-          .controlsBar {
-            gap: 8px;
-            padding: 12px 10px;
-          }
-
-          .controlBtn,
-          .endBtn {
-            min-width: 66px;
-            font-size: 12px;
-            padding: 12px 10px;
-          }
-
-          .localPreviewWrap {
-            width: 96px;
-            height: 146px;
-          }
-
-          .topOverlay h1 {
-            font-size: 24px;
-          }
         }
       `}</style>
     </div>
