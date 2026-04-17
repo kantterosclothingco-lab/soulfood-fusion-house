@@ -9,6 +9,12 @@ export default function handler(req, res) {
       role: req.body.role || "",
       event: req.body.event || "started",
       time: req.body.time || new Date().toISOString(),
+      fullName: req.body.fullName || "",
+      phone: req.body.phone || "",
+      email: req.body.email || "",
+      eventType: req.body.eventType || "",
+      eventDate: req.body.eventDate || "",
+      notes: req.body.notes || "",
     };
 
     callRecords.unshift(record);
@@ -24,6 +30,12 @@ export default function handler(req, res) {
       role: req.body.role || "",
       event: req.body.event || "ended",
       time: req.body.time || new Date().toISOString(),
+      fullName: req.body.fullName || "",
+      phone: req.body.phone || "",
+      email: req.body.email || "",
+      eventType: req.body.eventType || "",
+      eventDate: req.body.eventDate || "",
+      notes: req.body.notes || "",
     };
 
     callRecords.unshift(record);

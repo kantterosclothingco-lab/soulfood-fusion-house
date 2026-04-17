@@ -1,4 +1,5 @@
 import Head from "next/head";
+import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
 import io from "socket.io-client";
 
@@ -78,7 +79,21 @@ export default function ConsultantAppPage() {
       }
 
       setRinging(false);
-      window.location.href = `${WEBSITE_URL}${currentRequest.roomUrl}&role=consultant&autostart=1&requestId=${currentRequest.id}`;
+
+      const params = new URLSearchParams({
+        roomId: currentRequest.roomId,
+        role: "consultant",
+        autostart: "1",
+        requestId: currentRequest.id,
+        fullName: currentRequest.fullName || "",
+        phone: currentRequest.phone || "",
+        email: currentRequest.email || "",
+        eventType: currentRequest.eventType || "",
+        eventDate: currentRequest.eventDate || "",
+        notes: currentRequest.notes || "",
+      });
+
+      window.location.href = `${WEBSITE_URL}/call-room?${params.toString()}`;
     } catch (error) {
       console.error(error);
       alert("Failed to answer consultation.");
@@ -134,9 +149,16 @@ export default function ConsultantAppPage() {
                 <p className="label">Soulfood Consultant</p>
                 <h1>Ready for calls</h1>
               </div>
-              <div className="statusDotWrap">
-                <span className="statusDot" />
-                <span>Online</span>
+
+              <div className="topActions">
+                <div className="statusDotWrap">
+                  <span className="statusDot" />
+                  <span>Online</span>
+                </div>
+
+                <Link href="/call-records" className="recordsIconBtn" title="Call Records">
+                  📋
+                </Link>
               </div>
             </div>
 
@@ -215,6 +237,26 @@ export default function ConsultantAppPage() {
           align-items: center;
           gap: 16px;
           margin-bottom: 30px;
+        }
+
+        .topActions {
+          display: flex;
+          align-items: center;
+          gap: 12px;
+        }
+
+        .recordsIconBtn {
+          width: 44px;
+          height: 44px;
+          border-radius: 50%;
+          background: rgba(255,255,255,0.08);
+          display: inline-flex;
+          align-items: center;
+          justify-content: center;
+          text-decoration: none;
+          font-size: 20px;
+          color: white;
+          border: 1px solid rgba(255,255,255,0.08);
         }
 
         .label {

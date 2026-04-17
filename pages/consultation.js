@@ -20,6 +20,7 @@ export default function ConsultationPage() {
   const [requestId, setRequestId] = useState("");
   const [status, setStatus] = useState("waiting");
   const [roomUrl, setRoomUrl] = useState("");
+  const [requestData, setRequestData] = useState(null);
 
   function handleChange(e) {
     setForm({ ...form, [e.target.name]: e.target.value });
@@ -49,6 +50,7 @@ export default function ConsultationPage() {
       setRequestId(data.request.id);
       setStatus(data.request.status);
       setRoomUrl(data.request.roomUrl);
+      setRequestData(data.request);
 
       try {
         await fetch(`${CONSULTANT_SERVER_URL}/notify-consultants`, {
@@ -86,6 +88,7 @@ export default function ConsultationPage() {
         if (current) {
           setStatus(current.status);
           setRoomUrl(current.roomUrl || "");
+          setRequestData(current);
         }
       } catch (error) {
         console.error(error);
@@ -94,6 +97,11 @@ export default function ConsultationPage() {
 
     return () => clearInterval(interval);
   }, [requestId]);
+
+  const joinUrl =
+    requestData
+      ? `/call-room?roomId=${encodeURIComponent(requestData.roomId)}&role=customer&autostart=1&requestId=${encodeURIComponent(requestId)}&fullName=${encodeURIComponent(requestData.fullName || "")}&phone=${encodeURIComponent(requestData.phone || "")}&email=${encodeURIComponent(requestData.email || "")}&eventType=${encodeURIComponent(requestData.eventType || "")}&eventDate=${encodeURIComponent(requestData.eventDate || "")}&notes=${encodeURIComponent(requestData.notes || "")}`
+      : "#";
 
   return (
     <>
@@ -193,10 +201,7 @@ export default function ConsultationPage() {
                 {status === "waiting" && <p>Waiting for consultant...</p>}
 
                 {status === "answered" && (
-                  <a
-                    href={`${roomUrl}&role=customer&autostart=1&requestId=${requestId}`}
-                    className="joinBtn"
-                  >
+                  <a href={joinUrl} className="joinBtn">
                     Join Video Consultation
                   </a>
                 )}
