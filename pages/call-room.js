@@ -23,6 +23,7 @@ export default function CallRoom() {
   const remoteStreamRef = useRef(null);
   const joinedRef = useRef(false);
   const leavingRef = useRef(false);
+  const chatMessagesRef = useRef(null);
 
   const localVideoRef = useRef(null);
   const remoteVideoRef = useRef(null);
@@ -36,6 +37,10 @@ export default function CallRoom() {
   const [facingMode, setFacingMode] = useState("user");
   const [remoteConnected, setRemoteConnected] = useState(false);
   const [callEnded, setCallEnded] = useState(false);
+
+  const [showChat, setShowChat] = useState(false);
+  const [messages, setMessages] = useState([]);
+  const [chatInput, setChatInput] = useState("");
 
   useEffect(() => {
     if (!router.isReady || !roomId) return;
@@ -79,6 +84,17 @@ export default function CallRoom() {
       cleanup();
       setJoined(false);
       setCallEnded(true);
+    });
+
+    socket.on("chat-message", (data) => {
+      setMessages((prev) => [
+        ...prev,
+        {
+          message: data.message,
+          sender: data.sender,
+          time: data.time,
+        },
+      ]);
     });
 
     socket.on("webrtc-offer", async ({ offer }) => {
@@ -127,6 +143,11 @@ export default function CallRoom() {
     if (autostart !== "1") return;
     joinCall();
   }, [router.isReady, roomId, ready, autostart, joined]);
+
+  useEffect(() => {
+    if (!chatMessagesRef.current) return;
+    chatMessagesRef.current.scrollTop = chatMessagesRef.current.scrollHeight;
+  }, [messages]);
 
   async function getMediaStream(nextFacingMode = "user") {
     try {
@@ -346,6 +367,33 @@ export default function CallRoom() {
     } catch (err) {
       console.error(err);
       setError("Could not switch camera on this device/browser.");
+    }
+  }
+
+  function sendMessage() {
+    if (!chatInput.trim() || !socketRef.current || !roomId) return;
+
+    const newMessage = {
+      message: chatInput.trim(),
+      sender: role || "user",
+      time: new Date().toISOString(),
+    };
+
+    setMessages((prev) => [...prev, newMessage]);
+
+    socketRef.current.emit("chat-message", {
+      roomId,
+      message: chatInput.trim(),
+      sender: role || "user",
+    });
+
+    setChatInput("");
+  }
+
+  function handleChatKeyDown(e) {
+    if (e.key === "Enter") {
+      e.preventDefault();
+      sendMessage();
     }
   }
 
@@ -600,6 +648,61 @@ export default function CallRoom() {
             />
           </div>
 
+          <button
+            className="chatToggleBtn"
+            onClick={() => setShowChat(!showChat)}
+          >
+            💬
+          </button>
+
+          {showChat && (
+            <div className="chatPanel">
+              <div className="chatHeader">
+                <span>Live Chat</span>
+                <button
+                  className="chatCloseBtn"
+                  onClick={() => setShowChat(false)}
+                >
+                  ✕
+                </button>
+              </div>
+
+              <div className="chatMessages" ref={chatMessagesRef}>
+                {messages.length === 0 ? (
+                  <div className="emptyChat">No messages yet</div>
+                ) : (
+                  messages.map((msg, index) => (
+                    <div
+                      key={`${msg.time}-${index}`}
+                      className={`messageBubble ${
+                        msg.sender === (role || "user") ? "mine" : "theirs"
+                      }`}
+                    >
+                      <div className="messageSender">
+                        {msg.sender === (role || "user") ? "You" : "Other"}
+                      </div>
+                      <div>{msg.message}</div>
+                    </div>
+                  ))
+                )}
+              </div>
+
+              <div className="chatInputRow">
+                <input
+                  type="text"
+                  value={chatInput}
+                  onChange={(e) => setChatInput(e.target.value)}
+                  onKeyDown={handleChatKeyDown}
+                  placeholder="Type a message..."
+                  className="chatInput"
+                />
+                <button className="sendBtn" onClick={sendMessage}>
+                  Send
+                </button>
+              </div>
+            </div>
+          )}
+
           <div className="controlsBar">
             <button className="controlBtn" onClick={toggleMic}>
               {micOn ? "Mute" : "Unmute"}
@@ -766,6 +869,132 @@ export default function CallRoom() {
           transform: scaleX(-1);
         }
 
+        .chatToggleBtn {
+          position: absolute;
+          right: 16px;
+          bottom: 106px;
+          z-index: 6;
+          width: 56px;
+          height: 56px;
+          border-radius: 50%;
+          border: none;
+          background: #23c46e;
+          color: white;
+          font-size: 22px;
+          cursor: pointer;
+          box-shadow: 0 12px 28px rgba(0, 0, 0, 0.35);
+        }
+
+        .chatPanel {
+          position: absolute;
+          left: 12px;
+          right: 12px;
+          bottom: 96px;
+          height: 42%;
+          max-height: 360px;
+          z-index: 6;
+          background: rgba(14, 14, 16, 0.94);
+          border: 1px solid rgba(255,255,255,0.08);
+          border-radius: 22px;
+          overflow: hidden;
+          display: flex;
+          flex-direction: column;
+          backdrop-filter: blur(14px);
+        }
+
+        .chatHeader {
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          padding: 14px 16px;
+          border-bottom: 1px solid rgba(255,255,255,0.08);
+          font-weight: 700;
+        }
+
+        .chatCloseBtn {
+          border: none;
+          background: transparent;
+          color: white;
+          font-size: 18px;
+          cursor: pointer;
+        }
+
+        .chatMessages {
+          flex: 1;
+          overflow-y: auto;
+          padding: 12px;
+          display: flex;
+          flex-direction: column;
+          gap: 10px;
+        }
+
+        .emptyChat {
+          margin: auto;
+          color: rgba(255,255,255,0.6);
+          font-size: 14px;
+        }
+
+        .messageBubble {
+          max-width: 78%;
+          padding: 10px 12px;
+          border-radius: 16px;
+          line-height: 1.4;
+          font-size: 14px;
+          word-break: break-word;
+        }
+
+        .messageBubble.mine {
+          align-self: flex-end;
+          background: #23c46e;
+          color: white;
+          border-bottom-right-radius: 6px;
+        }
+
+        .messageBubble.theirs {
+          align-self: flex-start;
+          background: rgba(255,255,255,0.12);
+          color: white;
+          border-bottom-left-radius: 6px;
+        }
+
+        .messageSender {
+          font-size: 11px;
+          opacity: 0.8;
+          margin-bottom: 4px;
+        }
+
+        .chatInputRow {
+          display: flex;
+          gap: 8px;
+          padding: 12px;
+          border-top: 1px solid rgba(255,255,255,0.08);
+          background: rgba(255,255,255,0.03);
+        }
+
+        .chatInput {
+          flex: 1;
+          border: none;
+          border-radius: 999px;
+          padding: 12px 14px;
+          outline: none;
+          background: rgba(255,255,255,0.1);
+          color: white;
+        }
+
+        .chatInput::placeholder {
+          color: rgba(255,255,255,0.55);
+        }
+
+        .sendBtn {
+          border: none;
+          border-radius: 999px;
+          padding: 12px 16px;
+          background: #23c46e;
+          color: white;
+          font-weight: 700;
+          cursor: pointer;
+        }
+
         .controlsBar {
           position: absolute;
           left: 12px;
@@ -801,6 +1030,39 @@ export default function CallRoom() {
         .endBtn {
           background: #db3d35;
           color: #fff;
+        }
+
+        @media (max-width: 520px) {
+          .chatPanel {
+            height: 46%;
+          }
+
+          .chatToggleBtn {
+            width: 52px;
+            height: 52px;
+            bottom: 102px;
+          }
+
+          .controlsBar {
+            gap: 8px;
+            padding: 12px 10px;
+          }
+
+          .controlBtn,
+          .endBtn {
+            min-width: 66px;
+            font-size: 12px;
+            padding: 12px 10px;
+          }
+
+          .localPreviewWrap {
+            width: 96px;
+            height: 146px;
+          }
+
+          .topOverlay h1 {
+            font-size: 24px;
+          }
         }
       `}</style>
     </div>
