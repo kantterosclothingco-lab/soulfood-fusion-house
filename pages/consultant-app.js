@@ -14,8 +14,25 @@ export default function ConsultantAppPage() {
     "Connecting to consultant notification server..."
   );
   const [currentRequest, setCurrentRequest] = useState(null);
+  const [pushStatus, setPushStatus] = useState("Push notifications not enabled yet.");
 
   useEffect(() => {
+    async function registerServiceWorker() {
+      if ("serviceWorker" in navigator) {
+        try {
+          await navigator.serviceWorker.register("/sw.js");
+          setPushStatus("Service worker registered.");
+        } catch (error) {
+          console.error("Service worker registration failed:", error);
+          setPushStatus("Service worker registration failed.");
+        }
+      } else {
+        setPushStatus("Service workers are not supported on this device.");
+      }
+    }
+
+    registerServiceWorker();
+
     const socket = io(CONSULTANT_SERVER_URL, {
       transports: ["websocket", "polling"],
       reconnection: true,
@@ -35,7 +52,7 @@ export default function ConsultantAppPage() {
       setStatus("Failed to connect to consultant notification server.");
     });
 
-    socket.on("incoming-call", (request) => {
+    socket.on("incoming-call", async (request) => {
       setCurrentRequest(request);
 
       try {
@@ -46,12 +63,52 @@ export default function ConsultantAppPage() {
       } catch (e) {
         console.error(e);
       }
+
+      if ("Notification" in window && Notification.permission === "granted") {
+        try {
+          const reg = await navigator.serviceWorker.getRegistration();
+          if (reg) {
+            reg.showNotification("Incoming Free Consultation", {
+              body: `${request.fullName} • ${request.eventType}`,
+              icon: "/favicon.png",
+              badge: "/favicon.png",
+              data: {
+                url: "/consultant-app",
+              },
+            });
+          }
+        } catch (error) {
+          console.error("Notification show error:", error);
+        }
+      }
     });
 
     return () => {
       socket.disconnect();
     };
   }, []);
+
+  async function enablePushNotifications() {
+    if (!("Notification" in window)) {
+      setPushStatus("Notifications are not supported on this device.");
+      return;
+    }
+
+    try {
+      const permission = await Notification.requestPermission();
+
+      if (permission === "granted") {
+        setPushStatus("Push notifications enabled.");
+      } else if (permission === "denied") {
+        setPushStatus("Notifications were denied.");
+      } else {
+        setPushStatus("Notification permission was dismissed.");
+      }
+    } catch (error) {
+      console.error(error);
+      setPushStatus("Failed to request notification permission.");
+    }
+  }
 
   async function handleAnswer() {
     if (!currentRequest) return;
@@ -126,6 +183,13 @@ export default function ConsultantAppPage() {
           <h1>Consultant App</h1>
           <p className="status">{status}</p>
 
+          <div className="pushBox">
+            <p><strong>Push Status:</strong> {pushStatus}</p>
+            <button className="enableBtn" onClick={enablePushNotifications}>
+              Enable Notifications
+            </button>
+          </div>
+
           {!currentRequest ? (
             <div className="idleBox">
               <p>Waiting for incoming consultation requests.</p>
@@ -188,6 +252,23 @@ export default function ConsultantAppPage() {
         .status {
           font-weight: 600;
           margin-bottom: 18px;
+        }
+
+        .pushBox {
+          border: 1px solid #d9c7b3;
+          background: #f7f1e8;
+          padding: 16px;
+          margin-bottom: 18px;
+        }
+
+        .enableBtn {
+          margin-top: 10px;
+          border: none;
+          padding: 12px 16px;
+          font-weight: 600;
+          cursor: pointer;
+          background: #c79356;
+          color: #1e120d;
         }
 
         .idleBox,
