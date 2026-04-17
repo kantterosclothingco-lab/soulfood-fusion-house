@@ -2,6 +2,10 @@ import Head from "next/head";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 
+// ✅ YOUR LIVE CONSULTANT SERVER
+const CONSULTANT_SERVER_URL =
+  "https://soulfood-consultant-server-production.up.railway.app";
+
 export default function ConsultationPage() {
   const [form, setForm] = useState({
     fullName: "",
@@ -46,6 +50,22 @@ export default function ConsultationPage() {
       setRequestId(data.request.id);
       setStatus(data.request.status);
       setRoomUrl(data.request.roomUrl);
+
+      // 🔥 SEND TO LIVE CONSULTANT SERVER
+      try {
+        await fetch(`${CONSULTANT_SERVER_URL}/notify-consultants`, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json"
+          },
+          body: JSON.stringify({
+            request: data.request
+          }),
+        });
+      } catch (notifyError) {
+        console.error("Consultant notification failed:", notifyError);
+      }
+
     } catch (error) {
       console.error(error);
       alert("Something went wrong.");
@@ -83,10 +103,6 @@ export default function ConsultationPage() {
       <Head>
         <title>Free Consultation | Soulfood Fusion House</title>
         <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <link
-          href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap"
-          rel="stylesheet"
-        />
       </Head>
 
       <main className="page">
@@ -138,7 +154,7 @@ export default function ConsultationPage() {
                   <input
                     type="text"
                     name="eventType"
-                    placeholder="Event Type (Birthday, Wedding, etc.)"
+                    placeholder="Event Type"
                     value={form.eventType}
                     onChange={handleChange}
                     required
@@ -155,7 +171,7 @@ export default function ConsultationPage() {
 
                   <textarea
                     name="notes"
-                    placeholder="Additional details about your event"
+                    placeholder="Additional details"
                     value={form.notes}
                     onChange={handleChange}
                     rows="5"
@@ -173,121 +189,78 @@ export default function ConsultationPage() {
                 <p><strong>Request ID:</strong> {requestId}</p>
 
                 <div className="statusBox">
-                  <p className="statusLabel">Status</p>
+                  <p>Status</p>
                   <div className={`status ${status}`}>{status}</div>
                 </div>
 
-                {status === "waiting" && (
-                  <p>Waiting for a consultant to respond.</p>
-                )}
-
-                {status === "ringing" && (
-                  <p>A consultant is being notified. Please stay on this page.</p>
-                )}
+                {status === "waiting" && <p>Waiting for consultant...</p>}
 
                 {status === "answered" && (
-                  <div className="joinBox">
-                    <p>Your consultant is ready.</p>
-                    <a href={roomUrl} className="joinBtn">
-                      Join Video Consultation
-                    </a>
-                  </div>
-                )}
-
-                {status === "declined" && (
-                  <p>
-                    Request declined. Please try again or contact us directly.
-                  </p>
+                  <a href={roomUrl} className="joinBtn">
+                    Join Video Consultation
+                  </a>
                 )}
               </div>
             )}
 
             <div className="backLink">
-              <Link href="/catering">← Back to Catering</Link>
+              <Link href="/catering">← Back</Link>
             </div>
           </div>
         </section>
       </main>
 
       <style jsx global>{`
-        * { box-sizing: border-box; }
-
         body {
           margin: 0;
-          font-family: "Inter", sans-serif;
+          font-family: Arial;
           background: #faf7f2;
         }
 
         .hero {
-          background: linear-gradient(135deg, #1e140f, #3a2418);
+          background: #2a1c15;
           color: white;
-          padding: 80px 20px;
-        }
-
-        .heroInner {
-          max-width: 900px;
-          margin: auto;
-        }
-
-        .eyebrow {
-          font-size: 0.75rem;
-          letter-spacing: 0.14em;
-          text-transform: uppercase;
-          color: #d8b07a;
-        }
-
-        h1 {
-          font-size: 3rem;
-          margin: 10px 0;
-        }
-
-        .formSection {
-          padding: 50px 20px;
+          padding: 60px 20px;
         }
 
         .formCard {
-          max-width: 800px;
+          max-width: 600px;
           margin: auto;
           background: white;
-          padding: 30px;
-          border: 1px solid #eee;
+          padding: 20px;
         }
 
         .formGrid {
           display: grid;
-          gap: 14px;
+          gap: 10px;
         }
 
         input, textarea {
-          padding: 14px;
-          border: 1px solid #ddd;
+          padding: 10px;
         }
 
-        button, .joinBtn {
+        button {
+          padding: 12px;
           background: #c79356;
           border: none;
-          padding: 14px;
-          font-weight: 600;
           cursor: pointer;
-          text-decoration: none;
-          display: inline-block;
-          color: #1e120d;
         }
 
         .status {
-          padding: 8px 12px;
-          font-weight: 600;
-          text-transform: uppercase;
-          display: inline-block;
+          padding: 6px;
+          margin-top: 5px;
         }
 
+        .answered { background: #c8f7c5; }
         .waiting { background: #f3e5d3; }
-        .ringing { background: #e9f1fb; }
-        .answered { background: #e3efe8; }
-        .declined { background: #f7e2e2; }
 
-        .backLink {
-          margin-top: 20px;
+        .joinBtn {
+          display: inline-block;
+          margin-top: 10px;
+          background: #2f4f3e;
+          color: white;
+          padding: 10px;
+          text-decoration: none;
         }
       `}</style>
     </>

@@ -1,138 +1,152 @@
 import Head from "next/head";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
+import io from "socket.io-client";
 
-export default function ConsultantPage() {
-  const [requests, setRequests] = useState([]);
-  const [loading, setLoading] = useState(true);
+const CONSULTANT_SERVER_URL =
+  "https://soulfood-consultant-server-production.up.railway.app";
 
-  async function loadRequests() {
-    try {
-      const res = await fetch("/api/create-consultation-request");
-      const data = await res.json();
-      setRequests(data.requests || []);
-    } catch (error) {
+const WEBSITE_URL = "https://soulfoodfusionhouse.com";
+
+export default function ConsultantAppPage() {
+  const socketRef = useRef(null);
+
+  const [status, setStatus] = useState(
+    "Connecting to consultant notification server..."
+  );
+  const [currentRequest, setCurrentRequest] = useState(null);
+
+  useEffect(() => {
+    const socket = io(CONSULTANT_SERVER_URL, {
+      transports: ["websocket", "polling"],
+      reconnection: true,
+      reconnectionAttempts: 10,
+      reconnectionDelay: 1000,
+    });
+
+    socketRef.current = socket;
+
+    socket.on("connect", () => {
+      setStatus("Connected. Consultant is ready to receive calls.");
+      socket.emit("register-consultant");
+    });
+
+    socket.on("connect_error", (error) => {
       console.error(error);
-    } finally {
-      setLoading(false);
-    }
-  }
+      setStatus("Failed to connect to consultant notification server.");
+    });
 
-  async function updateStatus(id, status) {
+    socket.on("incoming-call", (request) => {
+      setCurrentRequest(request);
+
+      try {
+        const audio = new Audio(
+          "https://actions.google.com/sounds/v1/alarms/digital_watch_alarm_long.ogg"
+        );
+        audio.play().catch(() => {});
+      } catch (e) {
+        console.error(e);
+      }
+    });
+
+    return () => {
+      socket.disconnect();
+    };
+  }, []);
+
+  async function handleAnswer() {
+    if (!currentRequest) return;
+
     try {
-      const res = await fetch("/api/create-consultation-request", {
+      const res = await fetch(`${WEBSITE_URL}/api/create-consultation-request`, {
         method: "PATCH",
         headers: {
-          "Content-Type": "application/json"
+          "Content-Type": "application/json",
         },
-        body: JSON.stringify({ id, status }),
+        body: JSON.stringify({
+          id: currentRequest.id,
+          status: "answered",
+        }),
       });
 
       const data = await res.json();
 
       if (!res.ok) {
-        alert(data.error || "Failed to update request");
+        alert(data.error || "Failed to answer consultation.");
         return;
       }
 
-      loadRequests();
+      window.location.href = `${WEBSITE_URL}${currentRequest.roomUrl}`;
     } catch (error) {
       console.error(error);
-      alert("Something went wrong.");
+      alert("Failed to answer consultation.");
     }
   }
 
-  useEffect(() => {
-    loadRequests();
-    const interval = setInterval(loadRequests, 3000);
-    return () => clearInterval(interval);
-  }, []);
+  async function handleDecline() {
+    if (!currentRequest) return;
+
+    try {
+      const res = await fetch(`${WEBSITE_URL}/api/create-consultation-request`, {
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          id: currentRequest.id,
+          status: "declined",
+        }),
+      });
+
+      const data = await res.json();
+
+      if (!res.ok) {
+        alert(data.error || "Failed to decline consultation.");
+        return;
+      }
+
+      setCurrentRequest(null);
+    } catch (error) {
+      console.error(error);
+      alert("Failed to decline consultation.");
+    }
+  }
 
   return (
     <>
       <Head>
-        <title>Consultant Dashboard | Soulfood Fusion House</title>
+        <title>Consultant App | Soulfood Fusion House</title>
         <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <link
-          href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap"
-          rel="stylesheet"
-        />
       </Head>
 
       <main className="page">
-        <section className="header">
-          <div className="inner">
-            <p className="eyebrow">Consultant Dashboard</p>
-            <h1>Incoming consultation requests</h1>
-            <p>
-              This page is the consultant side of the consultation system.
-            </p>
-          </div>
-        </section>
+        <div className="card">
+          <h1>Consultant App</h1>
+          <p className="status">{status}</p>
 
-        <section className="content">
-          <div className="card">
-            {loading ? (
-              <p>Loading consultation requests...</p>
-            ) : requests.length === 0 ? (
-              <p>No consultation requests yet.</p>
-            ) : (
-              <div className="requestList">
-                {requests.map((request) => (
-                  <article className="requestCard" key={request.id}>
-                    <div className="requestTop">
-                      <div>
-                        <h2>{request.fullName}</h2>
-                        <p className="requestId">Request ID: {request.id}</p>
-                      </div>
-                      <span className="status">{request.status}</span>
-                    </div>
+          {!currentRequest ? (
+            <div className="idleBox">
+              <p>Waiting for incoming consultation requests.</p>
+            </div>
+          ) : (
+            <div className="callBox">
+              <p className="ringing">Incoming Free Consultation</p>
+              <p><strong>Name:</strong> {currentRequest.fullName}</p>
+              <p><strong>Phone:</strong> {currentRequest.phone}</p>
+              <p><strong>Email:</strong> {currentRequest.email}</p>
+              <p><strong>Event:</strong> {currentRequest.eventType}</p>
+              <p><strong>Date:</strong> {currentRequest.eventDate}</p>
 
-                    <div className="requestInfo">
-                      <p><strong>Phone:</strong> {request.phone}</p>
-                      <p><strong>Email:</strong> {request.email}</p>
-                      <p><strong>Event Type:</strong> {request.eventType}</p>
-                      <p><strong>Event Date:</strong> {request.eventDate}</p>
-                      <p><strong>Notes:</strong> {request.notes || "No notes"}</p>
-                      <p><strong>Created:</strong> {request.createdAt}</p>
-                      <p><strong>Room:</strong> {request.roomId}</p>
-                    </div>
-
-                    <div className="requestActions">
-                      <button
-                        type="button"
-                        onClick={() => updateStatus(request.id, "ringing")}
-                        className="ringBtn"
-                      >
-                        Ringing
-                      </button>
-
-                      <button
-                        type="button"
-                        onClick={() => updateStatus(request.id, "answered")}
-                      >
-                        Answer
-                      </button>
-
-                      <button
-                        type="button"
-                        className="secondary"
-                        onClick={() => updateStatus(request.id, "declined")}
-                      >
-                        Decline
-                      </button>
-
-                      {request.roomUrl && (
-                        <a href={request.roomUrl} className="openRoomBtn">
-                          Open Room
-                        </a>
-                      )}
-                    </div>
-                  </article>
-                ))}
+              <div className="actions">
+                <button className="answerBtn" onClick={handleAnswer}>
+                  Answer Call
+                </button>
+                <button className="declineBtn" onClick={handleDecline}>
+                  Decline
+                </button>
               </div>
-            )}
-          </div>
-        </section>
+            </div>
+          )}
+        </div>
       </main>
 
       <style jsx global>{`
@@ -142,136 +156,68 @@ export default function ConsultantPage() {
 
         body {
           margin: 0;
-          font-family: "Inter", sans-serif;
+          font-family: Arial, sans-serif;
           background: #f8f5ef;
           color: #2a1c15;
         }
 
         .page {
           min-height: 100vh;
-        }
-
-        .header {
-          background: linear-gradient(135deg, #1e140f, #3a2418);
-          color: white;
-          padding: 70px 20px 50px;
-        }
-
-        .inner {
-          max-width: 1000px;
-          margin: 0 auto;
-        }
-
-        .eyebrow {
-          font-size: 0.75rem;
-          text-transform: uppercase;
-          letter-spacing: 0.14em;
-          color: #d8b07a;
-        }
-
-        .header h1 {
-          font-size: clamp(2rem, 5vw, 3.5rem);
-          font-weight: 500;
-          margin: 12px 0 14px;
-        }
-
-        .header p {
-          max-width: 760px;
-          line-height: 1.8;
-          color: rgba(255, 255, 255, 0.88);
-        }
-
-        .content {
-          padding: 40px 20px 70px;
-        }
-
-        .card {
-          max-width: 1000px;
-          margin: 0 auto;
-          background: #fffdf9;
-          border: 1px solid #ede2d3;
           padding: 24px;
         }
 
-        .requestList {
-          display: grid;
-          gap: 18px;
-        }
-
-        .requestCard {
-          border: 1px solid #eadfce;
+        .card {
+          max-width: 760px;
+          margin: 0 auto;
           background: white;
-          padding: 18px;
+          border: 1px solid #eadfce;
+          padding: 24px;
         }
 
-        .requestTop {
-          display: flex;
-          justify-content: space-between;
-          gap: 16px;
-          align-items: start;
-          margin-bottom: 10px;
-        }
-
-        .requestTop h2 {
-          margin: 0 0 4px;
-          font-size: 1.1rem;
-          font-weight: 600;
-        }
-
-        .requestId {
-          margin: 0;
-          color: #8a6b4d;
-          font-size: 0.85rem;
+        h1 {
+          margin-top: 0;
         }
 
         .status {
-          background: #f3e5d3;
-          color: #7a5635;
-          padding: 6px 10px;
-          font-size: 0.78rem;
-          text-transform: uppercase;
-          letter-spacing: 0.08em;
+          font-weight: 600;
+          margin-bottom: 18px;
         }
 
-        .requestInfo p {
-          margin: 6px 0;
-          line-height: 1.7;
-          color: #5f4a3d;
-          font-size: 0.92rem;
+        .idleBox,
+        .callBox {
+          border: 1px solid #d9c7b3;
+          background: #fff9f2;
+          padding: 18px;
         }
 
-        .requestActions {
+        .ringing {
+          color: #a33a2d;
+          font-weight: 700;
+          margin-bottom: 12px;
+        }
+
+        .actions {
+          margin-top: 16px;
           display: flex;
           gap: 10px;
-          margin-top: 14px;
           flex-wrap: wrap;
         }
 
-        .requestActions button,
-        .openRoomBtn {
+        button {
           border: none;
-          background: #c79356;
-          color: #1e120d;
-          padding: 10px 16px;
+          padding: 12px 16px;
           font-weight: 600;
           cursor: pointer;
-          text-decoration: none;
-          display: inline-block;
         }
 
-        .requestActions .ringBtn {
-          background: #e3efe8;
-          color: #244631;
-        }
-
-        .requestActions .secondary {
-          background: #efe5d8;
-          color: #3a2418;
-        }
-
-        .openRoomBtn {
+        .answerBtn {
           background: #2f4f3e;
           color: white;
+        }
+
+        .declineBtn {
+          background: #efe5d8;
+          color: #3a2418;
         }
       `}</style>
     </>
