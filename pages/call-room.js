@@ -4,7 +4,7 @@ import io from "socket.io-client";
 
 export default function CallRoom() {
   const router = useRouter();
-  const { roomId } = router.query;
+  const { roomId, role, autostart } = router.query;
 
   const socketRef = useRef(null);
   const peerConnectionRef = useRef(null);
@@ -21,6 +21,8 @@ export default function CallRoom() {
   const [micOn, setMicOn] = useState(true);
   const [cameraOn, setCameraOn] = useState(true);
   const [facingMode, setFacingMode] = useState("user");
+  const [remoteConnected, setRemoteConnected] = useState(false);
+  const [callEnded, setCallEnded] = useState(false);
 
   useEffect(() => {
     if (!router.isReady || !roomId) return;
@@ -55,6 +57,21 @@ export default function CallRoom() {
       } catch (err) {
         console.error(err);
       }
+    });
+
+    socket.on("user-left", () => {
+      setRemoteConnected(false);
+      setStatusText("Other participant left");
+      setCallEnded(true);
+
+      setTimeout(() => {
+        if (role === "consultant") {
+          window.location.href = "/consultant-app";
+        } else {
+          window.location.href =
+            "/?review=1";
+        }
+      }, 1200);
     });
 
     socket.on("webrtc-offer", async ({ offer }) => {
@@ -95,7 +112,17 @@ export default function CallRoom() {
       cleanup();
       socketRef.current = null;
     };
-  }, [router.isReady, roomId]);
+  }, [router.isReady, roomId, role]);
+
+  useEffect(() => {
+    if (!router.isReady) return;
+    if (!roomId) return;
+    if (!ready) return;
+    if (autostart !== "1") return;
+    if (joined) return;
+
+    joinCall();
+  }, [router.isReady, roomId, ready, autostart, joined]);
 
   async function setupLocalMediaAndPeer(nextFacingMode = "user") {
     if (localStreamRef.current) {
@@ -167,6 +194,7 @@ export default function CallRoom() {
           }
         }
 
+        setRemoteConnected(true);
         setStatusText("Connected");
       };
 
@@ -181,7 +209,16 @@ export default function CallRoom() {
 
       pc.onconnectionstatechange = () => {
         if (pc.connectionState === "connected") {
+          setRemoteConnected(true);
           setStatusText("Connected");
+        }
+
+        if (
+          pc.connectionState === "failed" ||
+          pc.connectionState === "disconnected" ||
+          pc.connectionState === "closed"
+        ) {
+          setRemoteConnected(false);
         }
       };
 
@@ -226,7 +263,7 @@ export default function CallRoom() {
 
       socketRef.current.emit("join-room", {
         roomId,
-        userType: "user",
+        userType: role || "user",
       });
 
       setStatusText("Joining...");
@@ -302,9 +339,19 @@ export default function CallRoom() {
   }
 
   function leaveCall() {
+    if (socketRef.current) {
+      socketRef.current.disconnect();
+    }
+
     cleanup();
     setJoined(false);
     setStatusText("Call ended");
+
+    if (role === "consultant") {
+      window.location.href = "/consultant-app";
+    } else {
+      window.location.href = "/?review=1";
+    }
   }
 
   function cleanup() {
@@ -335,13 +382,15 @@ export default function CallRoom() {
 
             {error && <p className="errorText">{error}</p>}
 
-            <button
-              className="joinButton"
-              onClick={joinCall}
-              disabled={!ready}
-            >
-              Join Call
-            </button>
+            {!callEnded && (
+              <button
+                className="joinButton"
+                onClick={joinCall}
+                disabled={!ready}
+              >
+                Join Call
+              </button>
+            )}
           </div>
         </div>
       ) : (
@@ -353,9 +402,11 @@ export default function CallRoom() {
             className="remoteVideo"
           />
 
-          <div className="remoteFallback">
-            <span>{statusText}</span>
-          </div>
+          {!remoteConnected && (
+            <div className="remoteFallback">
+              <span>{statusText}</span>
+            </div>
+          )}
 
           <div className="topOverlay">
             <div>
@@ -478,6 +529,7 @@ export default function CallRoom() {
           height: 100%;
           object-fit: cover;
           background: #101114;
+          z-index: 1;
         }
 
         .remoteFallback {
@@ -488,7 +540,7 @@ export default function CallRoom() {
           justify-content: center;
           color: #d6d6db;
           background: radial-gradient(circle at top, #20252a 0%, #0a0b0d 60%);
-          z-index: 0;
+          z-index: 2;
         }
 
         .topOverlay {

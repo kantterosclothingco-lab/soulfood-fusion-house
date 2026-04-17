@@ -2,7 +2,6 @@ import Head from "next/head";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 
-// ✅ YOUR LIVE CONSULTANT SERVER
 const CONSULTANT_SERVER_URL =
   "https://soulfood-consultant-server-production.up.railway.app";
 
@@ -51,7 +50,6 @@ export default function ConsultationPage() {
       setStatus(data.request.status);
       setRoomUrl(data.request.roomUrl);
 
-      // 🔥 SEND TO LIVE CONSULTANT SERVER
       try {
         await fetch(`${CONSULTANT_SERVER_URL}/notify-consultants`, {
           method: "POST",
@@ -65,7 +63,6 @@ export default function ConsultationPage() {
       } catch (notifyError) {
         console.error("Consultant notification failed:", notifyError);
       }
-
     } catch (error) {
       console.error(error);
       alert("Something went wrong.");
@@ -196,7 +193,7 @@ export default function ConsultationPage() {
                 {status === "waiting" && <p>Waiting for consultant...</p>}
 
                 {status === "answered" && (
-                  <a href={roomUrl} className="joinBtn">
+                  <a href={`${roomUrl}&role=customer&autostart=1`} className="joinBtn">
                     Join Video Consultation
                   </a>
                 )}

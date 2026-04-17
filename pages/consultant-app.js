@@ -78,7 +78,7 @@ export default function ConsultantAppPage() {
       }
 
       setRinging(false);
-      window.location.href = `${WEBSITE_URL}${currentRequest.roomUrl}`;
+      window.location.href = `${WEBSITE_URL}${currentRequest.roomUrl}&role=consultant&autostart=1`;
     } catch (error) {
       console.error(error);
       alert("Failed to answer consultation.");
@@ -427,21 +427,6 @@ export default function ConsultantAppPage() {
           background: #23c46e;
           color: #fff;
           box-shadow: 0 10px 30px rgba(35, 196, 110, 0.3);
-        }
-
-        @media (max-width: 520px) {
-          .topBar h1,
-          .incomingContent h1 {
-            font-size: 30px;
-          }
-
-          .callActions {
-            gap: 12px;
-          }
-
-          .callActions button {
-            width: 46%;
-          }
         }
       `}</style>
     </>
