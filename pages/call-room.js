@@ -4,12 +4,13 @@ import io from "socket.io-client";
 
 export default function CallRoom() {
   const router = useRouter();
-  const { roomId, role, autostart } = router.query;
+  const { roomId, role, autostart, requestId } = router.query;
 
   const socketRef = useRef(null);
   const peerConnectionRef = useRef(null);
   const localStreamRef = useRef(null);
   const remoteStreamRef = useRef(null);
+  const callStartLoggedRef = useRef(false);
 
   const localVideoRef = useRef(null);
   const remoteVideoRef = useRef(null);
@@ -63,15 +64,7 @@ export default function CallRoom() {
       setRemoteConnected(false);
       setStatusText("Other participant left");
       setCallEnded(true);
-
-      setTimeout(() => {
-        if (role === "consultant") {
-          window.location.href = "/consultant-app";
-        } else {
-          window.location.href =
-            "/?review=1";
-        }
-      }, 1200);
+      logCallEnded("other-participant-left");
     });
 
     socket.on("webrtc-offer", async ({ offer }) => {
@@ -108,21 +101,57 @@ export default function CallRoom() {
     });
 
     return () => {
-      socket.disconnect();
+      if (socketRef.current) {
+        socketRef.current.disconnect();
+      }
       cleanup();
       socketRef.current = null;
     };
   }, [router.isReady, roomId, role]);
 
   useEffect(() => {
-    if (!router.isReady) return;
-    if (!roomId) return;
-    if (!ready) return;
+    if (!router.isReady || !roomId || !ready || joined) return;
     if (autostart !== "1") return;
-    if (joined) return;
-
     joinCall();
   }, [router.isReady, roomId, ready, autostart, joined]);
+
+  async function getMediaStream(nextFacingMode = "user") {
+    try {
+      return await navigator.mediaDevices.getUserMedia({
+        video: {
+          facingMode: { ideal: nextFacingMode },
+          width: { ideal: 1280 },
+          height: { ideal: 720 },
+        },
+        audio: true,
+      });
+    } catch (err) {
+      console.warn("Preferred camera failed, using fallback camera", err);
+      return await navigator.mediaDevices.getUserMedia({
+        video: true,
+        audio: true,
+      });
+    }
+  }
+
+  async function attachVideo(videoEl, stream, muted = false) {
+    if (!videoEl) return;
+    videoEl.srcObject = stream;
+    videoEl.muted = muted;
+    videoEl.playsInline = true;
+    videoEl.autoplay = true;
+
+    await new Promise((resolve) => {
+      videoEl.onloadedmetadata = () => resolve();
+      setTimeout(resolve, 500);
+    });
+
+    try {
+      await videoEl.play();
+    } catch (err) {
+      console.error("Video play error:", err);
+    }
+  }
 
   async function setupLocalMediaAndPeer(nextFacingMode = "user") {
     if (localStreamRef.current) {
@@ -130,25 +159,10 @@ export default function CallRoom() {
       localStreamRef.current = null;
     }
 
-    const stream = await navigator.mediaDevices.getUserMedia({
-      video: {
-        facingMode: nextFacingMode,
-        width: { ideal: 1280 },
-        height: { ideal: 720 },
-      },
-      audio: true,
-    });
-
+    const stream = await getMediaStream(nextFacingMode);
     localStreamRef.current = stream;
 
-    if (localVideoRef.current) {
-      localVideoRef.current.srcObject = stream;
-      try {
-        await localVideoRef.current.play();
-      } catch (err) {
-        console.error(err);
-      }
-    }
+    await attachVideo(localVideoRef.current, stream, true);
 
     const audioTrack = stream.getAudioTracks()[0];
     const videoTrack = stream.getVideoTracks()[0];
@@ -185,17 +199,15 @@ export default function CallRoom() {
           }
         });
 
-        if (remoteVideoRef.current) {
-          remoteVideoRef.current.srcObject = remoteStream;
-          try {
-            await remoteVideoRef.current.play();
-          } catch (err) {
-            console.error(err);
-          }
-        }
+        await attachVideo(remoteVideoRef.current, remoteStream, false);
 
         setRemoteConnected(true);
         setStatusText("Connected");
+
+        if (!callStartLoggedRef.current) {
+          logCallStarted();
+          callStartLoggedRef.current = true;
+        }
       };
 
       pc.onicecandidate = (event) => {
@@ -211,6 +223,11 @@ export default function CallRoom() {
         if (pc.connectionState === "connected") {
           setRemoteConnected(true);
           setStatusText("Connected");
+
+          if (!callStartLoggedRef.current) {
+            logCallStarted();
+            callStartLoggedRef.current = true;
+          }
         }
 
         if (
@@ -338,7 +355,49 @@ export default function CallRoom() {
     }
   }
 
-  function leaveCall() {
+  async function logCallStarted() {
+    try {
+      await fetch("/api/call-records", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+          requestId: requestId || "",
+          roomId,
+          role: role || "user",
+          event: "started",
+          time: new Date().toISOString(),
+        }),
+      });
+    } catch (err) {
+      console.error("Failed to log call start:", err);
+    }
+  }
+
+  async function logCallEnded(reason = "ended") {
+    try {
+      await fetch("/api/call-records", {
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+          requestId: requestId || "",
+          roomId,
+          role: role || "user",
+          event: reason,
+          time: new Date().toISOString(),
+        }),
+      });
+    } catch (err) {
+      console.error("Failed to log call end:", err);
+    }
+  }
+
+  async function leaveCall() {
+    await logCallEnded("ended-by-user");
+
     if (socketRef.current) {
       socketRef.current.disconnect();
     }
@@ -346,12 +405,7 @@ export default function CallRoom() {
     cleanup();
     setJoined(false);
     setStatusText("Call ended");
-
-    if (role === "consultant") {
-      window.location.href = "/consultant-app";
-    } else {
-      window.location.href = "/?review=1";
-    }
+    setCallEnded(true);
   }
 
   function cleanup() {
@@ -371,6 +425,112 @@ export default function CallRoom() {
     }
   }
 
+  if (callEnded && role === "consultant") {
+    return (
+      <div className="postCallScreen">
+        <div className="postCard">
+          <h1>Call ended</h1>
+          <p>Returning to consultant dashboard…</p>
+          <a className="primaryBtn" href="/consultant-app">Back to Dashboard</a>
+        </div>
+
+        <style jsx>{`
+          .postCallScreen {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: #101114;
+            color: white;
+            font-family: Inter, Arial, sans-serif;
+            padding: 24px;
+          }
+          .postCard {
+            width: 100%;
+            max-width: 420px;
+            padding: 28px;
+            border-radius: 24px;
+            background: rgba(255,255,255,0.06);
+            text-align: center;
+          }
+          .primaryBtn {
+            display: inline-block;
+            margin-top: 16px;
+            padding: 14px 18px;
+            border-radius: 999px;
+            background: #23c46e;
+            color: white;
+            text-decoration: none;
+            font-weight: 700;
+          }
+        `}</style>
+      </div>
+    );
+  }
+
+  if (callEnded && role === "customer") {
+    return (
+      <div className="postCallScreen">
+        <div className="postCard">
+          <h1>Thank you for your call</h1>
+          <p>We’d love your feedback.</p>
+          <div className="btnRow">
+            <a className="primaryBtn" href="https://www.google.com/search?q=Soulfood+Fusion+House+review" target="_blank" rel="noreferrer">
+              Rate us!
+            </a>
+            <a className="secondaryBtn" href="/">
+              Back to Home
+            </a>
+          </div>
+        </div>
+
+        <style jsx>{`
+          .postCallScreen {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: #101114;
+            color: white;
+            font-family: Inter, Arial, sans-serif;
+            padding: 24px;
+          }
+          .postCard {
+            width: 100%;
+            max-width: 420px;
+            padding: 28px;
+            border-radius: 24px;
+            background: rgba(255,255,255,0.06);
+            text-align: center;
+          }
+          .btnRow {
+            display: flex;
+            gap: 12px;
+            justify-content: center;
+            margin-top: 16px;
+            flex-wrap: wrap;
+          }
+          .primaryBtn,
+          .secondaryBtn {
+            display: inline-block;
+            padding: 14px 18px;
+            border-radius: 999px;
+            text-decoration: none;
+            font-weight: 700;
+          }
+          .primaryBtn {
+            background: #23c46e;
+            color: white;
+          }
+          .secondaryBtn {
+            background: rgba(255,255,255,0.12);
+            color: white;
+          }
+        `}</style>
+      </div>
+    );
+  }
+
   return (
     <div className="callApp">
       {!joined ? (
@@ -382,15 +542,13 @@ export default function CallRoom() {
 
             {error && <p className="errorText">{error}</p>}
 
-            {!callEnded && (
-              <button
-                className="joinButton"
-                onClick={joinCall}
-                disabled={!ready}
-              >
-                Join Call
-              </button>
-            )}
+            <button
+              className="joinButton"
+              onClick={joinCall}
+              disabled={!ready}
+            >
+              Join Call
+            </button>
           </div>
         </div>
       ) : (

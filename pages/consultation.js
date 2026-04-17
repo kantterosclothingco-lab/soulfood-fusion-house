@@ -193,7 +193,10 @@ export default function ConsultationPage() {
                 {status === "waiting" && <p>Waiting for consultant...</p>}
 
                 {status === "answered" && (
-                  <a href={`${roomUrl}&role=customer&autostart=1`} className="joinBtn">
+                  <a
+                    href={`${roomUrl}&role=customer&autostart=1&requestId=${requestId}`}
+                    className="joinBtn"
+                  >
                     Join Video Consultation
                   </a>
                 )}

@@ -78,7 +78,7 @@ export default function ConsultantAppPage() {
       }
 
       setRinging(false);
-      window.location.href = `${WEBSITE_URL}${currentRequest.roomUrl}&role=consultant&autostart=1`;
+      window.location.href = `${WEBSITE_URL}${currentRequest.roomUrl}&role=consultant&autostart=1&requestId=${currentRequest.id}`;
     } catch (error) {
       console.error(error);
       alert("Failed to answer consultation.");
