@@ -116,6 +116,9 @@ export default function ConsultantAppPage() {
       <Head>
         <title>Consultant App | Soulfood Fusion House</title>
         <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <meta name="theme-color" content="#2f4f3e" />
+        <link rel="manifest" href="/manifest.json" />
+        <link rel="apple-touch-icon" href="/favicon.png" />
       </Head>
 
       <main className="page">
@@ -126,6 +129,10 @@ export default function ConsultantAppPage() {
           {!currentRequest ? (
             <div className="idleBox">
               <p>Waiting for incoming consultation requests.</p>
+              <p className="installNote">
+                On iPhone: tap Share → Add to Home Screen. On Android Chrome:
+                tap menu → Install App or Add to Home Screen.
+              </p>
             </div>
           ) : (
             <div className="callBox">
@@ -194,6 +201,13 @@ export default function ConsultantAppPage() {
           color: #a33a2d;
           font-weight: 700;
           margin-bottom: 12px;
+        }
+
+        .installNote {
+          color: #6b584b;
+          font-size: 0.92rem;
+          line-height: 1.6;
+          margin-top: 12px;
         }
 
         .actions {

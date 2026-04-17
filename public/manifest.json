@@ -1,0 +1,21 @@
+{
+  "name": "Soulfood Consultant App",
+  "short_name": "Consultant App",
+  "start_url": "/consultant-app",
+  "display": "standalone",
+  "background_color": "#f8f5ef",
+  "theme_color": "#2f4f3e",
+  "orientation": "portrait",
+  "icons": [
+    {
+      "src": "/favicon.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "/favicon.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}
