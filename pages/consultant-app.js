@@ -14,25 +14,9 @@ export default function ConsultantAppPage() {
     "Connecting to consultant notification server..."
   );
   const [currentRequest, setCurrentRequest] = useState(null);
-  const [pushStatus, setPushStatus] = useState("Push notifications not enabled yet.");
+  const [ringing, setRinging] = useState(false);
 
   useEffect(() => {
-    async function registerServiceWorker() {
-      if ("serviceWorker" in navigator) {
-        try {
-          await navigator.serviceWorker.register("/sw.js");
-          setPushStatus("Service worker registered.");
-        } catch (error) {
-          console.error("Service worker registration failed:", error);
-          setPushStatus("Service worker registration failed.");
-        }
-      } else {
-        setPushStatus("Service workers are not supported on this device.");
-      }
-    }
-
-    registerServiceWorker();
-
     const socket = io(CONSULTANT_SERVER_URL, {
       transports: ["websocket", "polling"],
       reconnection: true,
@@ -43,7 +27,7 @@ export default function ConsultantAppPage() {
     socketRef.current = socket;
 
     socket.on("connect", () => {
-      setStatus("Connected. Consultant is ready to receive calls.");
+      setStatus("Connected. Consultant is ready.");
       socket.emit("register-consultant");
     });
 
@@ -54,6 +38,7 @@ export default function ConsultantAppPage() {
 
     socket.on("incoming-call", async (request) => {
       setCurrentRequest(request);
+      setRinging(true);
 
       try {
         const audio = new Audio(
@@ -63,52 +48,12 @@ export default function ConsultantAppPage() {
       } catch (e) {
         console.error(e);
       }
-
-      if ("Notification" in window && Notification.permission === "granted") {
-        try {
-          const reg = await navigator.serviceWorker.getRegistration();
-          if (reg) {
-            reg.showNotification("Incoming Free Consultation", {
-              body: `${request.fullName} • ${request.eventType}`,
-              icon: "/favicon.png",
-              badge: "/favicon.png",
-              data: {
-                url: "/consultant-app",
-              },
-            });
-          }
-        } catch (error) {
-          console.error("Notification show error:", error);
-        }
-      }
     });
 
     return () => {
       socket.disconnect();
     };
   }, []);
-
-  async function enablePushNotifications() {
-    if (!("Notification" in window)) {
-      setPushStatus("Notifications are not supported on this device.");
-      return;
-    }
-
-    try {
-      const permission = await Notification.requestPermission();
-
-      if (permission === "granted") {
-        setPushStatus("Push notifications enabled.");
-      } else if (permission === "denied") {
-        setPushStatus("Notifications were denied.");
-      } else {
-        setPushStatus("Notification permission was dismissed.");
-      }
-    } catch (error) {
-      console.error(error);
-      setPushStatus("Failed to request notification permission.");
-    }
-  }
 
   async function handleAnswer() {
     if (!currentRequest) return;
@@ -132,6 +77,7 @@ export default function ConsultantAppPage() {
         return;
       }
 
+      setRinging(false);
       window.location.href = `${WEBSITE_URL}${currentRequest.roomUrl}`;
     } catch (error) {
       console.error(error);
@@ -162,6 +108,8 @@ export default function ConsultantAppPage() {
       }
 
       setCurrentRequest(null);
+      setRinging(false);
+      setStatus("Connected. Consultant is ready.");
     } catch (error) {
       console.error(error);
       alert("Failed to decline consultation.");
@@ -173,51 +121,65 @@ export default function ConsultantAppPage() {
       <Head>
         <title>Consultant App | Soulfood Fusion House</title>
         <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <meta name="theme-color" content="#2f4f3e" />
+        <meta name="theme-color" content="#0f0f10" />
         <link rel="manifest" href="/manifest.json" />
         <link rel="apple-touch-icon" href="/favicon.png" />
       </Head>
 
       <main className="page">
-        <div className="card">
-          <h1>Consultant App</h1>
-          <p className="status">{status}</p>
-
-          <div className="pushBox">
-            <p><strong>Push Status:</strong> {pushStatus}</p>
-            <button className="enableBtn" onClick={enablePushNotifications}>
-              Enable Notifications
-            </button>
-          </div>
-
-          {!currentRequest ? (
-            <div className="idleBox">
-              <p>Waiting for incoming consultation requests.</p>
-              <p className="installNote">
-                On iPhone: tap Share → Add to Home Screen. On Android Chrome:
-                tap menu → Install App or Add to Home Screen.
-              </p>
+        {!currentRequest ? (
+          <section className="waitingScreen">
+            <div className="topBar">
+              <div>
+                <p className="label">Soulfood Consultant</p>
+                <h1>Ready for calls</h1>
+              </div>
+              <div className="statusDotWrap">
+                <span className="statusDot" />
+                <span>Online</span>
+              </div>
             </div>
-          ) : (
-            <div className="callBox">
-              <p className="ringing">Incoming Free Consultation</p>
-              <p><strong>Name:</strong> {currentRequest.fullName}</p>
-              <p><strong>Phone:</strong> {currentRequest.phone}</p>
-              <p><strong>Email:</strong> {currentRequest.email}</p>
-              <p><strong>Event:</strong> {currentRequest.eventType}</p>
-              <p><strong>Date:</strong> {currentRequest.eventDate}</p>
 
-              <div className="actions">
-                <button className="answerBtn" onClick={handleAnswer}>
-                  Answer Call
-                </button>
+            <div className="waitingCard">
+              <div className="avatarCircle">SF</div>
+              <h2>Consultant App</h2>
+              <p>{status}</p>
+              <div className="tipBox">
+                Keep this page open on your phone home screen for the fastest
+                consultation response.
+              </div>
+            </div>
+          </section>
+        ) : (
+          <section className="incomingScreen">
+            <div className="incomingBackdrop" />
+            <div className="incomingContent">
+              <p className="incomingSmall">Incoming consultation</p>
+              <div className={`pulseRing ${ringing ? "active" : ""}`}>
+                <div className="avatarCircle large">SF</div>
+              </div>
+
+              <h1>{currentRequest.fullName}</h1>
+              <p className="subtitle">{currentRequest.eventType}</p>
+              <p className="subtitle">{currentRequest.eventDate}</p>
+
+              <div className="detailsCard">
+                <p><strong>Phone:</strong> {currentRequest.phone}</p>
+                <p><strong>Email:</strong> {currentRequest.email}</p>
+                <p><strong>Notes:</strong> {currentRequest.notes || "No notes"}</p>
+              </div>
+
+              <div className="callActions">
                 <button className="declineBtn" onClick={handleDecline}>
                   Decline
                 </button>
+                <button className="answerBtn" onClick={handleAnswer}>
+                  Answer
+                </button>
               </div>
             </div>
-          )}
-        </div>
+          </section>
+        )}
       </main>
 
       <style jsx global>{`
@@ -225,94 +187,261 @@ export default function ConsultantAppPage() {
           box-sizing: border-box;
         }
 
-        body {
+        html,
+        body,
+        #__next {
           margin: 0;
-          font-family: Arial, sans-serif;
-          background: #f8f5ef;
-          color: #2a1c15;
+          min-height: 100%;
+          font-family: Inter, Arial, sans-serif;
+          background: #0f0f10;
         }
 
         .page {
           min-height: 100vh;
-          padding: 24px;
+          color: #fff;
         }
 
-        .card {
-          max-width: 760px;
-          margin: 0 auto;
-          background: white;
-          border: 1px solid #eadfce;
-          padding: 24px;
-        }
-
-        h1 {
-          margin-top: 0;
-        }
-
-        .status {
-          font-weight: 600;
-          margin-bottom: 18px;
-        }
-
-        .pushBox {
-          border: 1px solid #d9c7b3;
-          background: #f7f1e8;
-          padding: 16px;
-          margin-bottom: 18px;
-        }
-
-        .enableBtn {
-          margin-top: 10px;
-          border: none;
-          padding: 12px 16px;
-          font-weight: 600;
-          cursor: pointer;
-          background: #c79356;
-          color: #1e120d;
-        }
-
-        .idleBox,
-        .callBox {
-          border: 1px solid #d9c7b3;
-          background: #fff9f2;
-          padding: 18px;
-        }
-
-        .ringing {
-          color: #a33a2d;
-          font-weight: 700;
-          margin-bottom: 12px;
-        }
-
-        .installNote {
-          color: #6b584b;
-          font-size: 0.92rem;
-          line-height: 1.6;
-          margin-top: 12px;
-        }
-
-        .actions {
-          margin-top: 16px;
+        .waitingScreen {
+          min-height: 100vh;
+          background: linear-gradient(180deg, #111214 0%, #1a1b1e 100%);
+          padding: 24px 18px 32px;
           display: flex;
-          gap: 10px;
-          flex-wrap: wrap;
+          flex-direction: column;
         }
 
-        button {
+        .topBar {
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          gap: 16px;
+          margin-bottom: 30px;
+        }
+
+        .label {
+          margin: 0 0 8px;
+          font-size: 12px;
+          text-transform: uppercase;
+          letter-spacing: 0.14em;
+          color: #a7a7ac;
+        }
+
+        .topBar h1 {
+          margin: 0;
+          font-size: 34px;
+          font-weight: 700;
+          letter-spacing: -0.03em;
+        }
+
+        .statusDotWrap {
+          display: flex;
+          align-items: center;
+          gap: 8px;
+          color: #d5d5d7;
+          font-size: 14px;
+        }
+
+        .statusDot {
+          width: 10px;
+          height: 10px;
+          border-radius: 50%;
+          background: #29d17d;
+          display: inline-block;
+        }
+
+        .waitingCard {
+          margin: auto;
+          width: 100%;
+          max-width: 460px;
+          background: rgba(255, 255, 255, 0.06);
+          backdrop-filter: blur(18px);
+          border: 1px solid rgba(255, 255, 255, 0.08);
+          border-radius: 28px;
+          padding: 28px 22px;
+          text-align: center;
+        }
+
+        .avatarCircle {
+          width: 72px;
+          height: 72px;
+          border-radius: 50%;
+          background: linear-gradient(135deg, #2f4f3e, #4e7f66);
+          display: inline-flex;
+          align-items: center;
+          justify-content: center;
+          font-weight: 700;
+          font-size: 24px;
+          margin: 0 auto 18px;
+          box-shadow: 0 14px 40px rgba(0, 0, 0, 0.28);
+        }
+
+        .avatarCircle.large {
+          width: 96px;
+          height: 96px;
+          font-size: 30px;
+        }
+
+        .waitingCard h2 {
+          margin: 0 0 10px;
+          font-size: 28px;
+        }
+
+        .waitingCard p {
+          margin: 0;
+          color: #d1d1d5;
+          line-height: 1.7;
+        }
+
+        .tipBox {
+          margin-top: 18px;
+          padding: 14px 16px;
+          border-radius: 18px;
+          background: rgba(255, 255, 255, 0.06);
+          color: #cfcfd4;
+          font-size: 14px;
+          line-height: 1.6;
+        }
+
+        .incomingScreen {
+          min-height: 100vh;
+          position: relative;
+          overflow: hidden;
+          background: radial-gradient(circle at top, #202a2f 0%, #0e0f11 58%);
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          padding: 24px 18px;
+        }
+
+        .incomingBackdrop {
+          position: absolute;
+          inset: 0;
+          background: linear-gradient(
+            180deg,
+            rgba(255, 255, 255, 0.04),
+            rgba(0, 0, 0, 0.28)
+          );
+        }
+
+        .incomingContent {
+          position: relative;
+          z-index: 2;
+          width: 100%;
+          max-width: 460px;
+          text-align: center;
+        }
+
+        .incomingSmall {
+          margin: 0 0 16px;
+          color: #c0c0c7;
+          text-transform: uppercase;
+          letter-spacing: 0.14em;
+          font-size: 12px;
+        }
+
+        .pulseRing {
+          position: relative;
+          display: inline-flex;
+          align-items: center;
+          justify-content: center;
+          margin-bottom: 18px;
+        }
+
+        .pulseRing.active::before,
+        .pulseRing.active::after {
+          content: "";
+          position: absolute;
+          width: 130px;
+          height: 130px;
+          border-radius: 50%;
+          border: 1px solid rgba(255, 255, 255, 0.18);
+          animation: pulse 2s infinite;
+        }
+
+        .pulseRing.active::after {
+          animation-delay: 1s;
+        }
+
+        @keyframes pulse {
+          0% {
+            transform: scale(0.8);
+            opacity: 0.8;
+          }
+          100% {
+            transform: scale(1.4);
+            opacity: 0;
+          }
+        }
+
+        .incomingContent h1 {
+          margin: 0 0 8px;
+          font-size: 38px;
+          line-height: 1.05;
+          letter-spacing: -0.03em;
+        }
+
+        .subtitle {
+          margin: 0 0 6px;
+          color: #d4d4d8;
+          font-size: 16px;
+        }
+
+        .detailsCard {
+          margin-top: 22px;
+          text-align: left;
+          border-radius: 24px;
+          padding: 18px;
+          background: rgba(255, 255, 255, 0.08);
+          border: 1px solid rgba(255, 255, 255, 0.08);
+        }
+
+        .detailsCard p {
+          margin: 8px 0;
+          color: #f0f0f2;
+          line-height: 1.6;
+          font-size: 14px;
+        }
+
+        .callActions {
+          display: flex;
+          justify-content: center;
+          gap: 18px;
+          margin-top: 28px;
+        }
+
+        .callActions button {
           border: none;
-          padding: 12px 16px;
-          font-weight: 600;
+          width: 132px;
+          height: 58px;
+          border-radius: 999px;
+          font-size: 16px;
+          font-weight: 700;
           cursor: pointer;
-        }
-
-        .answerBtn {
-          background: #2f4f3e;
-          color: white;
         }
 
         .declineBtn {
-          background: #efe5d8;
-          color: #3a2418;
+          background: #2b2c30;
+          color: #fff;
+        }
+
+        .answerBtn {
+          background: #23c46e;
+          color: #fff;
+          box-shadow: 0 10px 30px rgba(35, 196, 110, 0.3);
+        }
+
+        @media (max-width: 520px) {
+          .topBar h1,
+          .incomingContent h1 {
+            font-size: 30px;
+          }
+
+          .callActions {
+            gap: 12px;
+          }
+
+          .callActions button {
+            width: 46%;
+          }
         }
       `}</style>
     </>

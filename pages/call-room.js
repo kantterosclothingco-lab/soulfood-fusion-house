@@ -15,9 +15,12 @@ export default function CallRoom() {
   const remoteVideoRef = useRef(null);
 
   const [joined, setJoined] = useState(false);
-  const [error, setError] = useState("");
   const [ready, setReady] = useState(false);
+  const [error, setError] = useState("");
   const [statusText, setStatusText] = useState("Preparing room...");
+  const [micOn, setMicOn] = useState(true);
+  const [cameraOn, setCameraOn] = useState(true);
+  const [facingMode, setFacingMode] = useState("user");
 
   useEffect(() => {
     if (!router.isReady || !roomId) return;
@@ -32,75 +35,59 @@ export default function CallRoom() {
     socketRef.current = socket;
 
     socket.on("connect", () => {
-      console.log("Socket connected:", socket.id);
       setReady(true);
       setError("");
-      setStatusText("Connected to live video server");
+      setStatusText("Ready to join");
     });
 
     socket.on("connect_error", (err) => {
-      console.error("Socket connect error:", err);
+      console.error(err);
       setReady(false);
       setError("Could not connect to the live video server.");
-      setStatusText("Live server connection failed");
+      setStatusText("Connection failed");
     });
 
-    socket.on("user-joined", async (data) => {
+    socket.on("user-joined", async () => {
       try {
-        console.log("User joined room:", roomId, data);
-        setStatusText("Other participant joined. Sending offer...");
         if (!peerConnectionRef.current) return;
+        setStatusText("Connecting...");
         await createOffer();
       } catch (err) {
-        console.error("user-joined/createOffer error:", err);
+        console.error(err);
       }
     });
 
     socket.on("webrtc-offer", async ({ offer }) => {
       try {
-        console.log("Offer received for room:", roomId);
-        setStatusText("Offer received. Creating answer...");
-
         if (!peerConnectionRef.current) {
-          await setupLocalMediaAndPeer();
+          await setupLocalMediaAndPeer(facingMode);
         }
-
         await createAnswer(offer);
       } catch (err) {
-        console.error("webrtc-offer error:", err);
+        console.error(err);
       }
     });
 
     socket.on("webrtc-answer", async ({ answer }) => {
       try {
         if (!peerConnectionRef.current) return;
-        console.log("Answer received for room:", roomId);
-        setStatusText("Answer received. Connecting...");
-
         await peerConnectionRef.current.setRemoteDescription(
           new RTCSessionDescription(answer)
         );
       } catch (err) {
-        console.error("webrtc-answer error:", err);
+        console.error(err);
       }
     });
 
     socket.on("webrtc-ice-candidate", async ({ candidate }) => {
       try {
         if (!peerConnectionRef.current || !candidate) return;
-        console.log("ICE candidate received");
-
         await peerConnectionRef.current.addIceCandidate(
           new RTCIceCandidate(candidate)
         );
       } catch (err) {
-        console.error("ICE candidate error:", err);
+        console.error(err);
       }
-    });
-
-    socket.on("disconnect", (reason) => {
-      console.log("Socket disconnected:", reason);
-      setStatusText("Disconnected from live video server");
     });
 
     return () => {
@@ -110,24 +97,37 @@ export default function CallRoom() {
     };
   }, [router.isReady, roomId]);
 
-  async function setupLocalMediaAndPeer() {
-    if (!localStreamRef.current) {
-      const stream = await navigator.mediaDevices.getUserMedia({
-        video: true,
-        audio: true,
-      });
+  async function setupLocalMediaAndPeer(nextFacingMode = "user") {
+    if (localStreamRef.current) {
+      localStreamRef.current.getTracks().forEach((track) => track.stop());
+      localStreamRef.current = null;
+    }
 
-      localStreamRef.current = stream;
+    const stream = await navigator.mediaDevices.getUserMedia({
+      video: {
+        facingMode: nextFacingMode,
+        width: { ideal: 1280 },
+        height: { ideal: 720 },
+      },
+      audio: true,
+    });
 
-      if (localVideoRef.current) {
-        localVideoRef.current.srcObject = stream;
-        try {
-          await localVideoRef.current.play();
-        } catch (err) {
-          console.error("Local video play error:", err);
-        }
+    localStreamRef.current = stream;
+
+    if (localVideoRef.current) {
+      localVideoRef.current.srcObject = stream;
+      try {
+        await localVideoRef.current.play();
+      } catch (err) {
+        console.error(err);
       }
     }
+
+    const audioTrack = stream.getAudioTracks()[0];
+    const videoTrack = stream.getVideoTracks()[0];
+
+    setMicOn(audioTrack?.enabled ?? true);
+    setCameraOn(videoTrack?.enabled ?? true);
 
     if (!peerConnectionRef.current) {
       const pc = new RTCPeerConnection({
@@ -144,16 +144,18 @@ export default function CallRoom() {
         remoteVideoRef.current.srcObject = remoteStream;
       }
 
-      localStreamRef.current.getTracks().forEach((track) => {
-        pc.addTrack(track, localStreamRef.current);
+      stream.getTracks().forEach((track) => {
+        pc.addTrack(track, stream);
       });
 
       pc.ontrack = async (event) => {
-        console.log("Remote track received:", event.track.kind);
-        setStatusText("Remote video connected");
+        const incomingStream = event.streams[0];
+        if (!incomingStream) return;
 
-        event.streams[0].getTracks().forEach((track) => {
-          remoteStream.addTrack(track);
+        incomingStream.getTracks().forEach((track) => {
+          if (!remoteStream.getTracks().some((t) => t.id === track.id)) {
+            remoteStream.addTrack(track);
+          }
         });
 
         if (remoteVideoRef.current) {
@@ -161,14 +163,15 @@ export default function CallRoom() {
           try {
             await remoteVideoRef.current.play();
           } catch (err) {
-            console.error("Remote video play error:", err);
+            console.error(err);
           }
         }
+
+        setStatusText("Connected");
       };
 
       pc.onicecandidate = (event) => {
         if (event.candidate && socketRef.current && roomId) {
-          console.log("Sending ICE candidate");
           socketRef.current.emit("webrtc-ice-candidate", {
             roomId,
             candidate: event.candidate,
@@ -177,15 +180,31 @@ export default function CallRoom() {
       };
 
       pc.onconnectionstatechange = () => {
-        console.log("Connection state:", pc.connectionState);
-        setStatusText(`Connection state: ${pc.connectionState}`);
-      };
-
-      pc.oniceconnectionstatechange = () => {
-        console.log("ICE connection state:", pc.iceConnectionState);
+        if (pc.connectionState === "connected") {
+          setStatusText("Connected");
+        }
       };
 
       peerConnectionRef.current = pc;
+    } else {
+      const senders = peerConnectionRef.current.getSenders();
+      const newVideoTrack = stream.getVideoTracks()[0];
+      const newAudioTrack = stream.getAudioTracks()[0];
+
+      const videoSender = senders.find(
+        (sender) => sender.track && sender.track.kind === "video"
+      );
+      const audioSender = senders.find(
+        (sender) => sender.track && sender.track.kind === "audio"
+      );
+
+      if (videoSender && newVideoTrack) {
+        await videoSender.replaceTrack(newVideoTrack);
+      }
+
+      if (audioSender && newAudioTrack) {
+        await audioSender.replaceTrack(newAudioTrack);
+      }
     }
   }
 
@@ -203,19 +222,17 @@ export default function CallRoom() {
     setError("");
 
     try {
-      setStatusText("Starting camera and microphone...");
-      await setupLocalMediaAndPeer();
+      await setupLocalMediaAndPeer(facingMode);
 
       socketRef.current.emit("join-room", {
         roomId,
         userType: "user",
       });
 
-      console.log("Joined room:", roomId);
-      setStatusText(`Joined room: ${roomId}`);
+      setStatusText("Joining...");
       setJoined(true);
     } catch (err) {
-      console.error("joinCall error:", err);
+      console.error(err);
       setError(
         "Could not start camera or microphone. Please allow permissions and try again."
       );
@@ -233,8 +250,6 @@ export default function CallRoom() {
       roomId,
       offer,
     });
-
-    console.log("Offer sent for room:", roomId);
   }
 
   async function createAnswer(offer) {
@@ -250,8 +265,46 @@ export default function CallRoom() {
       roomId,
       answer,
     });
+  }
 
-    console.log("Answer sent for room:", roomId);
+  function toggleMic() {
+    const stream = localStreamRef.current;
+    if (!stream) return;
+
+    stream.getAudioTracks().forEach((track) => {
+      track.enabled = !track.enabled;
+    });
+
+    setMicOn(stream.getAudioTracks()[0]?.enabled ?? false);
+  }
+
+  function toggleCamera() {
+    const stream = localStreamRef.current;
+    if (!stream) return;
+
+    stream.getVideoTracks().forEach((track) => {
+      track.enabled = !track.enabled;
+    });
+
+    setCameraOn(stream.getVideoTracks()[0]?.enabled ?? false);
+  }
+
+  async function switchCamera() {
+    const nextFacingMode = facingMode === "user" ? "environment" : "user";
+    setFacingMode(nextFacingMode);
+
+    try {
+      await setupLocalMediaAndPeer(nextFacingMode);
+    } catch (err) {
+      console.error(err);
+      setError("Could not switch camera on this device/browser.");
+    }
+  }
+
+  function leaveCall() {
+    cleanup();
+    setJoined(false);
+    setStatusText("Call ended");
   }
 
   function cleanup() {
@@ -272,64 +325,280 @@ export default function CallRoom() {
   }
 
   return (
-    <div style={{ padding: 20, fontFamily: "Arial, sans-serif" }}>
-      <h1>Video Consultation Room</h1>
-      <p>
-        <strong>Room ID:</strong> {roomId || "Loading..."}
-      </p>
-      <p>
-        <strong>Status:</strong> {statusText}
-      </p>
+    <div className="callApp">
+      {!joined ? (
+        <div className="preJoin">
+          <div className="preJoinCard">
+            <p className="preLabel">Soulfood Video Consultation</p>
+            <h1>Ready to join</h1>
+            <p className="preStatus">{statusText}</p>
 
-      {!ready && <p>Preparing room...</p>}
+            {error && <p className="errorText">{error}</p>}
 
-      {!joined && ready && (
-        <button
-          onClick={joinCall}
-          style={{ padding: "10px 16px", cursor: "pointer" }}
-        >
-          Join Call
-        </button>
-      )}
-
-      {error && (
-        <p style={{ color: "red", marginTop: 12 }}>
-          {error}
-        </p>
-      )}
-
-      <div style={{ display: "flex", gap: 20, marginTop: 20, flexWrap: "wrap" }}>
-        <div>
-          <p>Your Camera</p>
-          <video
-            ref={localVideoRef}
-            autoPlay
-            muted
-            playsInline
-            style={{
-              width: 320,
-              height: 240,
-              background: "black",
-              objectFit: "cover",
-            }}
-          />
+            <button
+              className="joinButton"
+              onClick={joinCall}
+              disabled={!ready}
+            >
+              Join Call
+            </button>
+          </div>
         </div>
-
-        <div>
-          <p>Other Participant</p>
+      ) : (
+        <div className="callScreen">
           <video
             ref={remoteVideoRef}
             autoPlay
             playsInline
-            style={{
-              width: 320,
-              height: 240,
-              background: "black",
-              objectFit: "cover",
-            }}
+            className="remoteVideo"
           />
+
+          <div className="remoteFallback">
+            <span>{statusText}</span>
+          </div>
+
+          <div className="topOverlay">
+            <div>
+              <h1>Consultation</h1>
+              <p>{statusText}</p>
+            </div>
+          </div>
+
+          <div className="localPreviewWrap">
+            <video
+              ref={localVideoRef}
+              autoPlay
+              muted
+              playsInline
+              className="localPreview"
+            />
+          </div>
+
+          <div className="controlsBar">
+            <button className="controlBtn" onClick={toggleMic}>
+              {micOn ? "Mute" : "Unmute"}
+            </button>
+
+            <button className="controlBtn" onClick={toggleCamera}>
+              {cameraOn ? "Camera Off" : "Camera On"}
+            </button>
+
+            <button className="controlBtn" onClick={switchCamera}>
+              Switch
+            </button>
+
+            <button className="endBtn" onClick={leaveCall}>
+              End
+            </button>
+          </div>
         </div>
-      </div>
+      )}
+
+      <style jsx>{`
+        .callApp {
+          min-height: 100vh;
+          background: #000;
+          color: #fff;
+          font-family: Inter, Arial, sans-serif;
+        }
+
+        .preJoin {
+          min-height: 100vh;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          padding: 24px;
+          background: linear-gradient(180deg, #121315 0%, #1e2024 100%);
+        }
+
+        .preJoinCard {
+          width: 100%;
+          max-width: 430px;
+          background: rgba(255, 255, 255, 0.06);
+          border: 1px solid rgba(255, 255, 255, 0.08);
+          border-radius: 28px;
+          padding: 28px 22px;
+          text-align: center;
+          backdrop-filter: blur(14px);
+        }
+
+        .preLabel {
+          margin: 0 0 10px;
+          color: #babac0;
+          text-transform: uppercase;
+          letter-spacing: 0.14em;
+          font-size: 12px;
+        }
+
+        .preJoinCard h1 {
+          margin: 0 0 10px;
+          font-size: 36px;
+          letter-spacing: -0.03em;
+        }
+
+        .preStatus {
+          margin: 0 0 18px;
+          color: #d4d4d8;
+        }
+
+        .joinButton {
+          width: 100%;
+          border: none;
+          border-radius: 999px;
+          background: #23c46e;
+          color: #fff;
+          padding: 16px;
+          font-size: 16px;
+          font-weight: 700;
+          cursor: pointer;
+        }
+
+        .joinButton:disabled {
+          opacity: 0.5;
+          cursor: not-allowed;
+        }
+
+        .errorText {
+          color: #ffb7b7;
+          margin-bottom: 14px;
+        }
+
+        .callScreen {
+          position: relative;
+          width: 100%;
+          height: 100vh;
+          overflow: hidden;
+          background: #000;
+        }
+
+        .remoteVideo {
+          position: absolute;
+          inset: 0;
+          width: 100%;
+          height: 100%;
+          object-fit: cover;
+          background: #101114;
+        }
+
+        .remoteFallback {
+          position: absolute;
+          inset: 0;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          color: #d6d6db;
+          background: radial-gradient(circle at top, #20252a 0%, #0a0b0d 60%);
+          z-index: 0;
+        }
+
+        .topOverlay {
+          position: absolute;
+          top: 0;
+          left: 0;
+          right: 0;
+          z-index: 3;
+          padding: 24px 18px 40px;
+          background: linear-gradient(
+            180deg,
+            rgba(0, 0, 0, 0.55) 0%,
+            rgba(0, 0, 0, 0) 100%
+          );
+        }
+
+        .topOverlay h1 {
+          margin: 0;
+          font-size: 28px;
+          font-weight: 700;
+        }
+
+        .topOverlay p {
+          margin: 6px 0 0;
+          color: rgba(255, 255, 255, 0.8);
+          font-size: 14px;
+        }
+
+        .localPreviewWrap {
+          position: absolute;
+          top: 84px;
+          right: 14px;
+          z-index: 4;
+          width: 110px;
+          height: 170px;
+          border-radius: 22px;
+          overflow: hidden;
+          background: #222;
+          box-shadow: 0 18px 40px rgba(0, 0, 0, 0.35);
+          border: 1px solid rgba(255, 255, 255, 0.12);
+        }
+
+        .localPreview {
+          width: 100%;
+          height: 100%;
+          object-fit: cover;
+          background: #222;
+          transform: scaleX(-1);
+        }
+
+        .controlsBar {
+          position: absolute;
+          left: 12px;
+          right: 12px;
+          bottom: 24px;
+          z-index: 5;
+          display: flex;
+          gap: 10px;
+          justify-content: center;
+          align-items: center;
+          padding: 14px;
+          border-radius: 28px;
+          background: rgba(18, 18, 20, 0.56);
+          backdrop-filter: blur(14px);
+        }
+
+        .controlBtn,
+        .endBtn {
+          border: none;
+          min-width: 72px;
+          border-radius: 999px;
+          padding: 12px 14px;
+          font-size: 13px;
+          font-weight: 700;
+          cursor: pointer;
+        }
+
+        .controlBtn {
+          background: rgba(255, 255, 255, 0.12);
+          color: #fff;
+        }
+
+        .endBtn {
+          background: #db3d35;
+          color: #fff;
+        }
+
+        @media (max-width: 520px) {
+          .controlsBar {
+            gap: 8px;
+            padding: 12px 10px;
+          }
+
+          .controlBtn,
+          .endBtn {
+            min-width: 66px;
+            font-size: 12px;
+            padding: 12px 10px;
+          }
+
+          .localPreviewWrap {
+            width: 96px;
+            height: 146px;
+          }
+
+          .topOverlay h1 {
+            font-size: 24px;
+          }
+        }
+      `}</style>
     </div>
   );
 }
