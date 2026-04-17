@@ -21,8 +21,8 @@ export default function CallRoom() {
   const peerConnectionRef = useRef(null);
   const localStreamRef = useRef(null);
   const remoteStreamRef = useRef(null);
-  const leavingRef = useRef(false);
   const joinedRef = useRef(false);
+  const leavingRef = useRef(false);
 
   const localVideoRef = useRef(null);
   const remoteVideoRef = useRef(null);
@@ -51,15 +51,15 @@ export default function CallRoom() {
 
     socket.on("connect", () => {
       setReady(true);
-      setError("");
       setStatusText("Ready to join");
+      setError("");
     });
 
     socket.on("connect_error", (err) => {
       console.error(err);
       setReady(false);
-      setError("Could not connect to the live video server.");
       setStatusText("Connection failed");
+      setError("Could not connect to the live video server.");
     });
 
     socket.on("user-joined", async () => {
@@ -75,18 +75,10 @@ export default function CallRoom() {
     socket.on("user-left", async () => {
       setRemoteConnected(false);
       setStatusText("Other participant ended the call");
-      setCallEnded(true);
-
       await logCallEnded("other-participant-left");
       cleanup();
-
-      setTimeout(() => {
-        if (role === "consultant") {
-          window.location.href = "/consultant-app";
-        } else {
-          window.location.href = "/?review=1";
-        }
-      }, 1200);
+      setJoined(false);
+      setCallEnded(true);
     });
 
     socket.on("webrtc-offer", async ({ offer }) => {
@@ -122,35 +114,13 @@ export default function CallRoom() {
       }
     });
 
-    const handleBeforeUnload = () => {
-      if (socketRef.current && joinedRef.current && roomId && !leavingRef.current) {
-        socketRef.current.emit("leave-room", {
-          roomId,
-          reason: "page-close",
-        });
-      }
-    };
-
-    window.addEventListener("beforeunload", handleBeforeUnload);
-
     return () => {
-      window.removeEventListener("beforeunload", handleBeforeUnload);
-
-      if (socketRef.current && joinedRef.current && roomId && !leavingRef.current) {
-        socketRef.current.emit("leave-room", {
-          roomId,
-          reason: "component-unmount",
-        });
-      }
-
       if (socketRef.current) {
         socketRef.current.disconnect();
       }
-
       cleanup();
-      socketRef.current = null;
     };
-  }, [router.isReady, roomId, role, facingMode]);
+  }, [router.isReady, roomId]);
 
   useEffect(() => {
     if (!router.isReady || !roomId || !ready || joined) return;
@@ -169,7 +139,7 @@ export default function CallRoom() {
         audio: true,
       });
     } catch (err) {
-      console.warn("Preferred camera failed, using fallback camera", err);
+      console.warn("Preferred camera failed, using fallback", err);
       return await navigator.mediaDevices.getUserMedia({
         video: true,
         audio: true,
@@ -184,11 +154,6 @@ export default function CallRoom() {
     videoEl.playsInline = true;
     videoEl.autoplay = true;
 
-    await new Promise((resolve) => {
-      videoEl.onloadedmetadata = () => resolve();
-      setTimeout(resolve, 500);
-    });
-
     try {
       await videoEl.play();
     } catch (err) {
@@ -197,21 +162,18 @@ export default function CallRoom() {
   }
 
   async function setupLocalMediaAndPeer(nextFacingMode = "user") {
-    if (localStreamRef.current) {
-      localStreamRef.current.getTracks().forEach((track) => track.stop());
-      localStreamRef.current = null;
+    if (!localStreamRef.current) {
+      const stream = await getMediaStream(nextFacingMode);
+      localStreamRef.current = stream;
+
+      await attachVideo(localVideoRef.current, stream, true);
+
+      const audioTrack = stream.getAudioTracks()[0];
+      const videoTrack = stream.getVideoTracks()[0];
+
+      setMicOn(audioTrack?.enabled ?? true);
+      setCameraOn(videoTrack?.enabled ?? true);
     }
-
-    const stream = await getMediaStream(nextFacingMode);
-    localStreamRef.current = stream;
-
-    await attachVideo(localVideoRef.current, stream, true);
-
-    const audioTrack = stream.getAudioTracks()[0];
-    const videoTrack = stream.getVideoTracks()[0];
-
-    setMicOn(audioTrack?.enabled ?? true);
-    setCameraOn(videoTrack?.enabled ?? true);
 
     if (!peerConnectionRef.current) {
       const pc = new RTCPeerConnection({
@@ -228,8 +190,8 @@ export default function CallRoom() {
         remoteVideoRef.current.srcObject = remoteStream;
       }
 
-      stream.getTracks().forEach((track) => {
-        pc.addTrack(track, stream);
+      localStreamRef.current.getTracks().forEach((track) => {
+        pc.addTrack(track, localStreamRef.current);
       });
 
       pc.ontrack = async (event) => {
@@ -245,6 +207,7 @@ export default function CallRoom() {
         await attachVideo(remoteVideoRef.current, remoteStream, false);
         setRemoteConnected(true);
         setStatusText("Connected");
+        await logCallStarted();
       };
 
       pc.onicecandidate = (event) => {
@@ -261,36 +224,9 @@ export default function CallRoom() {
           setRemoteConnected(true);
           setStatusText("Connected");
         }
-
-        if (
-          pc.connectionState === "failed" ||
-          pc.connectionState === "disconnected" ||
-          pc.connectionState === "closed"
-        ) {
-          setRemoteConnected(false);
-        }
       };
 
       peerConnectionRef.current = pc;
-    } else {
-      const senders = peerConnectionRef.current.getSenders();
-      const newVideoTrack = stream.getVideoTracks()[0];
-      const newAudioTrack = stream.getAudioTracks()[0];
-
-      const videoSender = senders.find(
-        (sender) => sender.track && sender.track.kind === "video"
-      );
-      const audioSender = senders.find(
-        (sender) => sender.track && sender.track.kind === "audio"
-      );
-
-      if (videoSender && newVideoTrack) {
-        await videoSender.replaceTrack(newVideoTrack);
-      }
-
-      if (audioSender && newAudioTrack) {
-        await audioSender.replaceTrack(newAudioTrack);
-      }
     }
   }
 
@@ -305,9 +241,8 @@ export default function CallRoom() {
       return;
     }
 
-    setError("");
-
     try {
+      setError("");
       await setupLocalMediaAndPeer(facingMode);
 
       socketRef.current.emit("join-room", {
@@ -316,13 +251,11 @@ export default function CallRoom() {
       });
 
       joinedRef.current = true;
-      setStatusText("Joining...");
       setJoined(true);
+      setStatusText("Joining...");
     } catch (err) {
       console.error(err);
-      setError(
-        "Could not start camera or microphone. Please allow permissions and try again."
-      );
+      setError("Could not start camera or microphone. Please allow permissions and try again.");
     }
   }
 
@@ -381,10 +314,64 @@ export default function CallRoom() {
     setFacingMode(nextFacingMode);
 
     try {
-      await setupLocalMediaAndPeer(nextFacingMode);
+      const oldStream = localStreamRef.current;
+      if (oldStream) {
+        oldStream.getTracks().forEach((track) => track.stop());
+      }
+
+      const newStream = await getMediaStream(nextFacingMode);
+      localStreamRef.current = newStream;
+      await attachVideo(localVideoRef.current, newStream, true);
+
+      const senders = peerConnectionRef.current?.getSenders() || [];
+      const newVideoTrack = newStream.getVideoTracks()[0];
+      const newAudioTrack = newStream.getAudioTracks()[0];
+
+      const videoSender = senders.find(
+        (sender) => sender.track && sender.track.kind === "video"
+      );
+      const audioSender = senders.find(
+        (sender) => sender.track && sender.track.kind === "audio"
+      );
+
+      if (videoSender && newVideoTrack) {
+        await videoSender.replaceTrack(newVideoTrack);
+      }
+      if (audioSender && newAudioTrack) {
+        await audioSender.replaceTrack(newAudioTrack);
+      }
+
+      setMicOn(newAudioTrack?.enabled ?? true);
+      setCameraOn(newVideoTrack?.enabled ?? true);
     } catch (err) {
       console.error(err);
       setError("Could not switch camera on this device/browser.");
+    }
+  }
+
+  async function logCallStarted() {
+    try {
+      await fetch("/api/call-records", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+          requestId: requestId || "",
+          roomId: roomId || "",
+          role: role || "",
+          event: "started",
+          time: new Date().toISOString(),
+          fullName: fullName || "",
+          phone: phone || "",
+          email: email || "",
+          eventType: eventType || "",
+          eventDate: eventDate || "",
+          notes: notes || "",
+        }),
+      });
+    } catch (err) {
+      console.error("Failed to log call start:", err);
     }
   }
 
@@ -416,7 +403,6 @@ export default function CallRoom() {
 
   async function leaveCall() {
     leavingRef.current = true;
-
     await logCallEnded("ended-by-user");
 
     if (socketRef.current && roomId) {
@@ -429,14 +415,6 @@ export default function CallRoom() {
     cleanup();
     setJoined(false);
     setCallEnded(true);
-
-    setTimeout(() => {
-      if (role === "consultant") {
-        window.location.href = "/consultant-app";
-      } else {
-        window.location.href = "/?review=1";
-      }
-    }, 800);
   }
 
   function cleanup() {
@@ -456,6 +434,118 @@ export default function CallRoom() {
     }
 
     joinedRef.current = false;
+    setRemoteConnected(false);
+  }
+
+  if (callEnded && role === "consultant") {
+    return (
+      <div className="postCallScreen">
+        <div className="postCard">
+          <h1>Call ended</h1>
+          <p>Returning to consultant dashboard…</p>
+          <a className="primaryBtn" href="/consultant-app">Back to Dashboard</a>
+        </div>
+
+        <style jsx>{`
+          .postCallScreen {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: #101114;
+            color: white;
+            font-family: Inter, Arial, sans-serif;
+            padding: 24px;
+          }
+          .postCard {
+            width: 100%;
+            max-width: 420px;
+            padding: 28px;
+            border-radius: 24px;
+            background: rgba(255,255,255,0.06);
+            text-align: center;
+          }
+          .primaryBtn {
+            display: inline-block;
+            margin-top: 16px;
+            padding: 14px 18px;
+            border-radius: 999px;
+            background: #23c46e;
+            color: white;
+            text-decoration: none;
+            font-weight: 700;
+          }
+        `}</style>
+      </div>
+    );
+  }
+
+  if (callEnded && role === "customer") {
+    return (
+      <div className="postCallScreen">
+        <div className="postCard">
+          <h1>Thank you for your call</h1>
+          <p>We’d love your feedback.</p>
+          <div className="btnRow">
+            <a
+              className="primaryBtn"
+              href="https://www.google.com/search?q=Soulfood+Fusion+House+review"
+              target="_blank"
+              rel="noreferrer"
+            >
+              Rate us!
+            </a>
+            <a className="secondaryBtn" href="/">
+              Back to Home
+            </a>
+          </div>
+        </div>
+
+        <style jsx>{`
+          .postCallScreen {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: #101114;
+            color: white;
+            font-family: Inter, Arial, sans-serif;
+            padding: 24px;
+          }
+          .postCard {
+            width: 100%;
+            max-width: 420px;
+            padding: 28px;
+            border-radius: 24px;
+            background: rgba(255,255,255,0.06);
+            text-align: center;
+          }
+          .btnRow {
+            display: flex;
+            gap: 12px;
+            justify-content: center;
+            margin-top: 16px;
+            flex-wrap: wrap;
+          }
+          .primaryBtn,
+          .secondaryBtn {
+            display: inline-block;
+            padding: 14px 18px;
+            border-radius: 999px;
+            text-decoration: none;
+            font-weight: 700;
+          }
+          .primaryBtn {
+            background: #23c46e;
+            color: white;
+          }
+          .secondaryBtn {
+            background: rgba(255,255,255,0.12);
+            color: white;
+          }
+        `}</style>
+      </div>
+    );
   }
 
   return (
