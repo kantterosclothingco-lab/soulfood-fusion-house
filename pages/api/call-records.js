@@ -1,50 +1,71 @@
-let callRecords = [];
+import { supabase } from "../../lib/supabase";
 
-export default function handler(req, res) {
+export default async function handler(req, res) {
   if (req.method === "POST") {
-    const record = {
-      id: Date.now().toString(),
-      requestId: req.body.requestId || "",
-      roomId: req.body.roomId || "",
+    const payload = {
+      request_id: req.body.requestId || "",
+      room_id: req.body.roomId || "",
       role: req.body.role || "",
       event: req.body.event || "started",
       time: req.body.time || new Date().toISOString(),
-      fullName: req.body.fullName || "",
+      full_name: req.body.fullName || "",
       phone: req.body.phone || "",
       email: req.body.email || "",
-      eventType: req.body.eventType || "",
-      eventDate: req.body.eventDate || "",
+      event_type: req.body.eventType || "",
+      event_date: req.body.eventDate || "",
       notes: req.body.notes || "",
     };
 
-    callRecords.unshift(record);
+    const { data, error } = await supabase
+      .from("call_records")
+      .insert([payload])
+      .select();
 
-    return res.status(200).json({ success: true, record });
+    if (error) {
+      return res.status(500).json({ error: error.message });
+    }
+
+    return res.status(200).json({ success: true, record: data[0] });
   }
 
   if (req.method === "PATCH") {
-    const record = {
-      id: Date.now().toString(),
-      requestId: req.body.requestId || "",
-      roomId: req.body.roomId || "",
+    const payload = {
+      request_id: req.body.requestId || "",
+      room_id: req.body.roomId || "",
       role: req.body.role || "",
       event: req.body.event || "ended",
       time: req.body.time || new Date().toISOString(),
-      fullName: req.body.fullName || "",
+      full_name: req.body.fullName || "",
       phone: req.body.phone || "",
       email: req.body.email || "",
-      eventType: req.body.eventType || "",
-      eventDate: req.body.eventDate || "",
+      event_type: req.body.eventType || "",
+      event_date: req.body.eventDate || "",
       notes: req.body.notes || "",
     };
 
-    callRecords.unshift(record);
+    const { data, error } = await supabase
+      .from("call_records")
+      .insert([payload])
+      .select();
 
-    return res.status(200).json({ success: true, record });
+    if (error) {
+      return res.status(500).json({ error: error.message });
+    }
+
+    return res.status(200).json({ success: true, record: data[0] });
   }
 
   if (req.method === "GET") {
-    return res.status(200).json({ records: callRecords });
+    const { data, error } = await supabase
+      .from("call_records")
+      .select("*")
+      .order("time", { ascending: false });
+
+    if (error) {
+      return res.status(500).json({ error: error.message });
+    }
+
+    return res.status(200).json({ records: data || [] });
   }
 
   return res.status(405).json({ error: "Method not allowed" });
