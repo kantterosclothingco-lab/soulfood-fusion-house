@@ -48,9 +48,9 @@ export default function CateringPage() {
             <p className="eyebrow">Soulfood Fusion Catering</p>
             <h1>Catering for events, gatherings, and shared meals</h1>
             <p>
-              Filipino-inspired dishes, generous servings, and flexible catering
-              for birthdays, private events, corporate functions, and special
-              occasions.
+              A fusion of Filipino and international flavors, generous servings,
+              and flexible catering tailored for birthdays, private events, 
+              corporate functions, and special occasions.
             </p>
 
             <div className="heroButtons">
