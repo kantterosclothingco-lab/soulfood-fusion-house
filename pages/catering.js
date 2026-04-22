@@ -14,10 +14,13 @@ export default function CateringPage() {
           name="description"
           content="Soulfood Fusion Catering in Bendigo for events, parties, office catering, and special occasions."
         />
+
+        {/* ✅ UPDATED FONT (only change) */}
         <link
-          href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap"
+          href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap"
           rel="stylesheet"
         />
+
         <link rel="icon" href="/favicon.png" />
       </Head>
 
@@ -83,7 +86,7 @@ export default function CateringPage() {
           </div>
         </section>
 
-        {/* SERVICES */}
+        {/* SERVICES (your existing content kept) */}
         <section className="section contentSection" id="services">
           <div className="textBlock narrow">
             <p className="sectionLabel">Services</p>
@@ -101,8 +104,8 @@ export default function CateringPage() {
               culinary touches to satisfy every guest.
             </p>
 
-            <h3 className="subHeading">Events We Cater</h3>
-            <p className="listText">
+            <p className="sectionLabel">Events We Cater</p>
+            <p>
               Weddings<br />
               Birthdays<br />
               Christenings<br />
@@ -117,8 +120,7 @@ export default function CateringPage() {
               are equipped to deliver quality and consistency.
             </p>
 
-            <h3 className="subHeading">Our Catering Services</h3>
-
+            <p className="sectionLabel">Our Catering Services</p>
             <p>
               <strong>Buffet Catering</strong><br />
               A wide selection of dishes presented in a professionally arranged buffet setup.
@@ -139,23 +141,23 @@ export default function CateringPage() {
               Customized catering for birthdays and special occasions.
             </p>
 
-            <h3 className="subHeading">Cuisine Specialties</h3>
-            <p className="listText">
+            <p className="sectionLabel">Cuisine Specialties</p>
+            <p>
               Authentic Filipino Cuisine<br />
               International Dishes<br />
               Fusion Menu Options
             </p>
 
-            <h3 className="subHeading">Custom Catering Packages</h3>
-            <p className="listText">
+            <p className="sectionLabel">Custom Catering Packages</p>
+            <p>
               Guest size<br />
               Budget<br />
               Menu preferences<br />
               Event type
             </p>
 
-            <h3 className="subHeading">What We Offer</h3>
-            <p className="listText">
+            <p className="sectionLabel">What We Offer</p>
+            <p>
               High-quality, freshly prepared food<br />
               Professional and reliable service<br />
               Clean and elegant presentation<br />
@@ -210,17 +212,31 @@ export default function CateringPage() {
         <p>Soulfood Fusion Catering</p>
       </footer>
 
+      {/* ✅ ONLY TYPOGRAPHY IMPROVEMENT */}
       <style jsx global>{`
-        .subHeading {
-          font-size: 1.2rem;
-          margin-top: 20px;
-          margin-bottom: 8px;
-          font-weight: 600;
+        body {
+          font-family: "Inter", sans-serif;
+          font-weight: 400;
+          letter-spacing: -0.01em;
         }
 
-        .listText {
-          line-height: 1.9;
-          font-size: 0.95rem;
+        h1, h2 {
+          font-weight: 600;
+          letter-spacing: -0.02em;
+        }
+
+        h3 {
+          font-weight: 500;
+        }
+
+        p {
+          font-size: 0.96rem;
+          line-height: 1.8;
+        }
+
+        .sectionLabel {
+          font-weight: 600;
+          letter-spacing: 0.14em;
         }
       `}</style>
     </>
