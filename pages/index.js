@@ -142,12 +142,6 @@ export default function Home() {
           </div>
         </section>
 
-        <section className="flowSection">
-          <div className="sectionIntro center">
-            <p className="sectionLabel">How It Works</p>
-            <h2>Simple order flow for customers</h2>
-          </div>
-
           <div className="flowGrid">
             <article className="flowCard">
               <div className="flowIcon">1</div>
@@ -345,18 +339,20 @@ export default function Home() {
       </main>
 
       <footer className="footer">
-        <div>
-          <strong>Soulfood Fusion House</strong>
-          <p>Where good food meets your soulful cravings.</p>
-        </div>
-        <div className="footerLinks">
-          <Link href="/menu">Menu</Link>
-          <Link href="/catering">🍽 Catering</Link>
-          <Link href="/checkout">🛒 Checkout</Link>
-          <a href={mapLink} target="_blank" rel="noreferrer">📍 Map</a>
-          <a href={reviewLink} target="_blank" rel="noreferrer">⭐ Reviews</a>
-        </div>
-      </footer>
+  <div>
+    <strong>Soulfood Fusion House</strong>
+    <p>Where good food meets your soulful cravings.</p>
+  </div>
+
+  <div className="footerLinks">
+    <Link href="/menu">Menu</Link>
+    <Link href="/catering">Catering</Link>
+    <Link href="/gallery">Gallery</Link>
+    <Link href="/checkout">Order Online</Link>
+    <a href={mapLink} target="_blank" rel="noreferrer">Location</a>
+    <a href={reviewLink} target="_blank" rel="noreferrer">Reviews</a>
+  </div>
+</footer>
 
       <style jsx global>{`
         * { box-sizing: border-box; }
@@ -510,15 +506,42 @@ export default function Home() {
           color: #6f5a49; line-height: 1.75; max-width: 620px; margin: 0 auto 20px;
         }
 
-        .footer {
-          max-width: 1280px; margin: 0 auto; padding: 28px;
-          display: flex; justify-content: space-between; align-items: center; gap: 18px;
-          border-top: 1px solid #ead7bf; color: #6f5a49; flex-wrap: wrap;
-        }
-        .footer strong { display: block; color: #332116; margin-bottom: 6px; }
-        .footer p { margin: 0; }
-        .footerLinks { display: flex; gap: 14px; flex-wrap: wrap; }
-        .footer a { color: #3a2418; font-weight: 700; }
+       .footer {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 32px 28px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 18px;
+  border-top: 1px solid #ead7bf;
+  color: #6f5a49;
+  flex-wrap: wrap;
+}
+
+.footer strong {
+  display: block;
+  color: #332116;
+  margin-bottom: 6px;
+  font-size: 1rem;
+}
+
+.footer p {
+  margin: 0;
+  font-size: 0.85rem;
+}
+
+.footerLinks {
+  display: flex;
+  gap: 14px;
+  flex-wrap: wrap;
+}
+
+.footer a {
+  color: #3a2418;
+  font-weight: 600;
+  font-size: 0.9rem;
+}
 
         @media (max-width: 980px) {
           .flowGrid, .featureGrid, .dishGrid, .visitGrid, .bookingForm {
