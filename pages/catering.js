@@ -15,7 +15,7 @@ export default function CateringPage() {
           content="Soulfood Fusion Catering in Bendigo for events, parties, office catering, and special occasions."
         />
         <link
-          href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap"
+          href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Inter:wght@300;400;500;600&display=swap"
           rel="stylesheet"
         />
         <link rel="icon" href="/favicon.png" />
@@ -92,7 +92,7 @@ export default function CateringPage() {
         <section className="section contentSection" id="services">
           <div className="textBlock narrow">
             <p className="sectionLabel">Services</p>
-            <h2>🍽️ SoulFood Fusion Catering & Events — Services</h2>
+            <h2>SoulFood Fusion Catering & Events — Services</h2>
             <p>
               SoulFood Fusion Catering & Events offers a complete catering
               experience designed to make every occasion seamless, memorable,
@@ -105,7 +105,7 @@ export default function CateringPage() {
             </p>
 
             <p className="sectionLabel">Events We Cater</p>
-            <h2>🎉 Events We Cater</h2>
+            <h2>Events We Cater</h2>
             <p>
               We provide catering services for a wide range of occasions,
               including:
@@ -131,7 +131,7 @@ export default function CateringPage() {
             </p>
 
             <p className="sectionLabel">Our Catering Services</p>
-            <h2>🍽️ Our Catering Services</h2>
+            <h2>Our Catering Services</h2>
             <p>
               <strong>Buffet Catering</strong>
               <br />
@@ -158,7 +158,7 @@ export default function CateringPage() {
             </p>
 
             <p className="sectionLabel">Cuisine Specialties</p>
-            <h2>🌍 Cuisine Specialties</h2>
+            <h2>Cuisine Specialties</h2>
             <p>Our menu features a combination of:</p>
             <p>
               Authentic Filipino Favorites
@@ -173,7 +173,7 @@ export default function CateringPage() {
             </p>
 
             <p className="sectionLabel">Custom Catering Packages</p>
-            <h2>📝 Custom Catering Packages</h2>
+            <h2>Custom Catering Packages</h2>
             <p>
               Every event is different — and we make sure your catering fits
               perfectly.
@@ -190,7 +190,7 @@ export default function CateringPage() {
             </p>
 
             <p className="sectionLabel">What We Offer</p>
-            <h2>⭐ What We Offer</h2>
+            <h2>What We Offer</h2>
             <p>
               High-quality, freshly prepared food
               <br />
@@ -296,6 +296,12 @@ export default function CateringPage() {
           font-weight: 500;
         }
 
+        .brand {
+          font-family: "Cormorant Garamond", serif;
+          font-size: 1.7rem;
+          letter-spacing: 0.02em;
+        }
+
         .nav {
           display: flex;
           gap: 18px;
@@ -352,9 +358,10 @@ export default function CateringPage() {
         }
 
         .heroContent h1 {
-          font-size: clamp(2.5rem, 5vw, 4.5rem);
-          line-height: 1.08;
-          font-weight: 500;
+          font-family: "Cormorant Garamond", serif;
+          font-size: clamp(2.9rem, 5vw, 5rem);
+          line-height: 1.02;
+          font-weight: 600;
           letter-spacing: -0.02em;
           margin: 16px 0;
         }
@@ -436,11 +443,13 @@ export default function CateringPage() {
         }
 
         .textBlock h2 {
-          font-size: clamp(1.9rem, 4vw, 2.8rem);
+          font-family: "Cormorant Garamond", serif;
+          font-size: clamp(2.2rem, 4vw, 3.3rem);
           margin: 8px 0 12px;
           color: #2e1d15;
-          font-weight: 500;
+          font-weight: 600;
           letter-spacing: -0.01em;
+          line-height: 1.05;
         }
 
         .textBlock p {
@@ -546,7 +555,11 @@ export default function CateringPage() {
           }
 
           .heroContent h1 {
-            font-size: 2.2rem;
+            font-size: 2.8rem;
+          }
+
+          .brand {
+            font-size: 1.45rem;
           }
         }
       `}</style>
