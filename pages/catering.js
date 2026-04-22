@@ -82,9 +82,13 @@ export default function CateringPage() {
             <p className="sectionLabel">About</p>
             <h2>Simple catering that feels generous and well-planned</h2>
             <p>
-              Soulfood Fusion Catering is designed for birthdays, private
-              functions, office lunches, and family gatherings. Our focus is on
-              food that is satisfying, easy to serve, and enjoyable for groups.
+              Established in 2020, SoulFood Fusion Catering & Events is dedicated to delivering exceptional dining experiences through a unique fusion of Filipino cuisine and international flavors.
+
+The business is owned by Chef Antonio Patricio Lim, whose culinary expertise was developed through years of experience working in international cuisine on luxury cruise ships and in Middle Eastern countries. Together with his wife, Yzabel Vale, they have built SoulFood into a trusted name in catering — known for quality, consistency, and refined presentation.
+
+Combining global culinary standards with Filipino hospitality, SoulFood Fusion Catering & Events offers thoughtfully prepared dishes made from fresh ingredients and crafted to impress every guest.
+
+From weddings and private celebrations to corporate events, the team is committed to providing generous servings, flexible catering options, and a seamless, stress-free experience.
             </p>
           </div>
         </section>
