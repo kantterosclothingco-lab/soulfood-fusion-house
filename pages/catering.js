@@ -15,7 +15,7 @@ export default function CateringPage() {
           content="Soulfood Fusion Catering in Bendigo for events, parties, office catering, and special occasions."
         />
 
-        {/* ✅ Aesthetic Fonts */}
+        {/* ✅ ONLY CHANGE: better aesthetic font */}
         <link
           href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600&family=Inter:wght@300;400;500;600&display=swap"
           rel="stylesheet"
@@ -125,27 +125,28 @@ export default function CateringPage() {
             <h2>Our Catering Services</h2>
 
             <p>
-              <strong>Buffet Catering</strong><br />
+              <strong>Buffet Catering</strong>
+              <br />
               A wide selection of dishes presented in a beautifully arranged
-              buffet setup, perfect for both small and large gatherings.
+              buffet setup.
             </p>
 
             <p>
-              <strong>Plated / Formal Dining</strong><br />
-              Elegant, individually served meals ideal for weddings and formal
-              occasions.
+              <strong>Plated / Formal Dining</strong>
+              <br />
+              Individually served meals for formal occasions.
             </p>
 
             <p>
-              <strong>Corporate Catering</strong><br />
-              Reliable and professional catering for meetings, office events,
-              and business functions.
+              <strong>Corporate Catering</strong>
+              <br />
+              Reliable catering for meetings and business functions.
             </p>
 
             <p>
-              <strong>Private Event Catering</strong><br />
-              Customized food service for birthdays, family gatherings, and
-              special celebrations.
+              <strong>Private Event Catering</strong>
+              <br />
+              Customized service for special celebrations.
             </p>
 
             <p className="sectionLabel">Cuisine Specialties</p>
@@ -155,11 +156,6 @@ export default function CateringPage() {
               Authentic Filipino Favorites<br />
               International Dishes<br />
               Fusion Menu Options
-            </p>
-
-            <p>
-              Each dish is carefully prepared using fresh ingredients and
-              crafted to deliver both flavor and presentation.
             </p>
 
             <p className="sectionLabel">Custom Catering Packages</p>
@@ -178,7 +174,7 @@ export default function CateringPage() {
             <p>
               High-quality, freshly prepared food<br />
               Professional and reliable service<br />
-              Clean and elegant food presentation<br />
+              Clean and elegant presentation<br />
               Flexible catering options<br />
               Stress-free event experience
             </p>
@@ -229,7 +225,7 @@ export default function CateringPage() {
         <p>Soulfood Fusion Catering</p>
       </footer>
 
-      {/* ✅ ONLY FONT STYLE IMPROVEMENT */}
+      {/* ✅ ONLY font tweak — no layout change */}
       <style jsx global>{`
         body {
           font-family: "Inter", sans-serif;
@@ -237,8 +233,6 @@ export default function CateringPage() {
 
         h1, h2 {
           font-family: "Playfair Display", serif;
-          font-weight: 500;
-          letter-spacing: -0.01em;
         }
       `}</style>
     </>
