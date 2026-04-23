@@ -66,7 +66,7 @@ export default function GalleryPage() {
           </div>
 
           <p className="copyright">
-            © 2025 - Soulfood Fusion Catering. All rights reserved.
+            © 2026 - Soulfood Fusion Catering. All rights reserved.
           </p>
         </div>
       </footer>
