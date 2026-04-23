@@ -30,17 +30,29 @@ export default function GalleryPage() {
           <h1>Our Catering Experience</h1>
 
           <div className="galleryGrid">
-            <img src="/images/catering1.jpg" />
-            <img src="/images/catering2.jpg" />
-            <img src="/images/catering3.jpg" />
-            <img src="/images/catering4.jpg" />
-            <img src="/images/catering5.jpg" />
-            <img src="/images/catering6.jpg" />
+            <img src="/images/catering1.jpg" alt="Soulfood catering 1" />
+            <img src="/images/catering2.jpg" alt="Soulfood catering 2" />
+            <img src="/images/catering3.jpg" alt="Soulfood catering 3" />
+            <img src="/images/catering4.jpg" alt="Soulfood catering 4" />
+            <img src="/images/catering5.jpg" alt="Soulfood catering 5" />
+            <img src="/images/catering6.jpg" alt="Soulfood catering 6" />
+            <img src="/images/catering7.jpg" alt="Soulfood catering 7" />
+            <img src="/images/catering8.jpg" alt="Soulfood catering 8" />
+            <img src="/images/catering9.jpg" alt="Soulfood catering 9" />
+            <img src="/images/catering10.jpg" alt="Soulfood catering 10" />
+            <img src="/images/catering11.jpg" alt="Soulfood catering 11" />
+            <img src="/images/catering12.jpg" alt="Soulfood catering 12" />
+            <img src="/images/catering13.jpg" alt="Soulfood catering 13" />
+            <img src="/images/catering14.jpg" alt="Soulfood catering 14" />
           </div>
         </div>
       </main>
 
       <style jsx global>{`
+        * {
+          box-sizing: border-box;
+        }
+
         body {
           margin: 0;
           font-family: "Inter", sans-serif;
@@ -48,10 +60,15 @@ export default function GalleryPage() {
           color: #2a1c15;
         }
 
+        a {
+          text-decoration: none;
+        }
+
         h1 {
           font-family: "Cormorant Garamond", serif;
           font-size: 3rem;
           margin-bottom: 20px;
+          font-weight: 600;
         }
 
         .topbar {
@@ -60,22 +77,27 @@ export default function GalleryPage() {
           align-items: center;
           padding: 20px 40px;
           background: #111;
+          flex-wrap: wrap;
+          gap: 14px;
         }
 
         .brand {
           color: white;
           font-family: "Cormorant Garamond", serif;
-          font-size: 1.5rem;
+          font-size: 1.7rem;
+          font-weight: 600;
         }
 
         .nav a {
           color: white;
+          font-family: "Inter", sans-serif;
+          font-weight: 500;
         }
 
         .container {
           max-width: 1100px;
           margin: auto;
-          padding: 40px 20px;
+          padding: 40px 20px 60px;
           text-align: center;
         }
 
@@ -84,12 +106,14 @@ export default function GalleryPage() {
           letter-spacing: 0.15em;
           text-transform: uppercase;
           color: #b57a39;
+          margin-bottom: 8px;
         }
 
         .galleryGrid {
           display: grid;
           grid-template-columns: repeat(3, 1fr);
           gap: 16px;
+          margin-top: 24px;
         }
 
         .galleryGrid img {
@@ -97,11 +121,30 @@ export default function GalleryPage() {
           height: 240px;
           object-fit: cover;
           border-radius: 12px;
+          display: block;
+        }
+
+        @media (max-width: 900px) {
+          .galleryGrid {
+            grid-template-columns: repeat(2, 1fr);
+          }
         }
 
         @media (max-width: 768px) {
+          h1 {
+            font-size: 2.4rem;
+          }
+
+          .topbar {
+            padding: 16px 18px;
+          }
+
           .galleryGrid {
             grid-template-columns: 1fr;
+          }
+
+          .galleryGrid img {
+            height: 260px;
           }
         }
       `}</style>
