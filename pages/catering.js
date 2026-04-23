@@ -289,7 +289,7 @@ export default function CateringPage() {
           </div>
 
           <p className="footerCopyright">
-            © 2025 - Soulfood Fusion Catering. All rights reserved.
+            © 2026 - Soulfood Fusion Catering. All rights reserved.
           </p>
         </div>
       </footer>
