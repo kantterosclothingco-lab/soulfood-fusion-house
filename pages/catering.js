@@ -29,6 +29,7 @@ export default function CateringPage() {
         <nav className="nav">
           <a href="#about">About</a>
           <a href="#services">Services</a>
+          <Link href="/gallery">Gallery</Link>
           <a href="#contact">Contact</a>
           <Link href="/consultation" className="consultBtn">
             Free Consultation
@@ -59,6 +60,7 @@ export default function CateringPage() {
               </a>
               <a href="#services" className="secondaryBtn">
                 Services
+              <Link href="/gallery" className="secondaryBtn">Gallery</Link>
               </a>
               <a href="#contact" className="secondaryBtn">
                 Contact
