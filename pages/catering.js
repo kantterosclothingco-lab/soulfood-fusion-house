@@ -60,6 +60,7 @@ export default function CateringPage() {
               </a>
               <a href="#services" className="secondaryBtn">
                 Services
+              </a>
               <Link href="/gallery" className="secondaryBtn">Gallery</Link>
               </a>
               <a href="#contact" className="secondaryBtn">
