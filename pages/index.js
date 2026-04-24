@@ -66,6 +66,10 @@ export default function Home() {
         />
         <link rel="icon" href="/favicon.png" />
         <link rel="apple-touch-icon" href="/favicon.png" />
+        <link
+          href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Inter:wght@300;400;500;600;700&display=swap"
+          rel="stylesheet"
+        />
       </Head>
 
       <header className="topbar">
@@ -86,13 +90,13 @@ export default function Home() {
           <a href="#bestsellers">Best Sellers</a>
           <a href="#visit">Visit</a>
           <Link href="/menu" className="menuBtn">
-            ☰ Menu
+            Menu
           </Link>
           <Link href="/catering" className="cateringBtn">
-            🍽 Catering
+            Catering
           </Link>
           <Link href="/checkout" className="orderBtn">
-            🛒 Order Online
+            Order Online
           </Link>
         </nav>
       </header>
@@ -102,7 +106,7 @@ export default function Home() {
           <div className="heroOverlay" />
           <div className="heroContent">
             <p className="eyebrow">Soulfood Fusion House</p>
-            <h1>WHERE GOOD FOOD MEETS YOUR SOULFUL CRAVINGS!</h1>
+            <h1>WHERE GOOD FOOD MEETS YOUR SOULFUL CRAVINGS</h1>
             <p className="heroText">
               Good food, warm service, and bold flavors made to share. Explore
               our best sellers, check our location, and browse the full menu.
@@ -114,11 +118,11 @@ export default function Home() {
               </Link>
 
               <Link href="/checkout" className="orderBtn">
-                🛒 Order Online
+                Order Online
               </Link>
 
               <Link href="/catering" className="cateringBtn">
-                🍽 Catering Services
+                Catering Services
               </Link>
 
               <a
@@ -127,7 +131,7 @@ export default function Home() {
                 rel="noreferrer"
                 className="secondaryBtn"
               >
-                📍 Location
+                Location
               </a>
 
               <a
@@ -136,39 +140,9 @@ export default function Home() {
                 rel="noreferrer"
                 className="reviewBtn"
               >
-                ⭐ Reviews
+                Reviews
               </a>
             </div>
-          </div>
-        </section>
-
-        <section className="flowSection">
-          <div className="sectionIntro center">
-            <p className="sectionLabel">How It Works</p>
-            <h2>Simple order flow for customers</h2>
-          </div>
-
-          <div className="flowGrid">
-            <article className="flowCard">
-              <div className="flowIcon">1</div>
-              <h3>Browse the menu</h3>
-              <p>Customers explore your dishes and choose what they want.</p>
-            </article>
-            <article className="flowCard">
-              <div className="flowIcon">2</div>
-              <h3>Go to checkout</h3>
-              <p>They enter contact details, pickup or delivery preferences, and payment method.</p>
-            </article>
-            <article className="flowCard">
-              <div className="flowIcon">3</div>
-              <h3>Pay online</h3>
-              <p>Card, digital wallet, and future options like Afterpay can be added here.</p>
-            </article>
-            <article className="flowCard">
-              <div className="flowIcon">4</div>
-              <h3>Order confirmed</h3>
-              <p>They land on a thank-you page with a review button and next steps.</p>
-            </article>
           </div>
         </section>
 
@@ -186,15 +160,24 @@ export default function Home() {
           <div className="featureGrid">
             <article className="featureCard">
               <h3>Freshly Prepared</h3>
-              <p>Made with care and packed with flavor, from grilled dishes to family-style favorites.</p>
+              <p>
+                Made with care and packed with flavor, from grilled dishes to
+                family-style favorites.
+              </p>
             </article>
             <article className="featureCard">
               <h3>Best Sellers First</h3>
-              <p>The homepage highlights the dishes people love most before guiding them to the full menu.</p>
+              <p>
+                The homepage highlights the dishes people love most before
+                guiding them to the full menu.
+              </p>
             </article>
             <article className="featureCard">
               <h3>Ready For Online Orders</h3>
-              <p>The website now has a clearer flow for order, checkout, and payment-ready pages.</p>
+              <p>
+                The website now has a clearer flow for order, checkout, and
+                payment-ready pages.
+              </p>
             </article>
           </div>
         </section>
@@ -219,8 +202,12 @@ export default function Home() {
                   </div>
                   <p>{item.description}</p>
                   <div className="cardActions">
-                    <Link href="/menu" className="miniBtn">View Dish</Link>
-                    <Link href="/checkout" className="miniGoldBtn">Order Now</Link>
+                    <Link href="/menu" className="miniBtn">
+                      View Dish
+                    </Link>
+                    <Link href="/checkout" className="miniGoldBtn">
+                      Order Now
+                    </Link>
                   </div>
                 </div>
               </article>
@@ -249,34 +236,62 @@ export default function Home() {
                   rel="noreferrer"
                   className="iconLink"
                 >
-                  📍 Open in Google Maps
+                  Open in Google Maps
                 </a>
               </div>
 
               <div className="infoGroup">
                 <h4>Contact</h4>
-                <p><a href="tel:+61403036727">+61 403 036 727</a></p>
-                <p><a href="mailto:soulfoodfusionhouse@gmail.com">soulfoodfusionhouse@gmail.com</a></p>
+                <p>
+                  <a href="tel:+61403036727">+61 403 036 727</a>
+                </p>
+                <p>
+                  <a href="mailto:soulfoodfusionhouse@gmail.com">
+                    soulfoodfusionhouse@gmail.com
+                  </a>
+                </p>
               </div>
 
               <div className="infoGroup">
-  <h4>Opening Hours</h4>
-  <p><strong>Monday</strong> — 12:00pm to 3:00pm Lunch • 5:00pm to 8:00pm Dinner</p>
-  <p><strong>Tuesday - Wednesday</strong> — CLOSED</p>
-  <p><strong>Thursday - Friday</strong> — 12:00pm to 3:00pm Lunch • 5:00pm to 8:00pm Dinner</p>
-  <p><strong>Saturday</strong> — 12:00pm to 9:00pm</p>
-  <p><strong>Sunday</strong> — 12:00pm to 8:00pm</p>
-</div>
+                <h4>Opening Hours</h4>
+                <p>
+                  <strong>Monday</strong> — 12:00pm to 3:00pm Lunch • 5:00pm to
+                  8:00pm Dinner
+                </p>
+                <p>
+                  <strong>Tuesday - Wednesday</strong> — CLOSED
+                </p>
+                <p>
+                  <strong>Thursday - Friday</strong> — 12:00pm to 3:00pm Lunch •
+                  5:00pm to 8:00pm Dinner
+                </p>
+                <p>
+                  <strong>Saturday</strong> — 12:00pm to 9:00pm
+                </p>
+                <p>
+                  <strong>Sunday</strong> — 12:00pm to 8:00pm
+                </p>
+              </div>
 
               <div className="actionRow">
-                <a href={mapLink} target="_blank" rel="noreferrer" className="secondaryBtn inlineBtn">
-                  📍 Get Directions
+                <a
+                  href={mapLink}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="secondaryBtn inlineBtn"
+                >
+                  Get Directions
                 </a>
                 <Link href="/checkout" className="orderBtn inlineBtn">
-                  🛒 Start Order
+                  Start Order
                 </Link>
-                <a href={reviewLink} target="_blank" rel="noreferrer" className="reviewBtn inlineBtn">
-                  ⭐ Leave a Review
+                <a
+                  href={reviewLink}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="reviewBtn inlineBtn"
+                >
+                  Leave a Review
                 </a>
               </div>
             </div>
@@ -285,17 +300,25 @@ export default function Home() {
               <div className="quoteOverlay" />
               <div className="quoteContent">
                 <p className="sectionLabel light">Online Payment Ready</p>
-                <h3>Checkout can be expanded for card, wallet, and Afterpay-supported payment options.</h3>
+                <h3>
+                  Checkout can be expanded for card, wallet, and
+                  Afterpay-supported payment options.
+                </h3>
                 <p>
-                  The next stage is connecting a real payment provider like Stripe
-                  or Square to activate live checkout.
+                  The next stage is connecting a real payment provider like
+                  Stripe or Square to activate live checkout.
                 </p>
                 <div className="quoteButtons">
                   <Link href="/checkout" className="goldBtn">
                     Go to Checkout
                   </Link>
-                  <a href={reviewLink} target="_blank" rel="noreferrer" className="reviewBtn lightBtn">
-                    ⭐ Reviews
+                  <a
+                    href={reviewLink}
+                    target="_blank"
+                    rel="noreferrer"
+                    className="reviewBtn lightBtn"
+                  >
+                    Reviews
                   </a>
                 </div>
               </div>
@@ -309,7 +332,8 @@ export default function Home() {
               <p className="sectionLabel">Book / Order Request</p>
               <h2>Send a booking or quick order request</h2>
               <p>
-                This is a simple request form. For online payment flow, use the checkout page.
+                This is a simple request form. For online payment flow, use the
+                checkout page.
               </p>
             </div>
 
@@ -317,25 +341,35 @@ export default function Home() {
               <form className="bookingForm" onSubmit={handleSubmit}>
                 <input type="text" placeholder="Full name" required />
                 <input type="tel" placeholder="Phone number" required />
-                <input type="text" placeholder="Order or booking details" required />
+                <input
+                  type="text"
+                  placeholder="Order or booking details"
+                  required
+                />
                 <input type="date" required />
                 <button type="submit" className="orderBtn formBtn">
-                  ✅ Submit Request
+                  Submit Request
                 </button>
               </form>
             ) : (
               <div className="thankYouBox">
-                <div className="thankYouIcon">✅</div>
+                <div className="thankYouIcon">Thank You</div>
                 <h3>Thank you for booking an order</h3>
                 <p>
-                  We’ve received your request. You can also proceed to checkout or leave a review below.
+                  We’ve received your request. You can also proceed to checkout
+                  or leave a review below.
                 </p>
                 <div className="thankYouActions">
                   <Link href="/checkout" className="orderBtn">
-                    🛒 Go to Checkout
+                    Go to Checkout
                   </Link>
-                  <a href={reviewLink} target="_blank" rel="noreferrer" className="reviewBtn">
-                    ⭐ Leave a Review
+                  <a
+                    href={reviewLink}
+                    target="_blank"
+                    rel="noreferrer"
+                    className="reviewBtn"
+                  >
+                    Leave a Review
                   </a>
                 </div>
               </div>
@@ -345,189 +379,596 @@ export default function Home() {
       </main>
 
       <footer className="footer">
-        <div>
+        <div className="footerBrand">
           <strong>Soulfood Fusion House</strong>
           <p>Where good food meets your soulful cravings.</p>
         </div>
+
         <div className="footerLinks">
           <Link href="/menu">Menu</Link>
-          <Link href="/catering">🍽 Catering</Link>
-          <Link href="/checkout">🛒 Checkout</Link>
-          <a href={mapLink} target="_blank" rel="noreferrer">📍 Map</a>
-          <a href={reviewLink} target="_blank" rel="noreferrer">⭐ Reviews</a>
+          <Link href="/catering">Catering</Link>
+          <Link href="/gallery">Gallery</Link>
+          <Link href="/checkout">Order Online</Link>
+          <a href={mapLink} target="_blank" rel="noreferrer">
+            Location
+          </a>
+          <a href={reviewLink} target="_blank" rel="noreferrer">
+            Reviews
+          </a>
         </div>
       </footer>
 
       <style jsx global>{`
-        * { box-sizing: border-box; }
-        html { scroll-behavior: smooth; }
-        body { margin: 0; font-family: Arial, sans-serif; background: #f8f4ee; color: #2b1c15; }
-        a { text-decoration: none; }
-        img { display: block; width: 100%; }
+        * {
+          box-sizing: border-box;
+        }
+
+        html {
+          scroll-behavior: smooth;
+        }
+
+        body {
+          margin: 0;
+          font-family: "Inter", sans-serif;
+          background: #f8f4ee;
+          color: #2b1c15;
+        }
+
+        a {
+          text-decoration: none;
+        }
+
+        img {
+          display: block;
+          width: 100%;
+        }
 
         .topbar {
-          position: sticky; top: 0; z-index: 100; display: flex; justify-content: space-between; align-items: center;
-          padding: 18px 28px; background: rgba(17, 10, 8, 0.88); backdrop-filter: blur(10px);
-          border-bottom: 1px solid rgba(212, 174, 112, 0.18); flex-wrap: wrap; gap: 16px;
+          position: sticky;
+          top: 0;
+          z-index: 100;
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          padding: 18px 28px;
+          background: rgba(17, 10, 8, 0.88);
+          backdrop-filter: blur(10px);
+          border-bottom: 1px solid rgba(212, 174, 112, 0.18);
+          flex-wrap: wrap;
+          gap: 16px;
         }
-        .brandWrap { display: flex; align-items: center; gap: 14px; }
-        .logo { width: 58px; height: 58px; object-fit: contain; border-radius: 14px; background: white; padding: 4px; }
-        .brandWrap h2 { margin: 0; font-size: 1.1rem; color: #fff8f0; }
-        .brandWrap p { margin: 3px 0 0; color: #d9c8b8; font-size: 0.85rem; }
 
-        .nav { display: flex; align-items: center; gap: 14px; flex-wrap: wrap; }
-        .nav a { color: #f2e6d8; font-weight: 600; }
-
-        .menuBtn, .orderBtn, .reviewBtn, .cateringBtn, .miniBtn, .miniGoldBtn {
-          padding: 11px 18px; border-radius: 999px; font-weight: 700; display: inline-block;
+        .brandWrap {
+          display: flex;
+          align-items: center;
+          gap: 14px;
         }
-        .menuBtn { background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.18); color: #fff4e8 !important; }
-        .orderBtn, .miniGoldBtn { background: linear-gradient(135deg, #c79356, #e7c78a); color: #1e120d !important; }
-        .reviewBtn { background: #3a2a20; color: #fff4e8 !important; border: 1px solid rgba(255,255,255,0.08); }
-        .cateringBtn { background: linear-gradient(135deg, #8a1f1f, #c24b3f); color: #fff9f4 !important; box-shadow: 0 10px 28px rgba(138,31,31,0.22); }
-        .miniBtn { background: #efe4d7; color: #3a2418 !important; padding: 9px 14px; }
-        .miniGoldBtn { padding: 9px 14px; }
+
+        .logo {
+          width: 58px;
+          height: 58px;
+          object-fit: contain;
+          border-radius: 14px;
+          background: white;
+          padding: 4px;
+        }
+
+        .brandWrap h2 {
+          margin: 0;
+          font-size: 1.1rem;
+          color: #fff8f0;
+          font-family: "Cormorant Garamond", serif;
+          letter-spacing: 0.02em;
+        }
+
+        .brandWrap p {
+          margin: 3px 0 0;
+          color: #d9c8b8;
+          font-size: 0.85rem;
+        }
+
+        .nav {
+          display: flex;
+          align-items: center;
+          gap: 14px;
+          flex-wrap: wrap;
+        }
+
+        .nav a {
+          color: #f2e6d8;
+          font-weight: 600;
+        }
+
+        .menuBtn,
+        .orderBtn,
+        .reviewBtn,
+        .cateringBtn,
+        .miniBtn,
+        .miniGoldBtn {
+          padding: 11px 18px;
+          border-radius: 999px;
+          font-weight: 700;
+          display: inline-block;
+        }
+
+        .menuBtn {
+          background: rgba(255, 255, 255, 0.1);
+          border: 1px solid rgba(255, 255, 255, 0.18);
+          color: #fff4e8 !important;
+        }
+
+        .orderBtn,
+        .miniGoldBtn {
+          background: linear-gradient(135deg, #c79356, #e7c78a);
+          color: #1e120d !important;
+          box-shadow: 0 12px 28px rgba(199, 147, 86, 0.18);
+        }
+
+        .reviewBtn {
+          background: #3a2a20;
+          color: #fff4e8 !important;
+          border: 1px solid rgba(255, 255, 255, 0.08);
+        }
+
+        .cateringBtn {
+          background: linear-gradient(135deg, #8a1f1f, #c24b3f);
+          color: #fff9f4 !important;
+          box-shadow: 0 10px 28px rgba(138, 31, 31, 0.22);
+        }
+
+        .miniBtn {
+          background: #efe4d7;
+          color: #3a2418 !important;
+          padding: 9px 14px;
+        }
+
+        .miniGoldBtn {
+          padding: 9px 14px;
+        }
 
         .hero {
-          position: relative; min-height: 88vh; display: flex; align-items: center; padding: 90px 28px;
-          background: url("/images/menu/filo-bbq-ribs.jpg") center/cover no-repeat; overflow: hidden;
+          position: relative;
+          min-height: 88vh;
+          display: flex;
+          align-items: center;
+          padding: 90px 28px;
+          background: url("/images/menu/filo-bbq-ribs.jpg") center/cover no-repeat;
+          overflow: hidden;
         }
+
         .heroOverlay {
-          position: absolute; inset: 0;
-          background: linear-gradient(90deg, rgba(17,10,8,0.84) 0%, rgba(17,10,8,0.58) 45%, rgba(17,10,8,0.3) 100%);
+          position: absolute;
+          inset: 0;
+          background: linear-gradient(
+            90deg,
+            rgba(17, 10, 8, 0.84) 0%,
+            rgba(17, 10, 8, 0.58) 45%,
+            rgba(17, 10, 8, 0.3) 100%
+          );
         }
-        .heroContent { position: relative; z-index: 2; max-width: 760px; }
-        .eyebrow, .sectionLabel {
-          text-transform: uppercase; letter-spacing: 0.18em; font-size: 0.78rem; font-weight: 700; color: #d8b27d;
+
+        .heroContent {
+          position: relative;
+          z-index: 2;
+          max-width: 760px;
         }
-        .light { color: #f0d8b3; }
+
+        .eyebrow,
+        .sectionLabel {
+          text-transform: uppercase;
+          letter-spacing: 0.18em;
+          font-size: 0.78rem;
+          font-weight: 700;
+          color: #d8b27d;
+        }
+
+        .light {
+          color: #f0d8b3;
+        }
+
         .hero h1 {
-          font-size: clamp(2.8rem, 7vw, 5.8rem); line-height: 0.96; margin: 18px 0; color: #fff8f0; max-width: 880px;
+          font-family: "Cormorant Garamond", serif;
+          font-size: clamp(3.1rem, 7vw, 6.2rem);
+          line-height: 0.94;
+          margin: 18px 0;
+          color: #fff8f0;
+          max-width: 880px;
+          letter-spacing: -0.03em;
         }
-        .heroText { color: #f2e6d8; font-size: 1.08rem; line-height: 1.8; max-width: 650px; }
 
-        .heroActions, .quoteButtons, .actionRow, .thankYouActions, .cardActions {
-          display: flex; gap: 12px; flex-wrap: wrap;
+        .heroText {
+          color: #f2e6d8;
+          font-size: 1.08rem;
+          line-height: 1.85;
+          max-width: 650px;
         }
-        .heroActions { margin-top: 30px; }
-        .primaryBtn, .secondaryBtn, .goldBtn {
-          display: inline-block; padding: 14px 22px; border-radius: 999px; font-weight: 700; transition: 0.25s ease;
-        }
-        .primaryBtn, .goldBtn { background: linear-gradient(135deg, #c79356, #ebce97); color: #1e120d; }
-        .secondaryBtn { background: rgba(255,255,255,0.94); border: 1px solid #dcc7af; color: #3b261b; }
-        .primaryBtn:hover, .goldBtn:hover, .secondaryBtn:hover, .menuBtn:hover, .orderBtn:hover, .reviewBtn:hover, .cateringBtn:hover { transform: translateY(-2px); }
 
-        .aboutSection, .bestSellerSection, .visitSection, .bookingSection, .flowSection {
-          max-width: 1280px; margin: 0 auto; padding: 82px 28px;
+        .heroActions,
+        .quoteButtons,
+        .actionRow,
+        .thankYouActions,
+        .cardActions {
+          display: flex;
+          gap: 12px;
+          flex-wrap: wrap;
         }
-        .sectionIntro { max-width: 860px; margin-bottom: 36px; }
-        .sectionIntro.center { text-align: center; margin-left: auto; margin-right: auto; }
-        .sectionIntro.small { max-width: 720px; }
+
+        .heroActions {
+          margin-top: 30px;
+        }
+
+        .primaryBtn,
+        .secondaryBtn,
+        .goldBtn {
+          display: inline-block;
+          padding: 14px 22px;
+          border-radius: 999px;
+          font-weight: 700;
+          transition: 0.25s ease;
+        }
+
+        .primaryBtn,
+        .goldBtn {
+          background: linear-gradient(135deg, #c79356, #ebce97);
+          color: #1e120d;
+          box-shadow: 0 12px 30px rgba(199, 147, 86, 0.2);
+        }
+
+        .secondaryBtn {
+          background: rgba(255, 255, 255, 0.94);
+          border: 1px solid #dcc7af;
+          color: #3b261b;
+        }
+
+        .primaryBtn:hover,
+        .goldBtn:hover,
+        .secondaryBtn:hover,
+        .menuBtn:hover,
+        .orderBtn:hover,
+        .reviewBtn:hover,
+        .cateringBtn:hover {
+          transform: translateY(-2px);
+        }
+
+        .aboutSection,
+        .bestSellerSection,
+        .visitSection,
+        .bookingSection {
+          max-width: 1280px;
+          margin: 0 auto;
+          padding: 82px 28px;
+        }
+
+        .sectionIntro {
+          max-width: 860px;
+          margin-bottom: 36px;
+        }
+
+        .sectionIntro.center {
+          text-align: center;
+          margin-left: auto;
+          margin-right: auto;
+        }
+
+        .sectionIntro.small {
+          max-width: 720px;
+        }
+
         .sectionIntro h2 {
-          font-size: clamp(2rem, 4vw, 3.4rem); line-height: 1.1; margin: 12px 0 14px; color: #2e1d15;
+          font-family: "Cormorant Garamond", serif;
+          font-size: clamp(2.2rem, 4vw, 3.8rem);
+          line-height: 1.05;
+          margin: 12px 0 14px;
+          color: #2e1d15;
+          letter-spacing: -0.02em;
         }
-        .sectionIntro p { line-height: 1.8; color: #6f5a49; }
 
-        .flowGrid, .featureGrid {
-          display: grid; grid-template-columns: repeat(4, 1fr); gap: 22px;
+        .sectionIntro p {
+          line-height: 1.8;
+          color: #6f5a49;
         }
-        .featureGrid { grid-template-columns: repeat(3, 1fr); }
 
-        .flowCard, .featureCard, .bookingCard {
+        .featureGrid {
+          display: grid;
+          grid-template-columns: repeat(3, 1fr);
+          gap: 22px;
+        }
+
+        .featureCard,
+        .bookingCard {
           background: linear-gradient(180deg, #ffffff, #f8efe3);
-          border: 1px solid #ead7bf; border-radius: 24px; padding: 26px;
+          border: 1px solid #ead7bf;
+          border-radius: 24px;
+          padding: 26px;
           box-shadow: 0 16px 40px rgba(53, 31, 18, 0.06);
         }
-        .flowIcon {
-          width: 46px; height: 46px; border-radius: 50%; display: grid; place-items: center;
-          background: linear-gradient(135deg, #c79356, #ebce97); color: #1e120d; font-weight: 700; margin-bottom: 14px;
+
+        .featureCard h3 {
+          margin-top: 0;
+          color: #332116;
+          font-family: "Cormorant Garamond", serif;
+          font-size: 1.6rem;
         }
-        .flowCard h3, .featureCard h3 { margin-top: 0; color: #332116; }
-        .flowCard p, .featureCard p { margin-bottom: 0; color: #6f5a49; line-height: 1.75; }
+
+        .featureCard p {
+          margin-bottom: 0;
+          color: #6f5a49;
+          line-height: 1.75;
+        }
 
         .dishGrid {
-          display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px;
+          display: grid;
+          grid-template-columns: repeat(3, 1fr);
+          gap: 24px;
         }
-        .dishCard {
-          overflow: hidden; border-radius: 24px; background: #fff; border: 1px solid #ead7bf;
-          box-shadow: 0 18px 42px rgba(53,31,18,0.08); transition: 0.3s ease;
-        }
-        .dishCard:hover { transform: translateY(-6px); box-shadow: 0 24px 60px rgba(53,31,18,0.12); }
-        .dishImageWrap { height: 260px; overflow: hidden; }
-        .dishImageWrap img { height: 100%; object-fit: cover; transition: transform 0.45s ease; }
-        .dishCard:hover .dishImageWrap img { transform: scale(1.05); }
-        .dishBody { padding: 24px; }
-        .dishTop {
-          display: flex; justify-content: space-between; gap: 16px; align-items: flex-start; margin-bottom: 10px;
-        }
-        .dishTop h3 { margin: 0; color: #332116; }
-        .dishTop span { color: #b57a39; font-weight: 700; white-space: nowrap; }
-        .dishBody p { margin: 0 0 16px; color: #6f5a49; line-height: 1.75; }
-        .ctaCenter { text-align: center; margin-top: 36px; }
 
-        .visitGrid { display: grid; grid-template-columns: 1.05fr 0.95fr; gap: 24px; }
-        .visitCard {
-          background: linear-gradient(180deg, #ffffff, #f8efe3); border: 1px solid #ead7bf; border-radius: 26px;
-          padding: 30px; box-shadow: 0 18px 42px rgba(53,31,18,0.08);
+        .dishCard {
+          overflow: hidden;
+          border-radius: 24px;
+          background: #fff;
+          border: 1px solid #ead7bf;
+          box-shadow: 0 18px 42px rgba(53, 31, 18, 0.08);
+          transition: 0.3s ease;
         }
-        .visitCard h2 { margin-top: 12px; color: #2e1d15; }
-        .infoGroup { margin-top: 24px; }
-        .infoGroup h4 { margin: 0 0 10px; color: #3a2418; }
-        .infoGroup p, .infoGroup a { margin: 6px 0; color: #6f5a49; line-height: 1.65; }
-        .iconLink { display: inline-block; margin-top: 8px; font-weight: 700; color: #3a2418 !important; }
+
+        .dishCard:hover {
+          transform: translateY(-6px);
+          box-shadow: 0 24px 60px rgba(53, 31, 18, 0.12);
+        }
+
+        .dishImageWrap {
+          height: 260px;
+          overflow: hidden;
+        }
+
+        .dishImageWrap img {
+          height: 100%;
+          object-fit: cover;
+          transition: transform 0.45s ease;
+        }
+
+        .dishCard:hover .dishImageWrap img {
+          transform: scale(1.05);
+        }
+
+        .dishBody {
+          padding: 24px;
+        }
+
+        .dishTop {
+          display: flex;
+          justify-content: space-between;
+          gap: 16px;
+          align-items: flex-start;
+          margin-bottom: 10px;
+        }
+
+        .dishTop h3 {
+          margin: 0;
+          color: #332116;
+          font-family: "Cormorant Garamond", serif;
+          font-size: 1.7rem;
+        }
+
+        .dishTop span {
+          color: #b57a39;
+          font-weight: 700;
+          white-space: nowrap;
+        }
+
+        .dishBody p {
+          margin: 0 0 16px;
+          color: #6f5a49;
+          line-height: 1.75;
+        }
+
+        .ctaCenter {
+          text-align: center;
+          margin-top: 36px;
+        }
+
+        .visitGrid {
+          display: grid;
+          grid-template-columns: 1.05fr 0.95fr;
+          gap: 24px;
+        }
+
+        .visitCard {
+          background: linear-gradient(180deg, #ffffff, #f8efe3);
+          border: 1px solid #ead7bf;
+          border-radius: 26px;
+          padding: 30px;
+          box-shadow: 0 18px 42px rgba(53, 31, 18, 0.08);
+        }
+
+        .visitCard h2 {
+          margin-top: 12px;
+          color: #2e1d15;
+          font-family: "Cormorant Garamond", serif;
+        }
+
+        .infoGroup {
+          margin-top: 24px;
+        }
+
+        .infoGroup h4 {
+          margin: 0 0 10px;
+          color: #3a2418;
+        }
+
+        .infoGroup p,
+        .infoGroup a {
+          margin: 6px 0;
+          color: #6f5a49;
+          line-height: 1.65;
+        }
+
+        .iconLink {
+          display: inline-block;
+          margin-top: 8px;
+          font-weight: 700;
+          color: #3a2418 !important;
+        }
 
         .quotePanel {
-          position: relative; min-height: 100%; border-radius: 26px; overflow: hidden;
-          background: url("/images/menu/grilled-chicken-inasal.jpg") center/cover no-repeat;
-          box-shadow: 0 18px 42px rgba(53,31,18,0.08);
+          position: relative;
+          min-height: 100%;
+          border-radius: 26px;
+          overflow: hidden;
+          background: url("/images/menu/grilled-chicken-inasal.jpg") center/cover
+            no-repeat;
+          box-shadow: 0 18px 42px rgba(53, 31, 18, 0.08);
         }
+
         .quoteOverlay {
-          position: absolute; inset: 0;
-          background: linear-gradient(180deg, rgba(18,10,8,0.48), rgba(18,10,8,0.8));
+          position: absolute;
+          inset: 0;
+          background: linear-gradient(
+            180deg,
+            rgba(18, 10, 8, 0.48),
+            rgba(18, 10, 8, 0.8)
+          );
         }
+
         .quoteContent {
-          position: relative; z-index: 2; padding: 34px; min-height: 100%;
-          display: flex; flex-direction: column; justify-content: end;
+          position: relative;
+          z-index: 2;
+          padding: 34px;
+          min-height: 100%;
+          display: flex;
+          flex-direction: column;
+          justify-content: end;
         }
+
         .quoteContent h3 {
-          color: #fff7ee; font-size: clamp(1.8rem, 4vw, 2.6rem); line-height: 1.2; margin: 12px 0;
+          color: #fff7ee;
+          font-family: "Cormorant Garamond", serif;
+          font-size: clamp(2rem, 4vw, 2.9rem);
+          line-height: 1.15;
+          margin: 12px 0;
         }
-        .quoteContent p { color: #eadbcb; line-height: 1.75; max-width: 520px; }
-        .lightBtn { background: rgba(255,255,255,0.14); color: #fff4e8 !important; border: 1px solid rgba(255,255,255,0.18); }
+
+        .quoteContent p {
+          color: #eadbcb;
+          line-height: 1.75;
+          max-width: 520px;
+        }
+
+        .lightBtn {
+          background: rgba(255, 255, 255, 0.14);
+          color: #fff4e8 !important;
+          border: 1px solid rgba(255, 255, 255, 0.18);
+        }
 
         .bookingForm {
-          display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px;
+          display: grid;
+          grid-template-columns: repeat(2, 1fr);
+          gap: 16px;
         }
-        .bookingForm input {
-          width: 100%; padding: 16px 18px; border-radius: 16px; border: 1px solid #dcc7af; background: #fff; font-size: 1rem;
-        }
-        .formBtn { border: none; cursor: pointer; }
 
-        .thankYouBox { text-align: center; padding: 20px 10px 10px; }
-        .thankYouIcon { font-size: 3rem; margin-bottom: 10px; }
-        .thankYouBox h3 { margin: 0 0 10px; color: #2e1d15; font-size: 1.8rem; }
+        .bookingForm input {
+          width: 100%;
+          padding: 16px 18px;
+          border-radius: 16px;
+          border: 1px solid #dcc7af;
+          background: #fff;
+          font-size: 1rem;
+        }
+
+        .formBtn {
+          border: none;
+          cursor: pointer;
+        }
+
+        .thankYouBox {
+          text-align: center;
+          padding: 20px 10px 10px;
+        }
+
+        .thankYouIcon {
+          font-size: 1rem;
+          letter-spacing: 0.18em;
+          text-transform: uppercase;
+          color: #b57a39;
+          margin-bottom: 10px;
+          font-weight: 700;
+        }
+
+        .thankYouBox h3 {
+          margin: 0 0 10px;
+          color: #2e1d15;
+          font-size: 2rem;
+          font-family: "Cormorant Garamond", serif;
+        }
+
         .thankYouBox p {
-          color: #6f5a49; line-height: 1.75; max-width: 620px; margin: 0 auto 20px;
+          color: #6f5a49;
+          line-height: 1.75;
+          max-width: 620px;
+          margin: 0 auto 20px;
         }
 
         .footer {
-          max-width: 1280px; margin: 0 auto; padding: 28px;
-          display: flex; justify-content: space-between; align-items: center; gap: 18px;
-          border-top: 1px solid #ead7bf; color: #6f5a49; flex-wrap: wrap;
+          max-width: 1280px;
+          margin: 0 auto;
+          padding: 34px 28px;
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          gap: 20px;
+          border-top: 1px solid #ead7bf;
+          color: #6f5a49;
+          flex-wrap: wrap;
         }
-        .footer strong { display: block; color: #332116; margin-bottom: 6px; }
-        .footer p { margin: 0; }
-        .footerLinks { display: flex; gap: 14px; flex-wrap: wrap; }
-        .footer a { color: #3a2418; font-weight: 700; }
+
+        .footerBrand strong {
+          display: block;
+          color: #332116;
+          margin-bottom: 6px;
+          font-family: "Cormorant Garamond", serif;
+          font-size: 1.6rem;
+          font-weight: 600;
+        }
+
+        .footerBrand p {
+          margin: 0;
+        }
+
+        .footerLinks {
+          display: flex;
+          gap: 14px;
+          flex-wrap: wrap;
+        }
+
+        .footer a {
+          color: #3a2418;
+          font-weight: 700;
+        }
 
         @media (max-width: 980px) {
-          .flowGrid, .featureGrid, .dishGrid, .visitGrid, .bookingForm {
+          .featureGrid,
+          .dishGrid,
+          .visitGrid,
+          .bookingForm {
             grid-template-columns: 1fr;
           }
-          .topbar { padding: 16px 18px; }
-          .hero { min-height: auto; padding: 80px 18px; }
-          .aboutSection, .bestSellerSection, .visitSection, .bookingSection, .flowSection, .footer {
-            padding-left: 18px; padding-right: 18px;
+
+          .topbar {
+            padding: 16px 18px;
+          }
+
+          .hero {
+            min-height: auto;
+            padding: 80px 18px;
+          }
+
+          .aboutSection,
+          .bestSellerSection,
+          .visitSection,
+          .bookingSection,
+          .footer {
+            padding-left: 18px;
+            padding-right: 18px;
           }
         }
       `}</style>
