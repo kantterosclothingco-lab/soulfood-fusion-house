@@ -85,6 +85,7 @@ export default function Home() {
           <a href="#about">About</a>
           <a href="#bestsellers">Best Sellers</a>
           <a href="#visit">Visit</a>
+          <a href="#events">Events</a>
           <Link href="/menu" className="menuBtn">
             ☰ Menu
           </Link>
@@ -231,6 +232,40 @@ export default function Home() {
             <Link href="/menu" className="primaryBtn">
               See Full Menu
             </Link>
+          </div>
+        </section>
+
+
+        <section className="eventSection" id="events">
+          <div className="sectionIntro center">
+            <p className="sectionLabel">Mother's Day Events</p>
+            <h2>One celebration, two experiences</h2>
+            <p>
+              Use one reservation flow for both events and let guests choose lunch buffet
+              or dinner show when booking.
+            </p>
+          </div>
+
+          <div className="eventGrid">
+            <article className="eventCard lunch">
+              <p className="eventTag">Lunch Buffet</p>
+              <h3>Mother's Day Lunch</h3>
+              <p className="eventMeta">Saturday, May 10, 2026 • 12:00 PM – 4:00 PM</p>
+              <p className="eventPrice">$45 per head</p>
+              <p>Family-style favorites, live pasta station, desserts, and fresh fruits.</p>
+            </article>
+
+            <article className="eventCard dinner">
+              <p className="eventTag">Dinner Show</p>
+              <h3>Mother's Day Dinner</h3>
+              <p className="eventMeta">Saturday, May 10, 2026 • Doors 5:00 PM • Show 7:00 PM</p>
+              <p className="eventPrice">$65 ticket</p>
+              <p>Special night with music, welcome drinks, and live entertainment.</p>
+            </article>
+          </div>
+
+          <div className="ctaCenter">
+            <a href="tel:+61413326097" className="primaryBtn">Reserve for Lunch or Dinner</a>
           </div>
         </section>
 
@@ -416,10 +451,21 @@ export default function Home() {
         .primaryBtn, .goldBtn { background: linear-gradient(135deg, #c79356, #ebce97); color: #1e120d; }
         .secondaryBtn { background: rgba(255,255,255,0.94); border: 1px solid #dcc7af; color: #3b261b; }
         .primaryBtn:hover, .goldBtn:hover, .secondaryBtn:hover, .menuBtn:hover, .orderBtn:hover, .reviewBtn:hover, .cateringBtn:hover { transform: translateY(-2px); }
-
-        .aboutSection, .bestSellerSection, .visitSection, .bookingSection, .flowSection {
+        .aboutSection, .bestSellerSection, .visitSection, .bookingSection, .flowSection, .eventSection {
           max-width: 1280px; margin: 0 auto; padding: 82px 28px;
         }
+
+        .eventGrid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 24px; }
+        .eventCard {
+          border-radius: 24px; padding: 28px; border: 1px solid #ead7bf;
+          box-shadow: 0 18px 42px rgba(53,31,18,0.08); background: #fff;
+        }
+        .eventCard.lunch { background: linear-gradient(180deg, #fff9f1, #fcefe3); }
+        .eventCard.dinner { background: linear-gradient(180deg, #2c1b16, #130b09); color: #f6e7d0; }
+        .eventTag { font-size: 0.75rem; letter-spacing: 0.13em; text-transform: uppercase; font-weight: 700; color: #b57a39; }
+        .eventCard h3 { margin: 8px 0 8px; font-size: 2rem; }
+        .eventMeta { font-weight: 700; margin-bottom: 12px; }
+        .eventPrice { font-size: 1.6rem; font-weight: 700; margin: 0 0 10px; }
         .sectionIntro { max-width: 860px; margin-bottom: 36px; }
         .sectionIntro.center { text-align: center; margin-left: auto; margin-right: auto; }
         .sectionIntro.small { max-width: 720px; }
