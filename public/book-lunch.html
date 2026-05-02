@@ -12,13 +12,12 @@
 
     body {
       margin: 0;
-      font-family: "Inter", "Segoe UI", Arial, sans-serif;
-      color: #2d1715;
+      font-family: "Segoe UI", Arial, sans-serif;
       background:
-        radial-gradient(circle at 10% 0%, rgba(255, 210, 225, 0.6), transparent 30%),
-        radial-gradient(circle at 90% 0%, rgba(255, 220, 160, 0.35), transparent 30%),
-        linear-gradient(135deg, #fff9f6 0%, #fff1eb 50%, #fbe7df 100%);
-      min-height: 100vh;
+        radial-gradient(circle at top left, rgba(255, 198, 216, 0.5), transparent 30%),
+        radial-gradient(circle at top right, rgba(226, 181, 105, 0.25), transparent 28%),
+        linear-gradient(135deg, #fff8f4 0%, #fff0ea 55%, #fde4dc 100%);
+      color: #2d1715;
     }
 
     a {
@@ -28,315 +27,218 @@
 
     .page {
       min-height: 100vh;
-      padding: 34px 20px 70px;
-      position: relative;
-      overflow: hidden;
     }
 
-    .page::before {
-      content: "";
-      position: fixed;
-      inset: 0;
-      background:
-        linear-gradient(rgba(255,255,255,0.76), rgba(255,255,255,0.9)),
-        url("/images/MothersdayPoster3.jpg") center/cover no-repeat;
-      filter: blur(22px);
-      transform: scale(1.08);
-      z-index: -2;
-    }
-
-    .page::after {
-      content: "";
-      position: fixed;
-      inset: 0;
-      background: rgba(255, 245, 241, 0.72);
-      z-index: -1;
-    }
-
-    .wrap {
-      max-width: 1240px;
-      margin: 0 auto;
-    }
-
-    .topbar-event {
+    .topbar {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      gap: 16px;
-      margin-bottom: 24px;
+      padding: 22px 34px;
+      background: rgba(255, 248, 244, 0.9);
+      border-bottom: 1px solid rgba(194, 55, 105, 0.12);
+      backdrop-filter: blur(12px);
+      position: sticky;
+      top: 0;
+      z-index: 10;
     }
 
     .brand {
       display: flex;
       align-items: center;
-      gap: 12px;
+      gap: 14px;
       font-weight: 900;
-      color: #351d17;
-    }
-
-    .brand img {
-      width: 48px;
-      height: 48px;
-      object-fit: contain;
-      background: white;
-      border-radius: 14px;
-      padding: 4px;
-      box-shadow: 0 14px 30px rgba(82, 40, 26, 0.14);
-    }
-
-    .back-link {
-      padding: 12px 18px;
-      border-radius: 999px;
-      background: rgba(255,255,255,0.78);
-      border: 1px solid rgba(183, 123, 82, 0.28);
-      color: #8b4e36;
-      font-weight: 900;
-      box-shadow: 0 12px 28px rgba(82, 40, 26, 0.08);
-    }
-
-    .event-shell {
-      display: grid;
-      grid-template-columns: 0.95fr 1.05fr;
-      gap: 28px;
-      align-items: stretch;
-    }
-
-    .poster-card,
-    .booking-card {
-      border-radius: 34px;
-      border: 1px solid rgba(183, 123, 82, 0.22);
-      box-shadow: 0 34px 90px rgba(82, 40, 26, 0.2);
-      background: rgba(255,255,255,0.78);
-      backdrop-filter: blur(12px);
-      overflow: hidden;
-    }
-
-    .poster-card {
-      padding: 22px;
-      position: sticky;
-      top: 24px;
-      align-self: start;
-      transition: transform 0.3s ease;
-    }
-
-    .booking-card {
-      padding: 46px;
-      background: rgba(255,255,255,0.84);
-      backdrop-filter: blur(16px);
-      border-radius: 34px;
-      border: 1px solid rgba(183, 123, 82, 0.18);
-      box-shadow:
-        0 40px 100px rgba(82, 40, 26, 0.18),
-        inset 0 0 0 1px rgba(255,255,255,0.6);
-      transition: transform 0.3s ease;
-    }
-
-    .booking-card:hover {
-      transform: translateY(-2px);
-    }
-
-    .poster-frame {
-      border-radius: 26px;
-      padding: 12px;
-      background:
-        linear-gradient(135deg, rgba(255,255,255,0.92), rgba(255,233,226,0.86));
-      border: 1px solid rgba(196, 129, 92, 0.28);
-      box-shadow: inset 0 0 0 1px rgba(255,255,255,0.7);
-    }
-
-    .poster-frame img {
-      width: 100%;
-      display: block;
-      border-radius: 20px;
-      box-shadow: 0 24px 58px rgba(86, 41, 28, 0.2);
-    }
-
-    .poster-caption {
-      margin: 18px 4px 4px;
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 10px;
-    }
-
-    .mini-stat {
-      border-radius: 18px;
-      padding: 14px 12px;
-      background: #fff6f2;
-      border: 1px solid rgba(214, 161, 127, 0.34);
-      text-align: center;
-    }
-
-    .mini-stat span {
-      display: block;
-      font-size: 0.72rem;
-      text-transform: uppercase;
-      letter-spacing: 0.08em;
-      color: #c23769;
-      font-weight: 900;
-      margin-bottom: 4px;
-    }
-
-    .mini-stat strong {
-      font-size: 0.95rem;
       color: #2d1715;
     }
 
-    .pill {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      padding: 9px 15px;
-      border-radius: 999px;
-      background: linear-gradient(135deg, #c23769, #e899b3);
-      color: white;
-      font-size: 0.78rem;
-      text-transform: uppercase;
-      letter-spacing: 0.09em;
-      font-weight: 950;
-      box-shadow: 0 14px 26px rgba(194, 55, 105, 0.22);
+    .brand img {
+      width: 54px;
+      height: 54px;
+      object-fit: contain;
+      border-radius: 50%;
+      background: #111;
+      padding: 5px;
+      box-shadow: 0 14px 32px rgba(82, 40, 26, 0.18);
     }
 
-    h1 {
-      margin: 22px 0 14px;
-      font-size: clamp(2.6rem, 5vw, 5rem);
-      line-height: 0.92;
-      letter-spacing: -0.04em;
-      font-weight: 900;
-      color: #2f1714;
-    }
-
-    .lead {
-      margin: 0;
-      color: #6e4e42;
-      line-height: 1.85;
-      font-size: 1.08rem;
-      max-width: 680px;
-    }
-
-    .highlight-row {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 12px;
-      margin: 28px 0;
-    }
-
-    .highlight {
-      padding: 18px;
-      border-radius: 22px;
-      background: linear-gradient(180deg, #fffaf7, #fff1ea);
-      border: 1px solid rgba(214, 161, 127, 0.34);
-    }
-
-    .highlight .icon {
-      font-size: 1.5rem;
-      margin-bottom: 10px;
-    }
-
-    .highlight span {
+    .brandText strong {
       display: block;
-      color: #b37a44;
-      font-weight: 900;
-      text-transform: uppercase;
-      font-size: 0.72rem;
-      letter-spacing: 0.09em;
-      margin-bottom: 5px;
+      font-size: 1.45rem;
+      letter-spacing: 0.04em;
     }
 
-    .highlight strong {
-      color: #2f1714;
+    .brandText span {
+      display: block;
+      font-size: 0.75rem;
+      letter-spacing: 0.28em;
+      color: #7e5a4b;
+      margin-top: 2px;
+    }
+
+    .backLink {
+      border: 1px solid rgba(194, 55, 105, 0.35);
+      color: #b3355d;
+      background: rgba(255, 255, 255, 0.7);
+      padding: 13px 22px;
+      border-radius: 999px;
+      font-weight: 900;
+      box-shadow: 0 12px 32px rgba(194, 55, 105, 0.08);
+    }
+
+    .wrap {
+      max-width: 1260px;
+      margin: 0 auto;
+      padding: 34px 22px 70px;
+    }
+
+    .heroGrid {
+      display: grid;
+      grid-template-columns: 1.05fr 0.95fr;
+      gap: 28px;
+      align-items: start;
+    }
+
+    .posterCard,
+    .formCard,
+    .benefitCard,
+    .loveBanner {
+      background: rgba(255, 255, 255, 0.82);
+      border: 1px solid rgba(211, 148, 109, 0.24);
+      box-shadow: 0 28px 80px rgba(85, 45, 31, 0.15);
+      backdrop-filter: blur(14px);
+      border-radius: 28px;
+    }
+
+    .posterCard {
+      padding: 20px;
+      overflow: hidden;
+    }
+
+    .posterCard img {
+      width: 100%;
+      display: block;
+      border-radius: 22px;
+      box-shadow: 0 24px 60px rgba(74, 36, 25, 0.22);
+    }
+
+    .rightColumn {
+      display: grid;
+      gap: 22px;
+    }
+
+    .formCard {
+      padding: 34px;
+    }
+
+    .sectionHeader {
+      text-align: center;
+      margin-bottom: 28px;
+    }
+
+    .sectionHeader h1 {
+      margin: 0;
+      font-size: clamp(2.1rem, 4vw, 3.5rem);
+      line-height: 1;
+      letter-spacing: -0.04em;
+      color: #2d1715;
+    }
+
+    .divider {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      margin: 16px auto 18px;
+      max-width: 330px;
+      color: #d94675;
+      font-size: 1.3rem;
+    }
+
+    .divider::before,
+    .divider::after {
+      content: "";
+      flex: 1;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(194, 55, 105, 0.45), transparent);
+    }
+
+    .sectionHeader p {
+      margin: 0 auto;
+      max-width: 430px;
+      color: #765c51;
+      line-height: 1.7;
       font-size: 1rem;
     }
 
-    .pricing {
-      margin: 28px 0;
-      padding: 24px;
-      border-radius: 26px;
-      background:
-        radial-gradient(circle at top right, rgba(232, 91, 135, 0.15), transparent 35%),
-        linear-gradient(135deg, #fff7f5, #fffaf2);
-      border: 1px solid rgba(194, 55, 105, 0.16);
-      box-shadow: 0 20px 46px rgba(84, 40, 27, 0.08);
-    }
-
-    .pricing h2,
-    .form-title {
-      margin: 0 0 16px;
-      color: #2f1714;
-      font-size: 1.55rem;
-    }
-
-    .price-list {
-      list-style: none;
-      padding: 0;
-      margin: 0;
+    .eventDetails {
       display: grid;
-      gap: 10px;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+      margin-bottom: 26px;
     }
 
-    .price-list li {
-      display: flex;
-      justify-content: space-between;
-      gap: 18px;
-      padding: 14px 0;
-      border-bottom: 1px dashed rgba(117, 76, 55, 0.22);
-      color: #674b41;
-      font-weight: 800;
+    .detailBox {
+      border-radius: 18px;
+      background: linear-gradient(180deg, #fffaf7, #fff1ec);
+      border: 1px solid rgba(215, 165, 132, 0.36);
+      padding: 15px;
+      text-align: center;
     }
 
-    .price-list li:last-child {
-      border-bottom: none;
-    }
-
-    .price-list strong {
+    .detailBox span {
+      display: block;
       color: #c23769;
-      white-space: nowrap;
+      font-size: 0.72rem;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      font-weight: 900;
+      margin-bottom: 6px;
     }
 
-    .form-box {
-      margin-top: 28px;
-      padding: 28px;
-      border-radius: 28px;
-      background: rgba(255,255,255,0.9);
-      border: 1px solid rgba(214, 161, 127, 0.34);
-      box-shadow: 0 22px 56px rgba(84, 40, 27, 0.1);
+    .detailBox strong {
+      font-size: 0.94rem;
+      color: #2d1715;
     }
 
-    .form-grid {
+    form {
+      margin: 0;
+    }
+
+    .formGrid {
       display: grid;
-      grid-template-columns: repeat(2, 1fr);
+      grid-template-columns: 1fr 1fr;
       gap: 16px;
     }
 
     label {
       display: block;
-      font-size: 0.88rem;
-      font-weight: 900;
-      color: #3d241d;
+      font-weight: 800;
+      color: #3a211b;
+      font-size: 0.9rem;
     }
 
     input,
     textarea {
       width: 100%;
       margin-top: 8px;
-      padding: 16px;
-      border-radius: 14px;
-      border: 1px solid rgba(143, 93, 70, 0.2);
-      background: rgba(255,255,255,0.95);
+      padding: 15px 16px;
+      border-radius: 16px;
+      border: 1px solid rgba(143, 93, 70, 0.22);
+      background: rgba(255, 255, 255, 0.96);
       color: #2d1715;
-      font-size: 1rem;
       outline: none;
-      transition: 0.25s ease;
+      font-size: 1rem;
+      box-shadow: 0 10px 24px rgba(68, 38, 28, 0.05);
+      transition: 0.2s ease;
     }
 
     input:focus,
     textarea:focus {
       border-color: #c23769;
       box-shadow: 0 0 0 4px rgba(194, 55, 105, 0.12);
-      background: white;
+      background: #fff;
     }
 
     textarea {
-      min-height: 110px;
+      min-height: 105px;
       resize: vertical;
     }
 
@@ -344,70 +246,91 @@
       grid-column: 1 / -1;
     }
 
-    .total {
+    .totalBox {
       margin: 22px 0;
       padding: 22px;
       border-radius: 22px;
-      background: linear-gradient(135deg, #2d1715, #5a3328);
-      color: white;
+      background:
+        radial-gradient(circle at top right, rgba(255, 198, 216, 0.28), transparent 35%),
+        linear-gradient(135deg, #fff7f2, #fffaf6);
+      border: 1px solid rgba(214, 161, 127, 0.35);
       display: flex;
-      align-items: center;
       justify-content: space-between;
       gap: 16px;
-      box-shadow: 0 18px 40px rgba(45, 23, 21, 0.22);
+      align-items: center;
     }
 
-    .total span {
-      color: #ffd8c8;
-      font-weight: 900;
+    .totalIcon {
+      width: 52px;
+      height: 52px;
+      border-radius: 50%;
+      background: #ffe2ea;
+      display: grid;
+      place-items: center;
+      color: #c23769;
+      font-size: 1.5rem;
+      flex: 0 0 auto;
     }
 
-    .total strong {
-      color: #f6c56f;
-      font-size: 1.9rem;
+    .totalText {
+      flex: 1;
     }
 
-    .submit {
+    .totalText span {
+      display: block;
+      color: #765c51;
+      font-weight: 800;
+      margin-bottom: 6px;
+    }
+
+    .totalText strong {
+      display: block;
+      color: #c23769;
+      font-size: 2rem;
+      line-height: 1;
+    }
+
+    .totalText small {
+      display: block;
+      margin-top: 10px;
+      color: #765c51;
+      line-height: 1.5;
+    }
+
+    .submitBtn {
       width: 100%;
-      padding: 18px 22px;
       border: none;
       border-radius: 999px;
-      background: linear-gradient(135deg, #c23769, #ff9fbd);
-      color: white;
-      font-weight: 900;
-      letter-spacing: 0.08em;
+      padding: 18px 24px;
+      color: #fff;
+      background: linear-gradient(135deg, #c23769, #ef8cab);
+      font-weight: 950;
+      letter-spacing: 0.07em;
+      font-size: 0.98rem;
       cursor: pointer;
-      box-shadow: 0 18px 50px rgba(194, 55, 105, 0.35);
-      transition: all 0.25s ease;
+      box-shadow: 0 18px 46px rgba(194, 55, 105, 0.32);
+      transition: 0.25s ease;
     }
 
-    .submit:hover {
-      transform: translateY(-3px) scale(1.01);
-      box-shadow: 0 26px 70px rgba(194, 55, 105, 0.45);
-    }
-
-    .fineprint {
-      text-align: center;
-      margin: 14px 0 0;
-      color: #795d52;
-      font-size: 0.92rem;
-      line-height: 1.65;
+    .submitBtn:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 26px 66px rgba(194, 55, 105, 0.42);
     }
 
     .message {
       display: none;
-      margin-top: 20px;
-      padding: 20px;
-      border-radius: 20px;
-      line-height: 1.75;
-      font-weight: 800;
+      margin-top: 18px;
+      padding: 18px;
+      border-radius: 18px;
+      line-height: 1.65;
+      font-weight: 750;
     }
 
     .message.success {
       display: block;
       background: #eefaf1;
-      color: #1e7036;
-      border: 1px solid #bfe8c8;
+      color: #1f6f36;
+      border: 1px solid #bde7c7;
     }
 
     .message.error {
@@ -417,57 +340,166 @@
       border: 1px solid #efbbbb;
     }
 
+    .benefitCard {
+      padding: 22px;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 14px;
+      text-align: center;
+    }
+
+    .benefit {
+      padding: 10px;
+      border-right: 1px solid rgba(214, 161, 127, 0.28);
+    }
+
+    .benefit:last-child {
+      border-right: none;
+    }
+
+    .benefitIcon {
+      width: 44px;
+      height: 44px;
+      margin: 0 auto 10px;
+      border-radius: 50%;
+      display: grid;
+      place-items: center;
+      background: #ffe2ea;
+      color: #c23769;
+      font-size: 1.35rem;
+    }
+
+    .benefit strong {
+      display: block;
+      color: #2d1715;
+      margin-bottom: 6px;
+    }
+
+    .benefit p {
+      margin: 0;
+      color: #765c51;
+      font-size: 0.86rem;
+      line-height: 1.55;
+    }
+
+    .loveBanner {
+      margin-top: 34px;
+      overflow: hidden;
+      display: grid;
+      grid-template-columns: 1.1fr 0.9fr;
+      min-height: 180px;
+    }
+
+    .loveCopy {
+      padding: 34px 42px;
+      background:
+        radial-gradient(circle at left, rgba(255, 198, 216, 0.38), transparent 40%),
+        linear-gradient(135deg, rgba(255,255,255,0.8), rgba(255,240,234,0.8));
+    }
+
+    .loveCopy h2 {
+      margin: 0 0 12px;
+      font-size: clamp(1.6rem, 3vw, 2.4rem);
+      color: #c23769;
+      font-family: Georgia, serif;
+      font-style: italic;
+    }
+
+    .loveCopy p {
+      margin: 0;
+      line-height: 1.75;
+      color: #6e4e42;
+      max-width: 620px;
+    }
+
+    .loveImage {
+      background:
+        linear-gradient(90deg, rgba(255,248,244,0.25), rgba(255,248,244,0)),
+        url("/images/MothersdayPoster3.jpg") center/cover no-repeat;
+      min-height: 180px;
+    }
+
+    .footer {
+      margin-top: 28px;
+      padding: 36px;
+      border-radius: 28px;
+      background: linear-gradient(135deg, #8b2545, #c23769);
+      color: #fff;
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 24px;
+      align-items: start;
+    }
+
+    .footer h3 {
+      margin: 0 0 10px;
+      font-size: 1.4rem;
+    }
+
+    .footer p {
+      margin: 6px 0;
+      color: rgba(255,255,255,0.88);
+    }
+
     @media (max-width: 980px) {
-      .event-shell {
+      .heroGrid {
         grid-template-columns: 1fr;
       }
 
-      .poster-card {
-        position: relative;
-        top: 0;
-      }
-
-      .booking-card {
-        padding: 30px;
-      }
-
-      .highlight-row,
-      .poster-caption {
+      .eventDetails,
+      .benefitCard,
+      .loveBanner,
+      .footer {
         grid-template-columns: 1fr;
+      }
+
+      .benefit {
+        border-right: none;
+        border-bottom: 1px solid rgba(214, 161, 127, 0.28);
+      }
+
+      .benefit:last-child {
+        border-bottom: none;
       }
     }
 
     @media (max-width: 640px) {
-      .page {
-        padding: 20px 12px 44px;
-      }
-
-      .topbar-event {
-        flex-direction: column;
+      .topbar {
+        padding: 18px;
         align-items: flex-start;
+        flex-direction: column;
       }
 
-      .booking-card,
-      .form-box {
-        padding: 22px;
-        border-radius: 24px;
+      .wrap {
+        padding: 22px 14px 44px;
       }
 
-      .form-grid {
+      .formCard {
+        padding: 24px;
+      }
+
+      .formGrid {
         grid-template-columns: 1fr;
       }
 
-      .total {
-        flex-direction: column;
+      .totalBox {
         align-items: flex-start;
       }
 
-      .poster-card {
-        padding: 14px;
+      .sectionHeader h1 {
+        font-size: 2.4rem;
       }
 
-      h1 {
-        font-size: clamp(2.2rem, 12vw, 3.4rem);
+      .posterCard {
+        padding: 12px;
+      }
+
+      .loveCopy {
+        padding: 26px;
+      }
+
+      .footer {
+        padding: 28px;
       }
     }
   </style>
@@ -475,107 +507,68 @@
 
 <body>
   <main class="page">
+    <header class="topbar">
+      <a href="/" class="brand">
+        <img src="/images/logo/logo.png" alt="SoulFood Fusion House logo" />
+        <div class="brandText">
+          <strong>Fusion House</strong>
+          <span>CAFÉ & RESTO</span>
+        </div>
+      </a>
+
+      <a href="/" class="backLink">← Back to Events</a>
+    </header>
+
     <div class="wrap">
-      <div class="topbar-event">
-        <a href="/" class="brand">
-          <img src="/images/logo/logo.png" alt="SoulFood Fusion House logo" />
-          <span>SoulFood Fusion House</span>
-        </a>
+      <section class="heroGrid">
+        <div class="posterCard">
+          <img src="/images/MothersdayPoster3.jpg" alt="Mother’s Day Lunch Buffet" />
+        </div>
 
-        <a href="/" class="back-link">← Back to Events</a>
-      </div>
-
-      <section class="event-shell">
-        <aside class="poster-card">
-          <div class="poster-frame">
-            <img src="/images/MothersdayPoster3.jpg" alt="Mother’s Day Lunch Buffet poster" />
-          </div>
-
-          <div class="poster-caption">
-            <div class="mini-stat">
-              <span>Date</span>
-              <strong>May 10</strong>
+        <div class="rightColumn">
+          <section class="formCard">
+            <div class="sectionHeader">
+              <h1>Reserve Your Table</h1>
+              <div class="divider">♥</div>
+              <p>
+                Fill in your details below. No online payment is required for lunch.
+              </p>
             </div>
-            <div class="mini-stat">
-              <span>Time</span>
-              <strong>12–4 PM</strong>
+
+            <div class="eventDetails">
+              <div class="detailBox">
+                <span>Date</span>
+                <strong>May 10, 2026</strong>
+              </div>
+              <div class="detailBox">
+                <span>Time</span>
+                <strong>12 PM – 4 PM</strong>
+              </div>
+              <div class="detailBox">
+                <span>Payment</span>
+                <strong>Pay Later</strong>
+              </div>
             </div>
-            <div class="mini-stat">
-              <span>From</span>
-              <strong>$45</strong>
-            </div>
-          </div>
-        </aside>
-
-        <section class="booking-card">
-          <span class="pill">💐 Mother’s Day Special</span>
-
-          <h1>Reserve a Beautiful Lunch for Mom</h1>
-
-          <p class="lead">
-            Celebrate Mom with a warm Mother’s Day Lunch Buffet at SoulFood Fusion House.
-            Enjoy Filipino and international flavors, family-style comfort, and a memorable
-            dining experience made with love.
-          </p>
-
-          <div class="highlight-row">
-            <div class="highlight">
-              <div class="icon">📅</div>
-              <span>Date</span>
-              <strong>May 10, 2026</strong>
-            </div>
-            <div class="highlight">
-              <div class="icon">🕛</div>
-              <span>Time</span>
-              <strong>12:00 PM – 4:00 PM</strong>
-            </div>
-            <div class="highlight">
-              <div class="icon">🍽️</div>
-              <span>Payment</span>
-              <strong>Pay at Restaurant</strong>
-            </div>
-          </div>
-
-          <div class="pricing">
-            <h2>Family Pricing</h2>
-            <ul class="price-list">
-              <li>
-                <span>Children 4 years old and below</span>
-                <strong>FREE</strong>
-              </li>
-              <li>
-                <span>Children 5–10 years old</span>
-                <strong>$22.50</strong>
-              </li>
-              <li>
-                <span>Guests 11 years old and above</span>
-                <strong>$45.00</strong>
-              </li>
-            </ul>
-          </div>
-
-          <div class="form-box">
-            <h2 class="form-title">Reserve Your Table</h2>
 
             <form id="lunchForm">
-              <div class="form-grid">
+              <div class="formGrid">
                 <label>
                   Full Name
-                  <input type="text" name="fullName" required />
+                  <input type="text" name="fullName" placeholder="Enter your full name" required />
                 </label>
 
                 <label>
                   Email Address
-                  <input type="email" name="email" required />
+                  <input type="email" name="email" placeholder="Enter your email address" required />
                 </label>
 
                 <label>
                   Phone Number
-                  <input type="tel" name="phone" required />
+                  <input type="tel" name="phone" placeholder="Enter your phone number" required />
                 </label>
 
                 <label>
-                  Guests 11 years old and above
+                  Guests 11+ years old
                   <input type="number" name="guests11Plus" id="guests11Plus" min="0" value="1" required />
                 </label>
 
@@ -591,27 +584,76 @@
 
                 <label class="full">
                   Special Requests
-                  <textarea name="specialRequests" placeholder="High chair, allergies, seating preference, etc."></textarea>
+                  <textarea name="specialRequests" placeholder="High chair, allergy notes, preferred seating, or other requests..."></textarea>
                 </label>
               </div>
 
-              <div class="total">
-                <span>Estimated Total</span>
-                <strong id="estimatedTotal">$45.00</strong>
+              <div class="totalBox">
+                <div class="totalIcon">🧾</div>
+                <div class="totalText">
+                  <span>Estimated Total</span>
+                  <strong id="estimatedTotal">$45.00</strong>
+                  <small>
+                    This is reservation only. Payment will be made at the restaurant.
+                  </small>
+                </div>
               </div>
 
-              <button class="submit" type="submit">Reserve Table Now</button>
-
-              <p class="fineprint">
-                Reservation only. No online payment is required for lunch.
-                Payment will be made at SoulFood Fusion House on the day of the event.
-              </p>
+              <button class="submitBtn" type="submit">🔒 Submit Lunch Reservation</button>
 
               <div id="message" class="message"></div>
             </form>
-          </div>
-        </section>
+          </section>
+
+          <section class="benefitCard">
+            <div class="benefit">
+              <div class="benefitIcon">💳</div>
+              <strong>No Online Payment</strong>
+              <p>Pay at the restaurant on the day of the event.</p>
+            </div>
+            <div class="benefit">
+              <div class="benefitIcon">👨‍👩‍👧‍👦</div>
+              <strong>Family Friendly</strong>
+              <p>A special celebration for the whole family.</p>
+            </div>
+            <div class="benefit">
+              <div class="benefitIcon">🎟️</div>
+              <strong>Limited Seats</strong>
+              <p>Reserve early to secure your table.</p>
+            </div>
+          </section>
+        </div>
       </section>
+
+      <section class="loveBanner">
+        <div class="loveCopy">
+          <h2>Celebrate Mom with Love</h2>
+          <p>
+            Join us for a warm, memorable dining experience filled with Filipino and international
+            flavors, made with love just like home.
+          </p>
+        </div>
+        <div class="loveImage" aria-label="Mother’s Day lunch atmosphere"></div>
+      </section>
+
+      <footer class="footer">
+        <div>
+          <h3>Fusion House</h3>
+          <p>CAFÉ & RESTO</p>
+        </div>
+
+        <div>
+          <h3>Follow Us</h3>
+          <p>Facebook • Instagram • TikTok</p>
+        </div>
+
+        <div>
+          <h3>Contact Us</h3>
+          <p>☎ +61 413 326 097</p>
+          <p>✉ soulfoodfusionhouse@gmail.com</p>
+          <p>📍 8 High St, Bendigo VIC 3550</p>
+        </div>
+      </footer>
     </div>
   </main>
 
