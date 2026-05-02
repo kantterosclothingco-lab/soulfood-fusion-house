@@ -1,6 +1,6 @@
 import Head from "next/head";
 import Link from "next/link";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 const bestSellers = [
   {
@@ -49,6 +49,15 @@ const reviewLink =
 
 export default function Home() {
   const [submitted, setSubmitted] = useState(false);
+  const [showPopup, setShowPopup] = useState(false);
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setShowPopup(true);
+    }, 1500);
+
+    return () => clearTimeout(timer);
+  }, []);
 
   function handleSubmit(e) {
     e.preventDefault();
@@ -57,6 +66,30 @@ export default function Home() {
 
   return (
     <>
+      {showPopup && (
+        <div className="popupOverlay">
+          <div className="popupContainer">
+            <button className="popupClose" onClick={() => setShowPopup(false)}>
+              ✕
+            </button>
+
+            <div className="popupSide">
+              <img src="/images/MothersdayPoster3.jpg" alt="Mother's Day Lunch Buffet" />
+              <a href="https://soulfood-fusion-house.onrender.com/book-lunch.html">
+                <button className="popupBtn lunch">BOOK LUNCH</button>
+              </a>
+            </div>
+
+            <div className="popupSide">
+              <img src="/images/ReyValeraPoster2.jpg" alt="Rey Valera Dinner Show" />
+              <a href="https://soulfood-fusion-house.onrender.com/book-dinner.html">
+                <button className="popupBtn dinner">BOOK DINNER</button>
+              </a>
+            </div>
+          </div>
+        </div>
+      )}
+
       <Head>
         <title>Soulfood Fusion House</title>
         <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -85,7 +118,6 @@ export default function Home() {
           <a href="#about">About</a>
           <a href="#bestsellers">Best Sellers</a>
           <a href="#visit">Visit</a>
-          <a href="#events">Events</a>
           <Link href="/menu" className="menuBtn">
             ☰ Menu
           </Link>
@@ -235,40 +267,6 @@ export default function Home() {
           </div>
         </section>
 
-
-        <section className="eventSection" id="events">
-          <div className="sectionIntro center">
-            <p className="sectionLabel">Mother's Day Events</p>
-            <h2>One celebration, two experiences</h2>
-            <p>
-              Use one reservation flow for both events and let guests choose lunch buffet
-              or dinner show when booking.
-            </p>
-          </div>
-
-          <div className="eventGrid">
-            <article className="eventCard lunch">
-              <p className="eventTag">Lunch Buffet</p>
-              <h3>Mother's Day Lunch</h3>
-              <p className="eventMeta">Saturday, May 10, 2026 • 12:00 PM – 4:00 PM</p>
-              <p className="eventPrice">$45 per head</p>
-              <p>Family-style favorites, live pasta station, desserts, and fresh fruits.</p>
-            </article>
-
-            <article className="eventCard dinner">
-              <p className="eventTag">Dinner Show</p>
-              <h3>Mother's Day Dinner</h3>
-              <p className="eventMeta">Saturday, May 10, 2026 • Doors 5:00 PM • Show 7:00 PM</p>
-              <p className="eventPrice">$65 ticket</p>
-              <p>Special night with music, welcome drinks, and live entertainment.</p>
-            </article>
-          </div>
-
-          <div className="ctaCenter">
-            <a href="tel:+61413326097" className="primaryBtn">Reserve for Lunch or Dinner</a>
-          </div>
-        </section>
-
         <section className="visitSection" id="visit">
           <div className="visitGrid">
             <div className="visitCard">
@@ -295,13 +293,13 @@ export default function Home() {
               </div>
 
               <div className="infoGroup">
-  <h4>Opening Hours</h4>
-  <p><strong>Monday</strong> — 12:00pm to 3:00pm Lunch • 5:00pm to 8:00pm Dinner</p>
-  <p><strong>Tuesday - Wednesday</strong> — CLOSED</p>
-  <p><strong>Thursday - Friday</strong> — 12:00pm to 3:00pm Lunch • 5:00pm to 8:00pm Dinner</p>
-  <p><strong>Saturday</strong> — 12:00pm to 9:00pm</p>
-  <p><strong>Sunday</strong> — 12:00pm to 8:00pm</p>
-</div>
+                <h4>Opening Hours</h4>
+                <p><strong>Monday</strong> — 12:00pm to 3:00pm Lunch • 5:00pm to 8:00pm Dinner</p>
+                <p><strong>Tuesday - Wednesday</strong> — CLOSED</p>
+                <p><strong>Thursday - Friday</strong> — 12:00pm to 3:00pm Lunch • 5:00pm to 8:00pm Dinner</p>
+                <p><strong>Saturday</strong> — 12:00pm to 9:00pm</p>
+                <p><strong>Sunday</strong> — 12:00pm to 8:00pm</p>
+              </div>
 
               <div className="actionRow">
                 <a href={mapLink} target="_blank" rel="noreferrer" className="secondaryBtn inlineBtn">
@@ -400,6 +398,128 @@ export default function Home() {
         a { text-decoration: none; }
         img { display: block; width: 100%; }
 
+        .popupOverlay {
+          position: fixed;
+          inset: 0;
+          background: radial-gradient(circle at top, rgba(199,147,86,0.18), transparent 35%),rgba(0, 0, 0, 0.78);
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          z-index: 9999;
+          padding: 22px;
+          backdrop-filter: blur(6px);
+        }
+
+        .popupContainer {
+          width: 1040px;
+          max-width: 96vw;
+          display: grid;
+          grid-template-columns: 1fr 1fr;
+          gap: 18px;
+          background: linear-gradient(135deg, #fff8f0, #f7eadb);
+          border: 1px solid rgba(199,147,86,0.5);
+          border-radius: 26px;
+          padding: 22px;
+          position: relative;
+          box-shadow: 0 40px 120px rgba(0,0,0,0.55);
+          animation: popupIn 0.35s ease;
+        }
+
+        @keyframes popupIn {
+          from {
+            opacity: 0;
+            transform: scale(0.94) translateY(14px);
+          }
+          to {
+            opacity: 1;
+            transform: scale(1) translateY(0);
+          }
+        }
+
+        .popupSide {
+          position: relative;
+          padding: 12px;
+          border-radius: 22px;
+          background: rgba(255,255,255,0.74);
+          border: 1px solid rgba(199,147,86,0.25);
+          box-shadow: inset 0 0 0 1px rgba(255,255,255,0.6);
+          text-align: center;
+        }
+
+        .popupSide img {
+          width: 100%;
+          height: 620px;
+          object-fit: contain;
+          background: #fff3ea;
+          border-radius: 18px;
+          box-shadow: 0 18px 40px rgba(63,35,20,0.18);
+        }
+
+        .popupBtn {
+          margin-top: 16px;
+          width: 100%;
+          padding: 16px 20px;
+          border: none;
+          border-radius: 999px;
+          font-weight: 900;
+          letter-spacing: 0.08em;
+          font-size: 0.9rem;
+          cursor: pointer;
+          transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .popupBtn:hover {
+          transform: translateY(-2px);
+        }
+
+        .popupBtn.lunch {
+          background: linear-gradient(135deg, #d93672, #f2a3bd);
+          color: #fff;
+          box-shadow: 0 12px 28px rgba(217,54,114,0.28);
+        }
+
+        .popupBtn.dinner {
+          background: linear-gradient(135deg, #16110b, #b8893e);
+          color: #fff;
+          box-shadow: 0 12px 28px rgba(30,20,10,0.32);
+        }
+
+        .popupClose {
+          position: absolute;
+          top: -16px;
+          right: -16px;
+          background: #111;
+          color: #fff;
+          border: 2px solid #fff;
+          width: 44px;
+          height: 44px;
+          border-radius: 50%;
+          cursor: pointer;
+          z-index: 2;
+          font-size: 20px;
+          line-height: 1;
+          box-shadow: 0 12px 30px rgba(0,0,0,0.35);
+        }
+
+        @media (max-width: 900px) {
+          .popupContainer {
+            grid-template-columns: 1fr;
+            max-height: 92vh;
+            overflow-y: auto;
+            padding: 16px;
+          }
+
+          .popupSide img {
+            height: auto;
+            max-height: 70vh;
+          }
+
+          .popupClose {
+            top: 10px;
+            right: 10px;
+          }
+        }
+
         .topbar {
           position: sticky; top: 0; z-index: 100; display: flex; justify-content: space-between; align-items: center;
           padding: 18px 28px; background: rgba(17, 10, 8, 0.88); backdrop-filter: blur(10px);
@@ -451,21 +571,10 @@ export default function Home() {
         .primaryBtn, .goldBtn { background: linear-gradient(135deg, #c79356, #ebce97); color: #1e120d; }
         .secondaryBtn { background: rgba(255,255,255,0.94); border: 1px solid #dcc7af; color: #3b261b; }
         .primaryBtn:hover, .goldBtn:hover, .secondaryBtn:hover, .menuBtn:hover, .orderBtn:hover, .reviewBtn:hover, .cateringBtn:hover { transform: translateY(-2px); }
-        .aboutSection, .bestSellerSection, .visitSection, .bookingSection, .flowSection, .eventSection {
+
+        .aboutSection, .bestSellerSection, .visitSection, .bookingSection, .flowSection {
           max-width: 1280px; margin: 0 auto; padding: 82px 28px;
         }
-
-        .eventGrid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 24px; }
-        .eventCard {
-          border-radius: 24px; padding: 28px; border: 1px solid #ead7bf;
-          box-shadow: 0 18px 42px rgba(53,31,18,0.08); background: #fff;
-        }
-        .eventCard.lunch { background: linear-gradient(180deg, #fff9f1, #fcefe3); }
-        .eventCard.dinner { background: linear-gradient(180deg, #2c1b16, #130b09); color: #f6e7d0; }
-        .eventTag { font-size: 0.75rem; letter-spacing: 0.13em; text-transform: uppercase; font-weight: 700; color: #b57a39; }
-        .eventCard h3 { margin: 8px 0 8px; font-size: 2rem; }
-        .eventMeta { font-weight: 700; margin-bottom: 12px; }
-        .eventPrice { font-size: 1.6rem; font-weight: 700; margin: 0 0 10px; }
         .sectionIntro { max-width: 860px; margin-bottom: 36px; }
         .sectionIntro.center { text-align: center; margin-left: auto; margin-right: auto; }
         .sectionIntro.small { max-width: 720px; }
@@ -574,6 +683,21 @@ export default function Home() {
           .hero { min-height: auto; padding: 80px 18px; }
           .aboutSection, .bestSellerSection, .visitSection, .bookingSection, .flowSection, .footer {
             padding-left: 18px; padding-right: 18px;
+          }
+
+          .popupContainer {
+            flex-direction: column;
+            max-height: 92vh;
+            overflow-y: auto;
+          }
+
+          .popupSide {
+            width: 100%;
+          }
+
+          .popupSide img {
+            height: auto;
+            max-height: 70vh;
           }
         }
       `}</style>
