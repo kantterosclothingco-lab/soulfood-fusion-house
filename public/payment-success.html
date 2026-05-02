@@ -1,0 +1,101 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Payment Confirmation | SoulFood Fusion House</title>
+  <link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+  <main class="sf-page-shell">
+    <nav class="sf-topbar" aria-label="Main navigation">
+      <a class="sf-logo-text" href="/">
+        <span>SoulFood Fusion House</span>
+        <span>Ticket Confirmation</span>
+      </a>
+      <a class="sf-home-link" href="/">Back to events</a>
+    </nav>
+
+    <section class="sf-success-panel">
+      <span class="sf-section-label">Payment Status</span>
+      <h1 id="statusTitle">Checking your booking...</h1>
+      <p class="sf-form-intro" id="statusIntro">
+        Please wait while we check your dinner ticket booking.
+      </p>
+
+      <div id="bookingDetails"></div>
+
+      <div class="sf-admin-actions">
+        <a class="sf-btn" href="/">Back to Homepage</a>
+        <a class="sf-btn-secondary" href="/book-dinner.html">Buy More Tickets</a>
+      </div>
+    </section>
+  </main>
+
+  <script>
+    const params = new URLSearchParams(window.location.search);
+    const bookingId = params.get('booking');
+    const title = document.getElementById('statusTitle');
+    const intro = document.getElementById('statusIntro');
+    const details = document.getElementById('bookingDetails');
+
+    function escapeHtml(value) {
+      return String(value || '').replace(/[&<>'"]/g, (char) => ({
+        '&': '&amp;',
+        '<': '&lt;',
+        '>': '&gt;',
+        "'": '&#39;',
+        '"': '&quot;'
+      }[char]));
+    }
+
+    async function loadBooking() {
+      if (!bookingId) {
+        title.textContent = 'Booking ID Missing';
+        intro.textContent = 'We could not find a booking ID in the payment confirmation link.';
+        return;
+      }
+
+      try {
+        const response = await fetch('/api/dinner/booking/' + encodeURIComponent(bookingId));
+        const result = await response.json();
+        if (!response.ok || !result.ok) throw new Error(result.message || 'Booking not found.');
+
+        const booking = result.booking;
+
+        if (booking.status === 'paid' || booking.status === 'checked_in') {
+          title.textContent = 'Your dinner tickets are confirmed!';
+          intro.textContent = 'Thank you. Your Square payment has been confirmed and your ticket numbers are below.';
+        } else if (booking.status === 'needs_manual_review') {
+          title.textContent = 'Payment received — staff review needed';
+          intro.textContent = 'Your payment was received, but the ticket limit needs staff review. Please keep your booking ID.';
+        } else {
+          title.textContent = 'Payment is being verified';
+          intro.textContent = 'Square payment confirmation can take a moment. Please keep this booking ID and refresh this page in a minute.';
+        }
+
+        const ticketHtml = Array.isArray(booking.ticketNumbers) && booking.ticketNumbers.length
+          ? `<div class="sf-ticket-list">${booking.ticketNumbers.map((ticket) => `<span class="sf-ticket-number">${escapeHtml(ticket)}</span>`).join('')}</div>`
+          : '<p class="sf-small-text">Ticket numbers will appear here after Square confirms the payment.</p>';
+
+        details.innerHTML = `
+          <div class="sf-notice-box">
+            <strong>Booking ID:</strong> ${escapeHtml(booking.id)}<br>
+            <strong>Name:</strong> ${escapeHtml(booking.fullName)}<br>
+            <strong>Email:</strong> ${escapeHtml(booking.email)}<br>
+            <strong>Tickets:</strong> ${escapeHtml(booking.ticketQuantity)}<br>
+            <strong>Total:</strong> ${escapeHtml(booking.amountDisplay)}<br>
+            <strong>Payment Status:</strong> ${escapeHtml(booking.paymentStatus)}
+          </div>
+          ${ticketHtml}
+        `;
+      } catch (error) {
+        title.textContent = 'Could not load booking';
+        intro.textContent = error.message;
+      }
+    }
+
+    loadBooking();
+  </script>
+</body>
+</html>

@@ -1,0 +1,196 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Book Mother’s Day Lunch Buffet | SoulFood Fusion House</title>
+  <link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+  <main class="sf-page-shell">
+    <nav class="sf-topbar" aria-label="Main navigation">
+      <a class="sf-logo-text" href="/">
+        <span>SoulFood Fusion House</span>
+        <span>Mother’s Day</span>
+      </a>
+      <a class="sf-home-link" href="/">Back to events</a>
+    </nav>
+
+    <section class="sf-booking-layout">
+      <aside class="sf-info-panel">
+        <img class="sf-event-poster-small" src="/images/MothersdayPoster3.jpg" alt="Mother’s Day Lunch Buffet poster">
+        <span class="sf-section-label">Reservation Only</span>
+        <h1>Mother’s Day Lunch Buffet</h1>
+        <p class="lead">
+          Celebrate Mom with a feast she truly deserves. Join us for a warm, memorable dining experience
+          filled with Filipino and international flavors, made with love just like home.
+        </p>
+
+        <div class="sf-meta-grid">
+          <div class="sf-meta-card">
+            <strong>Date</strong>
+            <span>May 10, 2026</span>
+          </div>
+          <div class="sf-meta-card">
+            <strong>Time</strong>
+            <span>12:00 PM – 4:00 PM</span>
+          </div>
+          <div class="sf-meta-card">
+            <strong>Payment</strong>
+            <span>At restaurant</span>
+          </div>
+        </div>
+
+        <ul class="sf-list">
+          <li>Children 4 years old and below are free.</li>
+          <li>Children 5–10 years old are half price: $22.50.</li>
+          <li>Guests 11 years old and above are full price: $45.</li>
+          <li>Your booking will be saved for our staff. Payment is made on the day at the restaurant.</li>
+        </ul>
+      </aside>
+
+      <section class="sf-form-panel">
+        <h2>Reserve Your Table</h2>
+        <p class="sf-form-intro">Fill in your details below. No online payment is required for lunch.</p>
+
+        <form id="lunchForm">
+          <div class="sf-form-group">
+            <label for="fullName">Full Name</label>
+            <input class="sf-input" id="fullName" name="fullName" type="text" autocomplete="name" required>
+          </div>
+
+          <div class="sf-form-group">
+            <label for="email">Email Address</label>
+            <input class="sf-input" id="email" name="email" type="email" autocomplete="email" required>
+          </div>
+
+          <div class="sf-form-group">
+            <label for="phone">Phone Number</label>
+            <input class="sf-input" id="phone" name="phone" type="tel" autocomplete="tel" required>
+          </div>
+
+          <div class="sf-two-cols">
+            <div class="sf-form-group">
+              <label for="guests11Plus">Guests 11+ years old</label>
+              <input class="sf-input" id="guests11Plus" name="guests11Plus" type="number" min="0" value="1" required>
+            </div>
+
+            <div class="sf-form-group">
+              <label for="children5To10">Children 5–10 years old</label>
+              <input class="sf-input" id="children5To10" name="children5To10" type="number" min="0" value="0" required>
+            </div>
+          </div>
+
+          <div class="sf-form-group">
+            <label for="children4Below">Children 4 years old and below</label>
+            <input class="sf-input" id="children4Below" name="children4Below" type="number" min="0" value="0" required>
+          </div>
+
+          <div class="sf-form-group">
+            <label for="specialRequests">Special Requests</label>
+            <textarea class="sf-textarea" id="specialRequests" name="specialRequests" placeholder="High chair, allergy notes, preferred seating, etc."></textarea>
+          </div>
+
+          <div class="sf-total-box" aria-live="polite">
+            <span>Estimated Total</span>
+            <strong id="lunchTotal">$45.00</strong>
+          </div>
+
+          <div class="sf-notice-box">
+            This is reservation only. The estimated total is for staff reference; payment will be made at SoulFood Fusion House.
+          </div>
+
+          <button class="sf-btn sf-card-btn" type="submit" id="lunchSubmit">Submit Lunch Reservation</button>
+          <div class="sf-message" id="lunchMessage"></div>
+        </form>
+      </section>
+    </section>
+  </main>
+
+  <script>
+    const adultInput = document.getElementById('guests11Plus');
+    const childInput = document.getElementById('children5To10');
+    const toddlerInput = document.getElementById('children4Below');
+    const totalEl = document.getElementById('lunchTotal');
+    const form = document.getElementById('lunchForm');
+    const submitBtn = document.getElementById('lunchSubmit');
+    const message = document.getElementById('lunchMessage');
+
+    function dollars(amount) {
+      return '$' + amount.toFixed(2);
+    }
+
+    function positiveNumber(input) {
+      return Math.max(0, Number(input.value || 0));
+    }
+
+    function calculateLunchTotal() {
+      const adults = positiveNumber(adultInput);
+      const children = positiveNumber(childInput);
+      const total = adults * 45 + children * 22.5;
+      totalEl.textContent = dollars(total);
+    }
+
+    function showMessage(type, text) {
+      message.className = 'sf-message show ' + type;
+      message.innerHTML = text;
+    }
+
+    [adultInput, childInput, toddlerInput].forEach((input) => {
+      input.addEventListener('input', calculateLunchTotal);
+    });
+
+    form.addEventListener('submit', async (event) => {
+      event.preventDefault();
+      submitBtn.disabled = true;
+      submitBtn.textContent = 'Submitting...';
+      message.className = 'sf-message';
+      message.textContent = '';
+
+      const payload = {
+        fullName: form.fullName.value,
+        email: form.email.value,
+        phone: form.phone.value,
+        guests11Plus: Number(form.guests11Plus.value || 0),
+        children5To10: Number(form.children5To10.value || 0),
+        children4Below: Number(form.children4Below.value || 0),
+        specialRequests: form.specialRequests.value
+      };
+
+      try {
+        const response = await fetch('/api/lunch-reservation', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(payload)
+        });
+
+        const result = await response.json();
+        if (!response.ok || !result.ok) {
+          throw new Error(result.message || 'Reservation failed.');
+        }
+
+        showMessage(
+          'success',
+          `<strong>Thank you, ${result.booking.fullName}!</strong><br>` +
+          `Your lunch buffet reservation has been received.<br>` +
+          `Booking ID: <strong>${result.booking.id}</strong><br>` +
+          `Estimated total: <strong>${result.booking.estimatedTotalDisplay}</strong><br>` +
+          `Payment will be made at the restaurant.`
+        );
+        form.reset();
+        adultInput.value = 1;
+        childInput.value = 0;
+        toddlerInput.value = 0;
+        calculateLunchTotal();
+      } catch (error) {
+        showMessage('error', error.message);
+      } finally {
+        submitBtn.disabled = false;
+        submitBtn.textContent = 'Submit Lunch Reservation';
+      }
+    });
+
+    calculateLunchTotal();
+  </script>
+</body>
+</html>

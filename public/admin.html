@@ -1,0 +1,142 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Event Bookings Admin | SoulFood Fusion House</title>
+  <link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+  <main class="sf-page-shell">
+    <nav class="sf-topbar" aria-label="Main navigation">
+      <a class="sf-logo-text" href="/">
+        <span>SoulFood Fusion House</span>
+        <span>Bookings Admin</span>
+      </a>
+      <a class="sf-home-link" href="/">Back to events</a>
+    </nav>
+
+    <section class="sf-admin-panel">
+      <span class="sf-section-label">Private Staff Page</span>
+      <h1>Event Booking Data</h1>
+      <p class="sf-form-intro">
+        Enter the admin export key from your server .env file to view summary and download CSV sheets.
+      </p>
+
+      <div class="sf-form-group">
+        <label for="adminKey">Admin Export Key</label>
+        <input class="sf-input" id="adminKey" type="password" placeholder="Paste ADMIN_EXPORT_KEY here">
+      </div>
+
+      <div class="sf-admin-actions">
+        <button class="sf-btn" id="loadSummary" type="button">Load Summary</button>
+        <button class="sf-btn-secondary" id="downloadLunch" type="button">Download Lunch CSV</button>
+        <button class="sf-btn-secondary" id="downloadDinner" type="button">Download Dinner CSV</button>
+      </div>
+
+      <div class="sf-message" id="adminMessage"></div>
+      <div class="sf-summary-grid" id="summaryGrid" style="display:none;"></div>
+
+      <hr style="border:0;border-top:1px solid rgba(95,58,47,.14);margin:32px 0;">
+
+      <h2>Dinner Check-In</h2>
+      <p class="sf-form-intro">Use this on the event day to mark a dinner ticket number as checked in.</p>
+      <div class="sf-form-group">
+        <label for="ticketNumber">Ticket Number</label>
+        <input class="sf-input" id="ticketNumber" type="text" placeholder="RV-001">
+      </div>
+      <button class="sf-btn" id="checkInButton" type="button">Check In Ticket</button>
+    </section>
+  </main>
+
+  <script>
+    const keyInput = document.getElementById('adminKey');
+    const message = document.getElementById('adminMessage');
+    const summaryGrid = document.getElementById('summaryGrid');
+    const ticketNumber = document.getElementById('ticketNumber');
+
+    function showMessage(type, text) {
+      message.className = 'sf-message show ' + type;
+      message.textContent = text;
+    }
+
+    function getKey() {
+      return keyInput.value.trim();
+    }
+
+    function requireKey() {
+      const key = getKey();
+      if (!key) {
+        showMessage('error', 'Please enter your admin export key first.');
+        return null;
+      }
+      return key;
+    }
+
+    document.getElementById('loadSummary').addEventListener('click', async () => {
+      const key = requireKey();
+      if (!key) return;
+
+      try {
+        const response = await fetch('/api/admin/summary?key=' + encodeURIComponent(key));
+        const result = await response.json();
+        if (!response.ok || !result.ok) throw new Error(result.message || 'Could not load summary.');
+
+        summaryGrid.style.display = 'grid';
+        summaryGrid.innerHTML = `
+          <div class="sf-summary-card">
+            <h3>Lunch Buffet</h3>
+            <p><strong>Bookings:</strong> ${result.lunch.bookings}</p>
+            <p><strong>Total guests:</strong> ${result.lunch.totalGuests}</p>
+            <p><strong>Estimated total:</strong> ${result.lunch.estimatedTotalDisplay}</p>
+          </div>
+          <div class="sf-summary-card">
+            <h3>Dinner Tickets</h3>
+            <p><strong>Paid tickets:</strong> ${result.dinner.paidTickets}</p>
+            <p><strong>Held or paid:</strong> ${result.dinner.heldOrPaidTickets} / ${result.dinner.maxTickets}</p>
+            <p><strong>Remaining:</strong> ${result.dinner.remainingTickets}</p>
+            <p><strong>Paid amount:</strong> ${result.dinner.paidAmountDisplay}</p>
+          </div>
+        `;
+        showMessage('success', 'Summary loaded.');
+      } catch (error) {
+        summaryGrid.style.display = 'none';
+        showMessage('error', error.message);
+      }
+    });
+
+    document.getElementById('downloadLunch').addEventListener('click', () => {
+      const key = requireKey();
+      if (!key) return;
+      window.location.href = '/api/admin/lunch.csv?key=' + encodeURIComponent(key);
+    });
+
+    document.getElementById('downloadDinner').addEventListener('click', () => {
+      const key = requireKey();
+      if (!key) return;
+      window.location.href = '/api/admin/dinner.csv?key=' + encodeURIComponent(key);
+    });
+
+    document.getElementById('checkInButton').addEventListener('click', async () => {
+      const key = requireKey();
+      if (!key) return;
+
+      try {
+        const response = await fetch('/api/admin/check-in?key=' + encodeURIComponent(key), {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ ticketNumber: ticketNumber.value })
+        });
+
+        const result = await response.json();
+        if (!response.ok || !result.ok) throw new Error(result.message || 'Check-in failed.');
+
+        showMessage('success', `Ticket checked in for ${result.booking.fullName}.`);
+        ticketNumber.value = '';
+      } catch (error) {
+        showMessage('error', error.message);
+      }
+    });
+  </script>
+</body>
+</html>
