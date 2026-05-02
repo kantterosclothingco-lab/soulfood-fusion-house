@@ -74,17 +74,16 @@ export default function Home() {
             </button>
 
             <div className="popupSide">
-              <img src="/images/MothersdayPoster3.jpg" alt="Mother's Day Lunch Buffet" />
-              <a href="https://soulfood-fusion-house.onrender.com/book-lunch.html">
-                <button className="popupBtn lunch">BOOK LUNCH</button>
-              </a>
-            </div>
+              <img src="/images/MothersdayPoster3.jpg" alt="Mother’s Day Lunch Buffet" />
 
-            <div className="popupSide">
-              <img src="/images/ReyValeraPoster2.jpg" alt="Rey Valera Dinner Show" />
-              <a href="https://soulfood-fusion-house.onrender.com/book-dinner.html">
-                <button className="popupBtn dinner">BOOK DINNER</button>
-              </a>
+              <div className="popupContent">
+                <h2>Mother’s Day Lunch Buffet</h2>
+                <p>Celebrate Mom with a beautiful lunch experience at SoulFood Fusion House.</p>
+
+                <a href="https://soulfood-fusion-house.onrender.com/book-lunch.html">
+                  <button className="popupBtn lunch">RESERVE YOUR TABLE</button>
+                </a>
+              </div>
             </div>
           </div>
         </div>
@@ -187,16 +186,19 @@ export default function Home() {
               <h3>Browse the menu</h3>
               <p>Customers explore your dishes and choose what they want.</p>
             </article>
+
             <article className="flowCard">
               <div className="flowIcon">2</div>
               <h3>Go to checkout</h3>
               <p>They enter contact details, pickup or delivery preferences, and payment method.</p>
             </article>
+
             <article className="flowCard">
               <div className="flowIcon">3</div>
               <h3>Pay online</h3>
               <p>Card, digital wallet, and future options like Afterpay can be added here.</p>
             </article>
+
             <article className="flowCard">
               <div className="flowIcon">4</div>
               <h3>Order confirmed</h3>
@@ -221,10 +223,12 @@ export default function Home() {
               <h3>Freshly Prepared</h3>
               <p>Made with care and packed with flavor, from grilled dishes to family-style favorites.</p>
             </article>
+
             <article className="featureCard">
               <h3>Best Sellers First</h3>
               <p>The homepage highlights the dishes people love most before guiding them to the full menu.</p>
             </article>
+
             <article className="featureCard">
               <h3>Ready For Online Orders</h3>
               <p>The website now has a clearer flow for order, checkout, and payment-ready pages.</p>
@@ -245,6 +249,7 @@ export default function Home() {
                 <div className="dishImageWrap">
                   <img src={item.image} alt={item.name} />
                 </div>
+
                 <div className="dishBody">
                   <div className="dishTop">
                     <h3>{item.name}</h3>
@@ -401,7 +406,9 @@ export default function Home() {
         .popupOverlay {
           position: fixed;
           inset: 0;
-          background: radial-gradient(circle at top, rgba(199,147,86,0.18), transparent 35%),rgba(0, 0, 0, 0.78);
+          background:
+            radial-gradient(circle at top, rgba(199,147,86,0.18), transparent 35%),
+            rgba(0, 0, 0, 0.78);
           display: flex;
           justify-content: center;
           align-items: center;
@@ -411,11 +418,8 @@ export default function Home() {
         }
 
         .popupContainer {
-          width: 1040px;
-          max-width: 96vw;
-          display: grid;
-          grid-template-columns: 1fr 1fr;
-          gap: 18px;
+          width: 520px;
+          max-width: 92vw;
           background: linear-gradient(135deg, #fff8f0, #f7eadb);
           border: 1px solid rgba(199,147,86,0.5);
           border-radius: 26px;
@@ -437,7 +441,6 @@ export default function Home() {
         }
 
         .popupSide {
-          position: relative;
           padding: 12px;
           border-radius: 22px;
           background: rgba(255,255,255,0.74);
@@ -448,15 +451,27 @@ export default function Home() {
 
         .popupSide img {
           width: 100%;
-          height: 620px;
+          height: auto;
+          max-height: 70vh;
           object-fit: contain;
           background: #fff3ea;
           border-radius: 18px;
           box-shadow: 0 18px 40px rgba(63,35,20,0.18);
         }
 
+        .popupContent h2 {
+          margin: 18px 0 8px;
+          color: #2b1c15;
+          font-size: 1.55rem;
+        }
+
+        .popupContent p {
+          margin: 0 0 16px;
+          color: #6f5a49;
+          line-height: 1.55;
+        }
+
         .popupBtn {
-          margin-top: 16px;
           width: 100%;
           padding: 16px 20px;
           border: none;
@@ -478,12 +493,6 @@ export default function Home() {
           box-shadow: 0 12px 28px rgba(217,54,114,0.28);
         }
 
-        .popupBtn.dinner {
-          background: linear-gradient(135deg, #16110b, #b8893e);
-          color: #fff;
-          box-shadow: 0 12px 28px rgba(30,20,10,0.32);
-        }
-
         .popupClose {
           position: absolute;
           top: -16px;
@@ -499,25 +508,6 @@ export default function Home() {
           font-size: 20px;
           line-height: 1;
           box-shadow: 0 12px 30px rgba(0,0,0,0.35);
-        }
-
-        @media (max-width: 900px) {
-          .popupContainer {
-            grid-template-columns: 1fr;
-            max-height: 92vh;
-            overflow-y: auto;
-            padding: 16px;
-          }
-
-          .popupSide img {
-            height: auto;
-            max-height: 70vh;
-          }
-
-          .popupClose {
-            top: 10px;
-            right: 10px;
-          }
         }
 
         .topbar {
@@ -686,18 +676,13 @@ export default function Home() {
           }
 
           .popupContainer {
-            flex-direction: column;
             max-height: 92vh;
             overflow-y: auto;
           }
 
-          .popupSide {
-            width: 100%;
-          }
-
-          .popupSide img {
-            height: auto;
-            max-height: 70vh;
+          .popupClose {
+            top: 10px;
+            right: 10px;
           }
         }
       `}</style>
