@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+<<<<<<< HEAD
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Mother’s Day Lunch Buffet | SoulFood Fusion House</title>
@@ -739,5 +740,188 @@
       }
     });
   </script>
+=======
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Mother’s Day Lunch | SoulFood Fusion House</title>
+
+<style>
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  font-family: "Segoe UI", Arial, sans-serif;
+  background:
+    radial-gradient(circle at top left, rgba(255,198,216,0.5), transparent 30%),
+    linear-gradient(135deg,#fff8f4,#fde4dc);
+  color:#2d1715;
+}
+
+.topbar {
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  padding:20px;
+  background:rgba(255,255,255,0.85);
+  backdrop-filter:blur(10px);
+}
+
+.brand {
+  display:flex;
+  align-items:center;
+  gap:10px;
+  font-weight:900;
+}
+
+.brand img {
+  width:50px;
+  height:50px;
+  border-radius:50%;
+  background:#111;
+  padding:5px;
+}
+
+.backLink {
+  padding:10px 18px;
+  border-radius:999px;
+  border:1px solid #c23769;
+  color:#c23769;
+  font-weight:800;
+}
+
+.wrap {
+  max-width:1200px;
+  margin:auto;
+  padding:30px 20px;
+}
+
+.heroGrid {
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:25px;
+}
+
+.posterCard img {
+  width:100%;
+  border-radius:20px;
+  box-shadow:0 20px 50px rgba(0,0,0,0.2);
+}
+
+.formCard {
+  background:white;
+  padding:30px;
+  border-radius:25px;
+  box-shadow:0 20px 60px rgba(0,0,0,0.1);
+}
+
+.sectionHeader {
+  text-align:center;
+  margin-bottom:20px;
+}
+
+.sectionHeader h1 {
+  margin:0;
+  font-size:2.5rem;
+}
+
+.divider {
+  margin:10px 0;
+  color:#c23769;
+}
+
+.eventDetails {
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:10px;
+  margin-bottom:20px;
+}
+
+.detailBox {
+  background:#fff3ef;
+  padding:10px;
+  border-radius:12px;
+  text-align:center;
+}
+
+iframe {
+  width:100%;
+  height:850px;
+  border:none;
+  border-radius:20px;
+}
+
+.footer {
+  margin-top:40px;
+  padding:30px;
+  background:#c23769;
+  color:white;
+  border-radius:20px;
+}
+
+@media(max-width:900px){
+  .heroGrid { grid-template-columns:1fr; }
+  iframe { height:900px; }
+}
+</style>
+</head>
+
+<body>
+
+<header class="topbar">
+  <div class="brand">
+    <img src="/images/logo/logo.png" />
+    SoulFood Fusion House
+  </div>
+  <a href="/" class="backLink">← Back</a>
+</header>
+
+<div class="wrap">
+
+  <div class="heroGrid">
+
+    <!-- LEFT POSTER -->
+    <div class="posterCard">
+      <img src="/images/MothersdayPoster3.jpg" />
+    </div>
+
+    <!-- RIGHT FORM -->
+    <div class="formCard">
+
+      <div class="sectionHeader">
+        <h1>Reserve Your Table</h1>
+        <div class="divider">♥</div>
+        <p>No online payment required</p>
+      </div>
+
+      <div class="eventDetails">
+        <div class="detailBox">
+          <strong>Date</strong><br>May 10
+        </div>
+        <div class="detailBox">
+          <strong>Time</strong><br>12PM–4PM
+        </div>
+        <div class="detailBox">
+          <strong>Payment</strong><br>At Restaurant
+        </div>
+      </div>
+
+      <!-- GOOGLE FORM -->
+      <iframe 
+        src="https://docs.google.com/forms/d/e/1FAIpQLSecDyHU_6HIVfMztMmpePZ5KvjL26VMBN1Lh3NluLfNkauAFg/viewform?embedded=true">
+      </iframe>
+
+    </div>
+
+  </div>
+
+  <div class="footer">
+    <h3>SoulFood Fusion House</h3>
+    <p>📍 8 High St, Bendigo VIC</p>
+    <p>☎ +61 403 036 727</p>
+  </div>
+
+</div>
+
+>>>>>>> event-booking
 </body>
 </html>

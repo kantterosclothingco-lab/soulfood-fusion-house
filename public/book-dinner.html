@@ -1,0 +1,217 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Buy Dinner Show Tickets | SoulFood Fusion House</title>
+  <link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+  <main class="sf-page-shell">
+    <nav class="sf-topbar" aria-label="Main navigation">
+      <a class="sf-logo-text" href="/">
+        <span>SoulFood Fusion House</span>
+        <span>Rey Valera Dinner Show</span>
+      </a>
+      <a class="sf-home-link" href="/">Back to events</a>
+    </nav>
+
+    <section class="sf-booking-layout">
+      <aside class="sf-info-panel">
+        <img class="sf-event-poster-small" src="/images/ReyValeraPoster2.jpg" alt="Dinner Show with Maestro Rey Valera poster">
+        <span class="sf-section-label">Paid Tickets</span>
+        <h1>Dinner Show with Maestro Rey Valera</h1>
+        <p class="lead">
+          LIVE in Bendigo this Mother’s Day. Maestro Rey Valera is coming to SoulFood Fusion House
+          for a special dinner show you don’t want to miss.
+        </p>
+
+        <div class="sf-meta-grid">
+          <div class="sf-meta-card">
+            <strong>Date</strong>
+            <span>May 10, 2026</span>
+          </div>
+          <div class="sf-meta-card">
+            <strong>Time</strong>
+            <span>5PM Doors · 7PM Show</span>
+          </div>
+          <div class="sf-meta-card">
+            <strong>Ticket</strong>
+            <span>$65</span>
+          </div>
+        </div>
+
+        <ul class="sf-list">
+          <li>Live music with Maestro Rey Valera.</li>
+          <li>Elegant dinner experience at SoulFood Fusion House.</li>
+          <li>Free welcome drinks included.</li>
+          <li>Only 110 tickets available. Tickets are confirmed after successful Square payment.</li>
+        </ul>
+      </aside>
+
+      <section class="sf-form-panel">
+        <h2>Buy Dinner Tickets</h2>
+        <p class="sf-form-intro">
+          Enter your details, choose your ticket quantity, then continue to secure Square payment.
+        </p>
+
+        <div class="sf-ticket-box" id="availabilityBox">Checking ticket availability...</div>
+
+        <form id="dinnerForm">
+          <div class="sf-form-group">
+            <label for="fullName">Full Name</label>
+            <input class="sf-input" id="fullName" name="fullName" type="text" autocomplete="name" required>
+          </div>
+
+          <div class="sf-form-group">
+            <label for="email">Email Address</label>
+            <input class="sf-input" id="email" name="email" type="email" autocomplete="email" required>
+          </div>
+
+          <div class="sf-form-group">
+            <label for="phone">Phone Number</label>
+            <input class="sf-input" id="phone" name="phone" type="tel" autocomplete="tel" required>
+          </div>
+
+          <div class="sf-form-group">
+            <label for="ticketQuantity">Number of Tickets</label>
+            <input class="sf-input" id="ticketQuantity" name="ticketQuantity" type="number" min="1" max="10" value="1" required>
+            <p class="sf-small-text" id="ticketLimitText">Maximum 10 tickets per order.</p>
+          </div>
+
+          <div class="sf-form-group">
+            <label for="specialRequests">Special Requests</label>
+            <textarea class="sf-textarea" id="specialRequests" name="specialRequests" placeholder="Table request, accessibility notes, etc."></textarea>
+          </div>
+
+          <div class="sf-total-box" aria-live="polite">
+            <span>Total Amount</span>
+            <strong id="dinnerTotal">$65.00</strong>
+          </div>
+
+          <div class="sf-notice-box">
+            Your tickets will be held for a short time while you complete Square payment.
+            Ticket numbers are issued only after payment is successful.
+          </div>
+
+          <button class="sf-btn sf-card-btn" type="submit" id="dinnerSubmit">Proceed to Square Payment</button>
+          <div class="sf-message" id="dinnerMessage"></div>
+        </form>
+      </section>
+    </section>
+  </main>
+
+  <script>
+    const form = document.getElementById('dinnerForm');
+    const ticketInput = document.getElementById('ticketQuantity');
+    const totalEl = document.getElementById('dinnerTotal');
+    const message = document.getElementById('dinnerMessage');
+    const submitBtn = document.getElementById('dinnerSubmit');
+    const availabilityBox = document.getElementById('availabilityBox');
+    const ticketLimitText = document.getElementById('ticketLimitText');
+
+    let availability = {
+      ticketPriceCents: 6500,
+      remainingTickets: 0,
+      maxTicketsPerOrder: 10,
+      holdMinutes: 15
+    };
+
+    function dollarsFromCents(cents) {
+      return '$' + (cents / 100).toFixed(2);
+    }
+
+    function safeTicketQuantity() {
+      const min = 1;
+      const max = Math.max(1, Math.min(availability.maxTicketsPerOrder, availability.remainingTickets || 1));
+      let value = Number(ticketInput.value || 1);
+      if (!Number.isFinite(value)) value = 1;
+      value = Math.max(min, Math.min(max, Math.floor(value)));
+      ticketInput.value = value;
+      return value;
+    }
+
+    function calculateDinnerTotal() {
+      const quantity = safeTicketQuantity();
+      totalEl.textContent = dollarsFromCents(quantity * availability.ticketPriceCents);
+    }
+
+    function showMessage(type, text) {
+      message.className = 'sf-message show ' + type;
+      message.innerHTML = text;
+    }
+
+    async function loadAvailability() {
+      try {
+        const response = await fetch('/api/dinner/availability');
+        const result = await response.json();
+        if (!response.ok || !result.ok) throw new Error(result.message || 'Could not load availability.');
+
+        availability = result;
+        const inputMax = Math.max(1, Math.min(result.remainingTickets, result.maxTicketsPerOrder));
+        ticketInput.max = inputMax;
+        ticketLimitText.textContent = `Maximum ${result.maxTicketsPerOrder} tickets per order. Ticket hold: ${result.holdMinutes} minutes.`;
+
+        if (result.remainingTickets <= 0) {
+          availabilityBox.textContent = 'Sold out — no dinner tickets are currently available.';
+          submitBtn.disabled = true;
+        } else {
+          availabilityBox.textContent = `${result.remainingTickets} of ${result.maxTickets} dinner tickets currently available.`;
+          submitBtn.disabled = false;
+        }
+
+        calculateDinnerTotal();
+      } catch (error) {
+        availabilityBox.textContent = error.message;
+        availabilityBox.style.color = '#9b1735';
+        submitBtn.disabled = true;
+      }
+    }
+
+    ticketInput.addEventListener('input', calculateDinnerTotal);
+
+    form.addEventListener('submit', async (event) => {
+      event.preventDefault();
+      submitBtn.disabled = true;
+      submitBtn.textContent = 'Creating Square checkout...';
+      message.className = 'sf-message';
+      message.textContent = '';
+
+      const payload = {
+        fullName: form.fullName.value,
+        email: form.email.value,
+        phone: form.phone.value,
+        ticketQuantity: Number(form.ticketQuantity.value || 1),
+        specialRequests: form.specialRequests.value
+      };
+
+      try {
+        const response = await fetch('/api/dinner/create-checkout', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(payload)
+        });
+
+        const result = await response.json();
+        if (!response.ok || !result.ok) {
+          throw new Error(result.message || 'Could not create Square checkout.');
+        }
+
+        showMessage(
+          'success',
+          `Booking ID <strong>${result.bookingId}</strong> created. Redirecting to Square payment...`
+        );
+
+        window.location.href = result.checkoutUrl;
+      } catch (error) {
+        showMessage('error', error.message);
+        submitBtn.disabled = false;
+        submitBtn.textContent = 'Proceed to Square Payment';
+        await loadAvailability();
+      }
+    });
+
+    loadAvailability();
+  </script>
+</body>
+</html>

@@ -1,0 +1,22 @@
+[
+  {
+    "id": "LUNCH-20260502-DEFC5F",
+    "event": "Mother's Day Lunch Buffet",
+    "eventDate": "May 10, 2026",
+    "eventTime": "12:00 PM - 4:00 PM",
+    "createdAt": "2026-05-02T07:07:38.112Z",
+    "updatedAt": "2026-05-02T07:07:38.112Z",
+    "fullName": "Test User",
+    "email": "test@email.com",
+    "phone": "0412345678",
+    "guests11Plus": 2,
+    "children5To10": 1,
+    "children4Below": 1,
+    "totalGuests": 4,
+    "estimatedTotalCents": 11250,
+    "estimatedTotalDisplay": "$112.50",
+    "paymentStatus": "Pay at Restaurant",
+    "bookingStatus": "New",
+    "specialRequests": ""
+  }
+]
